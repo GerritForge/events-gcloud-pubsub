@@ -18,6 +18,7 @@ import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
+import com.google.common.annotations.VisibleForTesting;
 import com.google.common.flogger.FluentLogger;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -37,6 +38,7 @@ public class PubSubEventSubscriber {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final Gson gson;
+  private final PubSubSubscriberMetrics subSubscriberMetrics;
   private final String topic;
   private final Consumer<EventMessage> messageProcessor;
   private final SubscriberProvider subscriberProvider;
@@ -48,9 +50,11 @@ public class PubSubEventSubscriber {
       Gson gson,
       SubscriberProvider subscriberProvider,
       PubSubConfiguration config,
+      PubSubSubscriberMetrics subSubscriberMetrics,
       @Assisted String topic,
       @Assisted Consumer<EventMessage> messageProcessor) {
     this.gson = gson;
+    this.subSubscriberMetrics = subSubscriberMetrics;
     this.topic = topic;
     this.messageProcessor = messageProcessor;
     this.subscriberProvider = subscriberProvider;
@@ -58,15 +62,8 @@ public class PubSubEventSubscriber {
   }
 
   public void subscribe() {
-    MessageReceiver receiver =
-        (PubsubMessage message, AckReplyConsumer consumer) -> {
-          EventMessage event = gson.fromJson(message.getData().toStringUtf8(), EventMessage.class);
-          messageProcessor.accept(event);
-          consumer.ack();
-        };
-
     try {
-      subscriber = subscriberProvider.get(topic, receiver);
+      subscriber = subscriberProvider.get(topic, getMessageReceiver());
       subscriber
           .startAsync()
           .awaitRunning(config.getSubscribtionTimeoutInSeconds(), TimeUnit.SECONDS);
@@ -97,5 +94,22 @@ public class PubSubEventSubscriber {
     } catch (TimeoutException e) {
       logger.atSevere().withCause(e).log("Timeout during subscriber shutdown");
     }
+  }
+
+  @VisibleForTesting
+  MessageReceiver getMessageReceiver() {
+    return (PubsubMessage message, AckReplyConsumer consumer) -> {
+      try {
+        EventMessage event = gson.fromJson(message.getData().toStringUtf8(), EventMessage.class);
+        messageProcessor.accept(event);
+        consumer.ack();
+        subSubscriberMetrics.incrementSucceedToConsumeMessage();
+      } catch (Exception e) {
+        logger.atSevere().withCause(e).log(
+            "Exception when consuming message %s from topic %s [message: %s]",
+            message.getMessageId(), topic, message.getData().toStringUtf8());
+        subSubscriberMetrics.incrementFailedToConsumeMessage();
+      }
+    };
   }
 }

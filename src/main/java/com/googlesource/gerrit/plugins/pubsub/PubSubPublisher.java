@@ -16,8 +16,11 @@ package com.googlesource.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.api.core.ApiFuture;
+import com.google.api.core.ApiFutureCallback;
+import com.google.api.core.ApiFutures;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.common.flogger.FluentLogger;
+import com.google.common.util.concurrent.MoreExecutors;
 import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -37,6 +40,8 @@ public class PubSubPublisher {
   }
 
   private final Gson gson;
+  private final PubSubPublisherMetrics publisherMetrics;
+  private final String topic;
   private final Publisher publisher;
   private final PubSubConfiguration pubSubProperties;
 
@@ -45,9 +50,12 @@ public class PubSubPublisher {
       PubSubConfiguration pubSubProperties,
       PublisherProvider publisherProvider,
       Gson gson,
+      PubSubPublisherMetrics publisherMetrics,
       @Assisted String topic)
       throws IOException {
     this.gson = gson;
+    this.publisherMetrics = publisherMetrics;
+    this.topic = topic;
     this.publisher = publisherProvider.get(topic);
     this.pubSubProperties = pubSubProperties;
   }
@@ -72,7 +80,29 @@ public class PubSubPublisher {
   }
 
   private ApiFuture<String> publishAsync(PubsubMessage pubsubMessage) {
-    return publisher.publish(pubsubMessage);
+    ApiFuture<String> publish = publisher.publish(pubsubMessage);
+    ApiFutures.addCallback(
+        publish,
+        new ApiFutureCallback<String>() {
+          @Override
+          public void onFailure(Throwable t) {
+            logger.atSevere().withCause(t).log(
+                "Exception when publishing message (id:%s) to topic '%s' [message: %s]",
+                pubsubMessage.getMessageId(), topic, pubsubMessage.getData().toStringUtf8());
+            publisherMetrics.incrementFailedToPublishMessage();
+          }
+
+          @Override
+          public void onSuccess(String messageId) {
+            logger.atFine().log(
+                "Successfully published message (id:%s) to topic '%s' [message: %s]",
+                messageId, topic, pubsubMessage.getData().toStringUtf8());
+
+            publisherMetrics.incrementSuccessPublishMessage();
+          }
+        },
+        MoreExecutors.directExecutor());
+    return publish;
   }
 
   private void publishSync(PubsubMessage pubsubMessage) {
