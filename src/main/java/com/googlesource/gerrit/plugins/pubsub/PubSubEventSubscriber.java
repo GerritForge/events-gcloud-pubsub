@@ -60,9 +60,14 @@ public class PubSubEventSubscriber {
   public void subscribe() {
     MessageReceiver receiver =
         (PubsubMessage message, AckReplyConsumer consumer) -> {
-          EventMessage event = gson.fromJson(message.getData().toStringUtf8(), EventMessage.class);
-          messageProcessor.accept(event);
-          consumer.ack();
+          try {
+            EventMessage event =
+                gson.fromJson(message.getData().toStringUtf8(), EventMessage.class);
+            event.validate();
+            messageProcessor.accept(event);
+          } finally {
+            consumer.ack();
+          }
         };
 
     try {
