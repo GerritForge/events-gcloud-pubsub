@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "62830868_50ec9c87",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-21T19:20:39Z",
+      "side": 1,
+      "message": "\u003e I am thinking if we should actually ack in the finally block.\n\u003e Do we really want to ack all messages even the ones that we couldn\u0027t process?\n\u003e \n\u003e I understand perhaps we want to ack *some* messages that we couldn\u0027t process (the ones for which validate() is false), but what about deserialization exceptions for example?\n\nIf this was a bank transaction or a data pipeline, we should have a DLQ. In this case, we should discard them and log the reason why we did.\n\n\u003e Also, since there\u0027s no logging we will not even have visibility on this and effectively we will be silently acking every message that we cannot process?\n\nTrue, we are missing a log at warning level here.\n\n\u003e I have recently modified this piece of code to allow exposing failure metrics (here [1]).\n\nYes, a metric would be best to count the number of messages discarded.\n\n\u003e [1]https://gerrit.googlesource.com/plugins/events-gcloud-pubsub/+/refs/changes/10/304010/1/src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java#100",
+      "parentUuid": "63e2a5b6_f68da21c",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "696fe4f4_73a4e775",
         "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
         "patchSetId": 1
