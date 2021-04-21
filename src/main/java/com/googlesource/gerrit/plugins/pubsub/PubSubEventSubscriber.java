@@ -101,6 +101,7 @@ public class PubSubEventSubscriber {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
       try {
         EventMessage event = gson.fromJson(message.getData().toStringUtf8(), EventMessage.class);
+        event.validate();
         messageProcessor.accept(event);
         consumer.ack();
         subSubscriberMetrics.incrementSucceedToConsumeMessage();
@@ -109,6 +110,8 @@ public class PubSubEventSubscriber {
             "Exception when consuming message %s from topic %s [message: %s]",
             message.getMessageId(), topic, message.getData().toStringUtf8());
         subSubscriberMetrics.incrementFailedToConsumeMessage();
+      } finally {
+        consumer.ack();
       }
     };
   }

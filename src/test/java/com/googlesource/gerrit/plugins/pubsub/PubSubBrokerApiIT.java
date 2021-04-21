@@ -31,6 +31,7 @@ import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.cloud.pubsub.v1.stub.GrpcSubscriberStub;
 import com.google.cloud.pubsub.v1.stub.SubscriberStub;
 import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
+import com.google.common.collect.Lists;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.NoHttpd;
 import com.google.gerrit.acceptance.TestPlugin;
@@ -179,8 +180,37 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
 
     WaitUtil.waitUntil(
         () ->
-            consumer.getMessage() != null
-                && expectedMessageJson.equals(gson.toJson(consumer.getMessage())),
+            consumer.getMessages().size() == 1
+                && expectedMessageJson.equals(gson.toJson(consumer.getMessages().get(0))),
+        TEST_TIMEOUT);
+  }
+
+  @Test
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  public void shouldSkipEventWithoutSourceInstanceId() throws InterruptedException {
+    UUID id = UUID.randomUUID();
+
+    Event event = new ProjectCreatedEvent();
+
+    EventMessage eventMessage = new EventMessage(new EventMessage.Header(id, id), event);
+    EventMessage eventMessageWithoutSourceInstanceId =
+        new EventMessage(new EventMessage.Header(id, null), event);
+    String expectedMessageJson = gson.toJson(eventMessage);
+    TestConsumer consumer = new TestConsumer();
+
+    objectUnderTest.receiveAsync(TOPIC_ID, consumer);
+
+    objectUnderTest.send(TOPIC_ID, eventMessageWithoutSourceInstanceId);
+    objectUnderTest.send(TOPIC_ID, eventMessage);
+
+    WaitUtil.waitUntil(
+        () ->
+            consumer.getMessages().size() == 1
+                && expectedMessageJson.equals(gson.toJson(consumer.getMessages().get(0))),
         TEST_TIMEOUT);
   }
 
@@ -248,15 +278,15 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
   }
 
   private class TestConsumer implements Consumer<EventMessage> {
-    private EventMessage msg;
+    private List<EventMessage> msgs = Lists.newLinkedList();
 
     @Override
     public void accept(EventMessage msg) {
-      this.msg = msg;
+      msgs.add(msg);
     }
 
-    public EventMessage getMessage() {
-      return msg;
+    public List<EventMessage> getMessages() {
+      return msgs;
     }
   }
 }

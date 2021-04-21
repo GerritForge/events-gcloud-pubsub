@@ -20,8 +20,12 @@ import static org.mockito.Mockito.verify;
 import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
-import com.google.gerrit.json.OutputFormat;
+import com.google.gerrit.server.events.EventGsonProvider;
+import com.google.gerrit.server.events.ProjectCreatedEvent;
+import com.google.gson.Gson;
+import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
+import java.util.UUID;
 import java.util.function.Consumer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -37,6 +41,10 @@ public class PubSubEventSubscriberTest {
   @Mock AckReplyConsumer ackReplyConsumerMock;
 
   private static final String TOPIC = "foo";
+  private static final EventMessage eventMessage =
+      new EventMessage(
+          new EventMessage.Header(UUID.randomUUID(), UUID.randomUUID()), new ProjectCreatedEvent());
+  private Gson gson = new EventGsonProvider().get();
 
   @Test
   public void shouldIncrementFailedToConsumeMessageWhenReceivingFails() {
@@ -55,20 +63,22 @@ public class PubSubEventSubscriberTest {
   public void shouldIncrementSucceedToConsumeMessageWhenReceivingSucceeds() {
     Consumer<EventMessage> succeedingConsumer = (message) -> {};
 
-    messageReceiver(succeedingConsumer)
-        .receiveMessage(PubsubMessage.getDefaultInstance(), ackReplyConsumerMock);
+    PubsubMessage pubsubMessage = sampleMessage();
+
+    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
 
     verify(pubSubSubscriberMetricsMock, only()).incrementSucceedToConsumeMessage();
   }
 
+  private PubsubMessage sampleMessage() {
+    String eventPayload = gson.toJson(eventMessage);
+    ByteString data = ByteString.copyFromUtf8(eventPayload);
+    return PubsubMessage.newBuilder().setData(data).build();
+  }
+
   private MessageReceiver messageReceiver(Consumer<EventMessage> consumer) {
     return new PubSubEventSubscriber(
-            OutputFormat.JSON_COMPACT.newGson(),
-            subscriberProviderMock,
-            confMock,
-            pubSubSubscriberMetricsMock,
-            TOPIC,
-            consumer)
+            gson, subscriberProviderMock, confMock, pubSubSubscriberMetricsMock, TOPIC, consumer)
         .getMessageReceiver();
   }
 }
