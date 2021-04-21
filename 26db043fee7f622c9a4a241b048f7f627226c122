@@ -3,6 +3,52 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "63e2a5b6_f68da21c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-21T18:30:11Z",
+      "side": 1,
+      "message": "I am thinking if we should actually ack in the finally block.\nDo we really want to ack all messages even the ones that we couldn\u0027t process?\n\nI understand perhaps we want to ack *some* messages that we couldn\u0027t process (the ones for which validate() is false), but what about deserialization exceptions for example?\n\nAlso, since there\u0027s no logging we will not even have visibility on this and effectively we will be silently acking every message that we cannot process?\n\nI have recently modified this piece of code to allow exposing failure metrics (here [1]).\n\nPerhaps let\u0027s discuss my points above and how to integrate them in the best way.\n\nWDYT?\n\n[1]https://gerrit.googlesource.com/plugins/events-gcloud-pubsub/+/refs/changes/10/304010/1/src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java#100",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "696fe4f4_73a4e775",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-21T18:30:11Z",
+      "side": 1,
+      "message": "Are we relying on the order of insertion? is the delivery guaranteed to be in order?\n\nI am asking because here we are asserting that the eventMessage is consumed, rather than asserting that the eventMessageWithoutSourceInstanceId is not, right?\n\nAs soon as we receive the eventMessage the test will pass without checking that the eventMessageWithoutSourceInstanceId is not received immediately after.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 90
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "7449bd17_e86f6cd6",
         "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
         "patchSetId": 1
@@ -14,6 +60,30 @@
       "writtenOn": "2021-04-21T10:40:07Z",
       "side": 1,
       "message": "I was thinking about replacing TestConsumer with mock but there is no much value",
+      "range": {
+        "startLine": 280,
+        "startChar": 2,
+        "endLine": 280,
+        "endChar": 64
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2d67e6ad_2cef53ef",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 280,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-04-21T18:30:11Z",
+      "side": 1,
+      "message": "I think using testConsumer is fine.",
+      "parentUuid": "7449bd17_e86f6cd6",
       "range": {
         "startLine": 280,
         "startChar": 2,
