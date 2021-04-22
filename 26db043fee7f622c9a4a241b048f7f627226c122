@@ -50,6 +50,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "069f0598_5dd64c8d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-04-22T13:20:50Z",
+      "side": 1,
+      "message": "I agree I should rebase on top of the metrics change.",
+      "parentUuid": "62830868_50ec9c87",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "696fe4f4_73a4e775",
         "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
         "patchSetId": 1
@@ -61,6 +85,30 @@
       "writtenOn": "2021-04-21T18:30:11Z",
       "side": 1,
       "message": "Are we relying on the order of insertion? is the delivery guaranteed to be in order?\n\nI am asking because here we are asserting that the eventMessage is consumed, rather than asserting that the eventMessageWithoutSourceInstanceId is not, right?\n\nAs soon as we receive the eventMessage the test will pass without checking that the eventMessageWithoutSourceInstanceId is not received immediately after.",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 90
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "31b67c16_471eddc1",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-04-22T13:20:50Z",
+      "side": 1,
+      "message": "yeah that\u0027s why I was thinking about using mock and to validate if this message was never delivered. But I will have the same problem, how long I should wait? The only way is to rely on the message ordering. WDYT?",
+      "parentUuid": "696fe4f4_73a4e775",
       "range": {
         "startLine": 209,
         "startChar": 0,
