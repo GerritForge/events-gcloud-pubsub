@@ -72,6 +72,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "bf31f8a3_0f665dc2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-04-23T07:53:05Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "069f0598_5dd64c8d",
+      "range": {
+        "startLine": 69,
+        "startChar": 0,
+        "endLine": 69,
+        "endChar": 27
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "696fe4f4_73a4e775",
@@ -133,6 +157,30 @@
       "side": 1,
       "message": "\u003e yeah that\u0027s why I was thinking about using mock and to validate if this message was never delivered. But I will have the same problem, how long I should wait?\n\nOption1:\nWe could assert that the message is NOT received in TEST_TIMEOUT time.\nBut I agree is not the best solution, because it will slow down the tests.\n\n\u003e The only way is to rely on the message ordering. \n\nIf message ordering is guaranteed then, this approach is fine (I am not sure that\u0027s the case though).\n\nWDYT?\n\nAlternative approach:\nI was thinking that if you rebase this on top of [1] you could perhaps have something like:\n\n```\nmessageReceiver(succeedingConsumer)\n        .receiveMessage(EventMessageInstance, ackReplyConsumerMock);\n\nassertThat(consumer is called)\n```\n\nand then\n```\nmessageReceiver(succeedingConsumer)\n        .receiveMessage(EventInstance, ackReplyConsumerMock);\n\nassertThat(consumer is NOT called)\n```\n\nI believe it should be easy, but I haven\u0027t looked into it much, so I might be wrong.\n\nIf it doesn\u0027t make our life easier don\u0027t worry I would say we leave this test as it is.\n\nWDYT?\n\n\n[1]https://gerrit-review.googlesource.com/c/plugins/events-gcloud-pubsub/+/304010/1/src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
       "parentUuid": "31b67c16_471eddc1",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 90
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e39266b2_11ce093b",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-04-23T07:53:05Z",
+      "side": 1,
+      "message": "You are correct, it will not be a e2e test just unit test which is fine. I will do that",
+      "parentUuid": "a559eb03_431bb2b4",
       "range": {
         "startLine": 209,
         "startChar": 0,
