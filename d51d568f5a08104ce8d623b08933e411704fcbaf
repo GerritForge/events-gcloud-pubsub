@@ -34,6 +34,24 @@
       "parentUuid": "1c363cd9_17f7baf7",
       "revId": "d51d568f5a08104ce8d623b08933e411704fcbaf",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "38df73bb_f022b5e9",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1011323
+      },
+      "writtenOn": "2021-04-23T07:38:24Z",
+      "side": 1,
+      "message": "This repository only has 3.3 branch: [1]\n\n[1] https://gerrit-review.googlesource.com/admin/repos/plugins/events-gcloud-pubsub,branches",
+      "parentUuid": "a76c486e_d2e05581",
+      "revId": "d51d568f5a08104ce8d623b08933e411704fcbaf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
