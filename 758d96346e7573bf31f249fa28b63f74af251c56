@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9f4673d4_c91ffef6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T08:23:53Z",
+      "side": 1,
+      "message": "Shouldn\u0027t we \"nack()\" the failing messages? Like:\n\n   try {\n      ..\n      event.validate();\n      consumer.ack();\n      ...\n   } catch (Exception e) {\n      consumer.nack();\n      ...\n   }",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "758d96346e7573bf31f249fa28b63f74af251c56",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
