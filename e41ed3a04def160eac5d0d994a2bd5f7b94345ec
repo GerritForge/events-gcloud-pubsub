@@ -1,0 +1,222 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e3d9085a_66deb009",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 41,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "nit: pubSubSubscriberMetrics?",
+      "range": {
+        "startLine": 41,
+        "startChar": 40,
+        "endLine": 41,
+        "endChar": 60
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "503c2640_4ff2d988",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "If we end up here we also have a failure in the message consumption. Why not increasing the metric here as well?",
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "938c40bd_4e2c5614",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "Same as line 71",
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "24b86171_0132c3e2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "The addition of this try/catch makes the logic slightly different than before. Before if we were having an exception we were capturing it in the external catch (L70 or L72), while now we are catching it here.\n\nWhen catching the exception here, will the \"subscriberProvider.get\" throw another one?",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 7
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5a44d466_75ad2a7a",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisherMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 35,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "success_counter ? for consistency with failure_counter and to make clear is not the total.",
+      "range": {
+        "startLine": 35,
+        "startChar": 59,
+        "endLine": 35,
+        "endChar": 66
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11a5b7e3_a05a76b6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisherMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "There is a \"rateDescription\" method in PubSubEventsMetrics that does that, why not using it?",
+      "range": {
+        "startLine": 36,
+        "startChar": 12,
+        "endLine": 38,
+        "endChar": 36
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "8488033a_adab5266",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisherMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "There is a \"rateDescription\" method in PubSubEventsMetrics that does that, why not using it?",
+      "range": {
+        "startLine": 43,
+        "startChar": 12,
+        "endLine": 43,
+        "endChar": 95
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "728bedd0_ba0864b3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisherMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "incrementSucceedToConsumeMessage for consistency with the subscriber",
+      "range": {
+        "startLine": 47,
+        "startChar": 14,
+        "endLine": 47,
+        "endChar": 44
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67aa0504_4317cb40",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubSubscriberMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 40,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "There is a \"rateDescription\" method in PubSubEventsMetrics that does that, why not using it?",
+      "range": {
+        "startLine": 38,
+        "startChar": 12,
+        "endLine": 40,
+        "endChar": 36
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "763ef23f_04f14bb4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubSubscriberMetrics.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-23T12:47:41Z",
+      "side": 1,
+      "message": "There is a \"rateDescription\" method in PubSubEventsMetrics that does that, why not using it?",
+      "range": {
+        "startLine": 45,
+        "startChar": 12,
+        "endLine": 47,
+        "endChar": 34
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
