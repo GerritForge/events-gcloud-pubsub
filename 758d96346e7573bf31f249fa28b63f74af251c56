@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "91c2e1f8_5c2f141e",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 106,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-24T01:21:46Z",
+      "side": 1,
+      "message": "+1",
+      "parentUuid": "e9a2b097_4510f85d",
+      "range": {
+        "startLine": 106,
+        "startChar": 8,
+        "endLine": 106,
+        "endChar": 23
+      },
+      "revId": "758d96346e7573bf31f249fa28b63f74af251c56",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "9f4673d4_c91ffef6",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
         "patchSetId": 3
@@ -85,6 +109,30 @@
       "side": 1,
       "message": "Sorry I didn\u0027t understand that the message would have been re-queued. I thought it was more a \"reject\".",
       "parentUuid": "a5519b6d_3e7760dd",
+      "range": {
+        "startLine": 102,
+        "startChar": 4,
+        "endLine": 115,
+        "endChar": 7
+      },
+      "revId": "758d96346e7573bf31f249fa28b63f74af251c56",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6b843394_21291d4c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-04-24T01:21:46Z",
+      "side": 1,
+      "message": "If you nack() the message, then it is going to be queued and redelivered again: if the message isn\u0027t valid, we need to trace the problem and discard it. Redelivering it won\u0027t make it pass the next time, isn\u0027t it?",
+      "parentUuid": "e2f4cb0b_4485b1f9",
       "range": {
         "startLine": 102,
         "startChar": 4,
