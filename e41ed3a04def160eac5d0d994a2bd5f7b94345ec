@@ -83,6 +83,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "177ca1ab_3b8c9762",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 71,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-27T08:01:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "d8357432_70100f6f",
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "938c40bd_4e2c5614",
@@ -114,6 +132,24 @@
       "side": 1,
       "message": "See my comment above, this is a failure in subscribing to the topic, we shouldn\u0027t increment message consumption failures.",
       "parentUuid": "938c40bd_4e2c5614",
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0fb368d5_6b6c9218",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 73,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-27T08:01:37Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "750dd5ea_f9420021",
       "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -155,6 +191,30 @@
       "side": 1,
       "message": "this method returns a MessageReceiver, but does *not* execute its code block immediately: this is the code that will be executed when consuming a message (in a different thread).\n\nThis was true even before, so the addition of the try {} catch {} block doesn\u0027t change any logic I think:\n\n* The subscribe() will still catch any exception related to subscription to the topic\n* The (newly added) try {} catch {} in this block will allow the *receiver* to catch exceptions when *consuming* (we didn\u0027t have anything before).\n\nHope it makes sense?",
       "parentUuid": "24b86171_0132c3e2",
+      "range": {
+        "startLine": 107,
+        "startChar": 6,
+        "endLine": 112,
+        "endChar": 7
+      },
+      "revId": "e41ed3a04def160eac5d0d994a2bd5f7b94345ec",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "15749488_34b7f106",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 112,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-04-27T08:01:37Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2a64ea7b_d63e14f4",
       "range": {
         "startLine": 107,
         "startChar": 6,
