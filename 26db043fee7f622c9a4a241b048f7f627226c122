@@ -191,6 +191,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "7428638f_c0e3751e",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 213,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-04-29T06:35:03Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e39266b2_11ce093b",
+      "range": {
+        "startLine": 209,
+        "startChar": 0,
+        "endLine": 213,
+        "endChar": 90
+      },
+      "revId": "26db043fee7f622c9a4a241b048f7f627226c122",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "7449bd17_e86f6cd6",
