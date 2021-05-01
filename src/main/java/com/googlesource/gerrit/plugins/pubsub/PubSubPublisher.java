@@ -20,6 +20,9 @@ import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.common.flogger.FluentLogger;
+import com.google.common.util.concurrent.Futures;
+import com.google.common.util.concurrent.JdkFutureAdapters;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
@@ -28,9 +31,8 @@ import com.google.inject.assistedinject.Assisted;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import java.io.IOException;
-import java.util.concurrent.ExecutionException;
+import java.util.Objects;
 import java.util.concurrent.TimeUnit;
-import java.util.concurrent.TimeoutException;
 
 public class PubSubPublisher {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -60,26 +62,21 @@ public class PubSubPublisher {
     this.pubSubProperties = pubSubProperties;
   }
 
-  public boolean publish(Event event) {
+  public ListenableFuture<Boolean> publish(Event event) {
     return publish(gson.toJson(event));
   }
 
-  public boolean publish(EventMessage event) {
+  public ListenableFuture<Boolean> publish(EventMessage event) {
     return publish(gson.toJson(event));
   }
 
-  private boolean publish(String eventPayload) {
+  private ListenableFuture<Boolean> publish(String eventPayload) {
     ByteString data = ByteString.copyFromUtf8(eventPayload);
     PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
-    if (pubSubProperties.isSendAsync()) {
-      return publishAsync(pubsubMessage) != null;
-    }
-
-    publishSync(pubsubMessage);
-    return true;
+    return publishAsync(pubsubMessage);
   }
 
-  private ApiFuture<String> publishAsync(PubsubMessage pubsubMessage) {
+  private ListenableFuture<Boolean> publishAsync(PubsubMessage pubsubMessage) {
     ApiFuture<String> publish = publisher.publish(pubsubMessage);
     ApiFutures.addCallback(
         publish,
@@ -102,17 +99,11 @@ public class PubSubPublisher {
           }
         },
         MoreExecutors.directExecutor());
-    return publish;
-  }
 
-  private void publishSync(PubsubMessage pubsubMessage) {
-    try {
-      ApiFuture<String> messageIdFuture = publishAsync(pubsubMessage);
-      messageIdFuture.get(1000, TimeUnit.SECONDS);
-
-    } catch (InterruptedException | ExecutionException | TimeoutException e) {
-      logger.atSevere().withCause(e).log("Cannot send the message");
-    }
+    return Futures.transform(
+        JdkFutureAdapters.listenInPoolThread(publish),
+        Objects::nonNull,
+        MoreExecutors.directExecutor());
   }
 
   public void close() throws InterruptedException {

@@ -33,7 +33,6 @@ public class PubSubConfiguration {
   private final String gcloudProject;
   private final String subscriptionId;
   private final Integer numberOfSubscribers;
-  private final Boolean sendAsync;
   private final String privateKeyLocation;
   private final Integer ackDeadlineSeconds;
   private final Long subscribtionTimeoutInSeconds;
@@ -47,7 +46,6 @@ public class PubSubConfiguration {
       @PluginName String pluginName,
       @Nullable @GerritInstanceId String instanceId) {
     this.fromGerritConfig = configFactory.getFromGerritConfig(pluginName);
-    this.sendAsync = fromGerritConfig.getBoolean("sendAsync", true);
     this.gcloudProject = getMandatoryString("gcloudProject");
     this.subscriptionId = getMandatoryString("subscriptionId", instanceId);
     this.privateKeyLocation = getMandatoryString("privateKeyLocation");
@@ -66,10 +64,6 @@ public class PubSubConfiguration {
     this.shutdownTimeoutInSeconds =
         Long.parseLong(
             fromGerritConfig.getString("shutdownTimeoutInSeconds", DEFAULT_SHUTDOWN_TIMEOUT));
-  }
-
-  public Boolean isSendAsync() {
-    return sendAsync;
   }
 
   public String getGCloudProject() {

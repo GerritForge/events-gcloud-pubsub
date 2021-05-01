@@ -18,6 +18,7 @@ import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 import com.google.common.flogger.FluentLogger;
+import com.google.common.util.concurrent.ListenableFuture;
 import com.google.inject.Inject;
 import java.util.Collections;
 import java.util.Map;
@@ -42,7 +43,7 @@ class PubSubBrokerApi implements BrokerApi {
   }
 
   @Override
-  public boolean send(String topic, EventMessage message) {
+  public ListenableFuture<Boolean> send(String topic, EventMessage message) {
     return publishers.computeIfAbsent(topic, t -> publisherFactory.create(t)).publish(message);
   }
 
