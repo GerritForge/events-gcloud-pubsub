@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a710325b_ea1d079b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-05-01T14:55:46Z",
+      "side": 0,
+      "message": "Not sure if I went too wild, but I thought it would have been pointless to resolve the future here, and then wrap the result again in a future just to pass it back to the caller, hence I thought we could just get rid of the async send. Let me know what you think.",
+      "range": {
+        "startLine": 108,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "2e56a48467dc465ead3d363c8779bffb77f0ef7f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
