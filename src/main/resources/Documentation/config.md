@@ -34,16 +34,6 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
     to allocate a thread pool able to run all subscribers.
     Default: 6
 
-`plugin.events-gcloud-pubsub.sendAsync`
-:   Optional. Send messages to GCloud PubSub asynchronously, detaching the calling
-    process from the acknowledge of the message being sent.
-    The drawback of the enabling the sendAsync parameter is that the broker would only
-    return the status of the successful invocation of the message send operation and not
-    the actual status received by the broker. This means that when sendAsync is enabled
-    'broker_msg_publisher_failure_counter' metric is not incremented when message send
-    failure occurs.
-    Default: true
-
 `plugin.events-gcloud-pubsub.ackDeadlineSeconds`
 :   Optional. The approximate amount of time (on a best-effort basis) Pub/Sub waits for
     the subscriber to acknowledge receipt before resending the message.

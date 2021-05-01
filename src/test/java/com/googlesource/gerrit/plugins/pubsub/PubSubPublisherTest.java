@@ -60,18 +60,6 @@ public class PubSubPublisherTest {
 
   @Test
   public void shouldIncrementFailedToPublishMessageWhenAsyncPublishFails() {
-    when(confMock.isSendAsync()).thenReturn(true);
-    when(publisherMock.publish(any()))
-        .thenReturn(ApiFutures.immediateFailedFuture(new Exception("Something went wrong")));
-
-    objectUnderTest.publish(eventMessage);
-
-    verify(pubSubPublisherMetricsMock, only()).incrementFailedToPublishMessage();
-  }
-
-  @Test
-  public void shouldIncrementFailedToPublishMessageWhenSyncPublishFails() {
-    when(confMock.isSendAsync()).thenReturn(false);
     when(publisherMock.publish(any()))
         .thenReturn(ApiFutures.immediateFailedFuture(new Exception("Something went wrong")));
 
@@ -82,17 +70,6 @@ public class PubSubPublisherTest {
 
   @Test
   public void shouldIncrementSuccessToPublishMessageWhenAsyncPublishSucceeds() {
-    when(confMock.isSendAsync()).thenReturn(true);
-    when(publisherMock.publish(any())).thenReturn(ApiFutures.immediateFuture("some-message-id"));
-
-    objectUnderTest.publish(eventMessage);
-
-    verify(pubSubPublisherMetricsMock, only()).incrementSucceedToPublishMessage();
-  }
-
-  @Test
-  public void shouldIncrementSuccessToPublishMessageWhenSyncPublishSucceeds() {
-    when(confMock.isSendAsync()).thenReturn(false);
     when(publisherMock.publish(any())).thenReturn(ApiFutures.immediateFuture("some-message-id"));
 
     objectUnderTest.publish(eventMessage);
