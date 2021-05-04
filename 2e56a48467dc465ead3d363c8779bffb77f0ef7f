@@ -46,6 +46,30 @@
       },
       "revId": "2e56a48467dc465ead3d363c8779bffb77f0ef7f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba791a3d_679076a1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-05-04T15:06:18Z",
+      "side": 0,
+      "message": "this bit of code has been removed in the new version",
+      "parentUuid": "da89043c_21e38cbf",
+      "range": {
+        "startLine": 108,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "2e56a48467dc465ead3d363c8779bffb77f0ef7f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
