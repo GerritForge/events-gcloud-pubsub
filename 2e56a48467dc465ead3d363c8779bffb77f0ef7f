@@ -22,6 +22,30 @@
       },
       "revId": "2e56a48467dc465ead3d363c8779bffb77f0ef7f",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "da89043c_21e38cbf",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubPublisher.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 115,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-05-04T00:22:24Z",
+      "side": 0,
+      "message": "Avoid the 1000 seconds hardcoded value: the publish timeout should be a configuration IMHO.",
+      "parentUuid": "a710325b_ea1d079b",
+      "range": {
+        "startLine": 108,
+        "startChar": 1,
+        "endLine": 115,
+        "endChar": 5
+      },
+      "revId": "2e56a48467dc465ead3d363c8779bffb77f0ef7f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
