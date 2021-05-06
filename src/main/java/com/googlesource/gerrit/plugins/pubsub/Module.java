@@ -14,11 +14,11 @@
 
 package com.googlesource.gerrit.plugins.pubsub;
 
+import com.gerritforge.gerrit.eventbroker.EventGsonProvider;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.gerrit.extensions.config.FactoryModule;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.registration.DynamicSet;
-import com.google.gerrit.server.events.EventGsonProvider;
 import com.google.gerrit.server.events.EventListener;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
