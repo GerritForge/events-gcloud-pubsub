@@ -6,9 +6,11 @@
       "updated": "2021-05-06T06:31:13Z"
     },
     "gerritforge:plugins-events-gcloud-pubsub-code-style": {
-      "state": "SCHEDULED",
+      "state": "RUNNING",
+      "url": "https://gerrit-ci.gerritforge.com/job/plugin-events-gcloud-pubsub-verifier/job/05%252F305405%252F4/1/console",
+      "started": "2021-05-06T06:33:50Z",
       "created": "2021-05-06T06:31:13Z",
-      "updated": "2021-05-06T06:31:13Z"
+      "updated": "2021-05-06T06:33:00Z"
     }
   }
 }
