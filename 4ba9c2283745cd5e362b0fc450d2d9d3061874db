@@ -61,6 +61,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "4d535105_b7be27da",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-05-06T08:54:39Z",
+      "side": 1,
+      "message": "It was done in master but we are addressing stable-3.3. Let me check if stable-3.4 has the same problem if yes that we have to rollback there as well. The problem was with message serialisation of events coming from replication. Event should look like this:\n`{\"header\":{\"eventId\":\"d4dd1c92-57f5-4a10-97ec-2ac0293cda9f\",\"sourceInstanceId\":\"1fb1b802-7fd7-43e5-91dc-92aa535c110b\",\"eventType\":\"\"},\"body\":{\"project\":\"test_repo2\",\"ref\":\"refs/heads/master\",\"nodesCount\":1,\"type\":\"ref-replication-done\",\"eventCreatedOn\":1620219319}}`\n\nBut we have:\n`{\"header\":{\"eventId\":\"d4dd1c92-57f5-4a10-97ec-2ac0293cda9f\",\"sourceInstanceId\":\"1fb1b802-7fd7-43e5-91dc-92aa535c110b\",\"eventType\":\"\"},\"body\":{\"nodesCount\":0,\"type\":\"ref-replication-done\",\"eventCreatedOn\":1620219319}}`",
+      "parentUuid": "a1e987c8_27dbffac",
+      "revId": "4ba9c2283745cd5e362b0fc450d2d9d3061874db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "128e4bd5_84841e8f",
         "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
         "patchSetId": 4
@@ -72,6 +90,30 @@
       "writtenOn": "2021-05-06T07:44:27Z",
       "side": 1,
       "message": "Why is this needed?",
+      "range": {
+        "startLine": 78,
+        "startChar": 68,
+        "endLine": 78,
+        "endChar": 77
+      },
+      "revId": "4ba9c2283745cd5e362b0fc450d2d9d3061874db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0b56f51f_98b74244",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 4
+      },
+      "lineNbr": 78,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-05-06T08:54:39Z",
+      "side": 1,
+      "message": "we have two constructors. One with UUID and one with String",
+      "parentUuid": "128e4bd5_84841e8f",
       "range": {
         "startLine": 78,
         "startChar": 68,
