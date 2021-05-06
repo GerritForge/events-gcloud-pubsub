@@ -79,6 +79,24 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "8ffd5adc_89490450",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-05-06T09:44:13Z",
+      "side": 1,
+      "message": "It\u0027s fine on stable-3.4 because of the fix made in com.google.gerrit.server.events.EventGsonProvider. This new adapter was added: EntitiesAdapterFactory.create()\n\nSo on stable-3.3 we still need EventGsonProvider from events-broker",
+      "parentUuid": "4d535105_b7be27da",
+      "revId": "4ba9c2283745cd5e362b0fc450d2d9d3061874db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "128e4bd5_84841e8f",
         "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
         "patchSetId": 4
