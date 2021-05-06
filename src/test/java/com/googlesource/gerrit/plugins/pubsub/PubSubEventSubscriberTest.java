@@ -14,6 +14,8 @@
 
 package com.googlesource.gerrit.plugins.pubsub;
 
+import static com.google.common.truth.Truth.assertThat;
+import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
@@ -31,6 +33,8 @@ import java.util.UUID;
 import java.util.function.Consumer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.mockito.ArgumentCaptor;
+import org.mockito.Captor;
 import org.mockito.Mock;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -42,6 +46,7 @@ public class PubSubEventSubscriberTest {
   @Mock PubSubSubscriberMetrics pubSubSubscriberMetricsMock;
   @Mock AckReplyConsumer ackReplyConsumerMock;
   @Mock Consumer<EventMessage> succeedingConsumer;
+  @Captor ArgumentCaptor<EventMessage> eventMessageCaptor;
 
   private static final String TOPIC = "foo";
   private static final EventMessage eventMessage =
@@ -81,6 +86,37 @@ public class PubSubEventSubscriberTest {
     messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
 
     verify(succeedingConsumer, never()).accept(messageWithoutSourceInstanceId);
+  }
+
+  @Test
+  public void shouldParseEventObject() {
+    String instanceId = "instance-id";
+
+    Event event = new ProjectCreatedEvent();
+    event.instanceId = instanceId;
+    PubsubMessage pubsubMessage = sampleMessage(event);
+    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
+
+    verify(succeedingConsumer, only()).accept(eventMessageCaptor.capture());
+    EventMessage result = eventMessageCaptor.getValue();
+    assertThat(result.getHeader().sourceInstanceId).isEqualTo(instanceId);
+  }
+
+  @Test
+  public void shouldParseEventObjectWithHeaderAndBodyProjectName() {
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+    event.projectName = "header_body_parser_project";
+    PubsubMessage pubsubMessage = sampleMessage(event);
+    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
+
+    verify(succeedingConsumer, only()).accept(any(EventMessage.class));
+  }
+
+  private PubsubMessage sampleMessage(Event event) {
+    String eventPayload = gson.toJson(event);
+    ByteString data = ByteString.copyFromUtf8(eventPayload);
+    return PubsubMessage.newBuilder().setData(data).build();
   }
 
   private PubsubMessage sampleMessage(EventMessage message) {
