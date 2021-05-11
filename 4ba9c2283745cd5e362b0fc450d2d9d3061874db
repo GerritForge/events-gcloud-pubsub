@@ -26,6 +26,30 @@
     {
       "unresolved": false,
       "key": {
+        "uuid": "8616c0cd_4b10fc33",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-05-11T05:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6ecd78fe_45d752ce",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 34
+      },
+      "revId": "4ba9c2283745cd5e362b0fc450d2d9d3061874db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
         "uuid": "7d41c8ed_7d4ab063",
         "filename": "/PATCHSET_LEVEL",
         "patchSetId": 4
@@ -91,6 +115,24 @@
       "side": 1,
       "message": "It\u0027s fine on stable-3.4 because of the fix made in com.google.gerrit.server.events.EventGsonProvider. This new adapter was added: EntitiesAdapterFactory.create()\n\nSo on stable-3.3 we still need EventGsonProvider from events-broker",
       "parentUuid": "4d535105_b7be27da",
+      "revId": "4ba9c2283745cd5e362b0fc450d2d9d3061874db",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "49c2351c_64781583",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-05-11T05:27:14Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "8ffd5adc_89490450",
       "revId": "4ba9c2283745cd5e362b0fc450d2d9d3061874db",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
