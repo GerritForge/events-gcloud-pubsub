@@ -75,7 +75,7 @@ public class PubSubEventSubscriberTest {
   public void shouldSkipEventWithoutSourceInstanceId() {
     Event event = new ProjectCreatedEvent();
     EventMessage messageWithoutSourceInstanceId =
-        new EventMessage(new EventMessage.Header(UUID.randomUUID(), null), event);
+        new EventMessage(new EventMessage.Header(UUID.randomUUID(), (String) null), event);
     PubsubMessage pubsubMessage = sampleMessage(messageWithoutSourceInstanceId);
 
     messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
