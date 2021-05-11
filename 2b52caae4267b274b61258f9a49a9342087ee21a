@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b54bd16_8ff463de",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 6
+      },
+      "lineNbr": 9,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2021-05-11T09:45:14Z",
+      "side": 1,
+      "message": "Can we explain why we cannot use here the Gerrit one? Something like you mentioned in one comment below. Just to make sure I don\u0027t go and move it back to Gerrit again 😊 \n\n\u003e It\u0027s fine on stable-3.4 because of the fix made in ?com.google.gerrit.server.events.EventGsonProvider. This new adapter was added: ?EntitiesAdapterFactory.create()\n\n\u003e So on stable-3.3 we still need EventGsonProvider from events-broker",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 9,
+        "endChar": 71
+      },
+      "revId": "2b52caae4267b274b61258f9a49a9342087ee21a",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
