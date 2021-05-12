@@ -48,6 +48,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0611f1ea_c663c3c3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 126,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-05-12T23:21:34Z",
+      "side": 1,
+      "message": "Ack",
+      "parentUuid": "c796b53b_55312735",
+      "range": {
+        "startLine": 126,
+        "startChar": 43,
+        "endLine": 126,
+        "endChar": 60
+      },
+      "revId": "a81b6c3427840dfdee7f9a0d3e707148f5b7b06d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "08b2a0d4_cab439c4",
@@ -61,6 +85,30 @@
       "writtenOn": "2021-05-06T07:35:07Z",
       "side": 1,
       "message": "This will go in the events broker as per Issue 14367, right?",
+      "range": {
+        "startLine": 122,
+        "startChar": 2,
+        "endLine": 137,
+        "endChar": 3
+      },
+      "revId": "a81b6c3427840dfdee7f9a0d3e707148f5b7b06d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7795f6c2_cbe7fbf4",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-05-12T23:21:34Z",
+      "side": 1,
+      "message": "I believe EventMessage will disappear anyway: it doesn\u0027t make so much sense to refactor it for then removing it altogether.",
+      "parentUuid": "08b2a0d4_cab439c4",
       "range": {
         "startLine": 122,
         "startChar": 2,
