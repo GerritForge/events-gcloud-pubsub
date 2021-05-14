@@ -14,17 +14,22 @@
 
 package com.googlesource.gerrit.plugins.pubsub;
 
+import static java.util.Objects.requireNonNull;
+
 import com.gerritforge.gerrit.eventbroker.EventMessage;
+import com.gerritforge.gerrit.eventbroker.EventMessage.Header;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.server.events.Event;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.pubsub.v1.PubsubMessage;
 import java.io.IOException;
+import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
@@ -100,16 +105,34 @@ public class PubSubEventSubscriber {
   MessageReceiver getMessageReceiver() {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
       try {
-        EventMessage event = gson.fromJson(message.getData().toStringUtf8(), EventMessage.class);
+        EventMessage event = deserialise(message.getData().toStringUtf8());
         messageProcessor.accept(event);
-        consumer.ack();
         subscriberMetrics.incrementSucceedToConsumeMessage();
       } catch (Exception e) {
         logger.atSevere().withCause(e).log(
             "Exception when consuming message %s from topic %s [message: %s]",
             message.getMessageId(), topic, message.getData().toStringUtf8());
         subscriberMetrics.incrementFailedToConsumeMessage();
+      } finally {
+        consumer.ack();
       }
     };
+  }
+
+  private EventMessage deserialise(String json) {
+    EventMessage result = gson.fromJson(json, EventMessage.class);
+    if (result.getEvent() == null && result.getHeader() == null) {
+      Event event = deserialiseEvent(json);
+      result = new EventMessage(new Header(UUID.randomUUID(), event.instanceId), event);
+    }
+    result.validate();
+    return result;
+  }
+
+  private Event deserialiseEvent(String json) {
+    Event event = gson.fromJson(json, Event.class);
+    requireNonNull(event.type, "Event type cannot be null");
+    requireNonNull(event.instanceId, "Event instance id cannot be null");
+    return event;
   }
 }
