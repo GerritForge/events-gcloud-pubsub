@@ -1,2 +1,2 @@
-pluginPipeline(formatCheckId: 'gerritforge:plugins-gcloud-pubsub-code-style',
-                buildCheckId: 'gerritforge:plugins-gcloud-pubsub-build-test')
+pluginPipeline(formatCheckId: 'gerritforge:plugins-events-gcloud-pubsub-code-style',
+                buildCheckId: 'gerritforge:plugins-events-gcloud-pubsub-build-test')
