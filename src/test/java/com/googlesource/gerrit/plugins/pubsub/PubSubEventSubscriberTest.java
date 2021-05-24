@@ -20,6 +20,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
+import com.gerritforge.gerrit.eventbroker.EventDeserializer;
 import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
@@ -53,6 +54,7 @@ public class PubSubEventSubscriberTest {
       new EventMessage(
           new EventMessage.Header(UUID.randomUUID(), UUID.randomUUID()), new ProjectCreatedEvent());
   private Gson gson = new EventGsonProvider().get();
+  private EventDeserializer deserializer = new EventDeserializer(gson);
 
   @Test
   public void shouldIncrementFailedToConsumeMessageWhenReceivingFails() {
@@ -131,7 +133,12 @@ public class PubSubEventSubscriberTest {
 
   private MessageReceiver messageReceiver(Consumer<EventMessage> consumer) {
     return new PubSubEventSubscriber(
-            gson, subscriberProviderMock, confMock, pubSubSubscriberMetricsMock, TOPIC, consumer)
+            deserializer,
+            subscriberProviderMock,
+            confMock,
+            pubSubSubscriberMetricsMock,
+            TOPIC,
+            consumer)
         .getMessageReceiver();
   }
 }
