@@ -14,22 +14,17 @@
 
 package com.googlesource.gerrit.plugins.pubsub;
 
-import static java.util.Objects.requireNonNull;
-
+import com.gerritforge.gerrit.eventbroker.EventDeserializer;
 import com.gerritforge.gerrit.eventbroker.EventMessage;
-import com.gerritforge.gerrit.eventbroker.EventMessage.Header;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.flogger.FluentLogger;
-import com.google.gerrit.server.events.Event;
-import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.pubsub.v1.PubsubMessage;
 import java.io.IOException;
-import java.util.UUID;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 import java.util.function.Consumer;
@@ -42,7 +37,7 @@ public class PubSubEventSubscriber {
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
-  private final Gson gson;
+  private final EventDeserializer eventsDeserializer;
   private final PubSubSubscriberMetrics subscriberMetrics;
   private final String topic;
   private final Consumer<EventMessage> messageProcessor;
@@ -52,13 +47,13 @@ public class PubSubEventSubscriber {
 
   @Inject
   public PubSubEventSubscriber(
-      Gson gson,
+      EventDeserializer eventsDeserializer,
       SubscriberProvider subscriberProvider,
       PubSubConfiguration config,
       PubSubSubscriberMetrics subscriberMetrics,
       @Assisted String topic,
       @Assisted Consumer<EventMessage> messageProcessor) {
-    this.gson = gson;
+    this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
     this.topic = topic;
     this.messageProcessor = messageProcessor;
@@ -105,7 +100,7 @@ public class PubSubEventSubscriber {
   MessageReceiver getMessageReceiver() {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
       try {
-        EventMessage event = deserialise(message.getData().toStringUtf8());
+        EventMessage event = eventsDeserializer.deserialize(message.getData().toStringUtf8());
         messageProcessor.accept(event);
         subscriberMetrics.incrementSucceedToConsumeMessage();
       } catch (Exception e) {
@@ -117,22 +112,5 @@ public class PubSubEventSubscriber {
         consumer.ack();
       }
     };
-  }
-
-  private EventMessage deserialise(String json) {
-    EventMessage result = gson.fromJson(json, EventMessage.class);
-    if (result.getEvent() == null && result.getHeader() == null) {
-      Event event = deserialiseEvent(json);
-      result = new EventMessage(new Header(UUID.randomUUID(), event.instanceId), event);
-    }
-    result.validate();
-    return result;
-  }
-
-  private Event deserialiseEvent(String json) {
-    Event event = gson.fromJson(json, Event.class);
-    requireNonNull(event.type, "Event type cannot be null");
-    requireNonNull(event.instanceId, "Event instance id cannot be null");
-    return event;
   }
 }
