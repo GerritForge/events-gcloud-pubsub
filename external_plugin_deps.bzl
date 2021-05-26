@@ -1,4 +1,4 @@
-load("//tools/bzl:maven_jar.bzl", "maven_jar")
+load("//tools/bzl:maven_jar.bzl", "maven_jar", "MAVEN_LOCAL")
 
 def external_plugin_deps():
     maven_jar(
@@ -45,8 +45,8 @@ def external_plugin_deps():
 
     maven_jar(
         name = "events-broker",
-        artifact = "com.gerritforge:events-broker:3.4.0.1",
-        sha1 = "2d406afa8787621442d855e4b458c97bd24f1198",
+        artifact = "com.gerritforge:events-broker:3.4.0.2",
+        repository = MAVEN_LOCAL,
     )
 
     maven_jar(

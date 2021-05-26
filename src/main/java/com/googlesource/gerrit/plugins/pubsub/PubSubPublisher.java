@@ -25,6 +25,7 @@ import com.google.common.util.concurrent.JdkFutureAdapters;
 import com.google.common.util.concurrent.ListenableFuture;
 import com.google.common.util.concurrent.MoreExecutors;
 import com.google.gerrit.server.events.Event;
+import com.google.gerrit.server.events.EventGson;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
@@ -51,7 +52,7 @@ public class PubSubPublisher {
   public PubSubPublisher(
       PubSubConfiguration pubSubProperties,
       PublisherProvider publisherProvider,
-      Gson gson,
+      @EventGson Gson gson,
       PubSubPublisherMetrics publisherMetrics,
       @Assisted String topic)
       throws IOException {

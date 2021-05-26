@@ -37,6 +37,7 @@ import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.acceptance.WaitUtil;
 import com.google.gerrit.acceptance.config.GerritConfig;
 import com.google.gerrit.server.events.Event;
+import com.google.gerrit.server.events.EventGson;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
 import com.google.gerrit.server.events.RefUpdatedEvent;
 import com.google.gson.Gson;
@@ -72,7 +73,7 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
   private static final Duration TEST_TIMEOUT = Duration.ofSeconds(5);
   private static final String PRIVATE_KEY_LOCATION = "not used in test";
 
-  @Inject private Gson gson;
+  @Inject @EventGson private Gson gson;
 
   private TransportChannelProvider channelProvider;
   private NoCredentialsProvider credentialsProvider;
