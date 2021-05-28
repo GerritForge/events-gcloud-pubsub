@@ -15,10 +15,10 @@
 package com.googlesource.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
-import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gerrit.server.events.Event;
 import com.google.inject.Inject;
 import java.util.Collections;
 import java.util.Map;
@@ -43,12 +43,12 @@ class PubSubBrokerApi implements BrokerApi {
   }
 
   @Override
-  public ListenableFuture<Boolean> send(String topic, EventMessage message) {
+  public ListenableFuture<Boolean> send(String topic, Event message) {
     return publishers.computeIfAbsent(topic, t -> publisherFactory.create(t)).publish(message);
   }
 
   @Override
-  public void receiveAsync(String topic, Consumer<EventMessage> eventConsumer) {
+  public void receiveAsync(String topic, Consumer<Event> eventConsumer) {
     PubSubEventSubscriber subscriber = subscriberFactory.create(topic, eventConsumer);
     subscribers.add(subscriber);
     subscriber.subscribe();

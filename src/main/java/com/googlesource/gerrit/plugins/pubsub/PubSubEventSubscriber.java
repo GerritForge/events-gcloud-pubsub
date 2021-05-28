@@ -15,12 +15,12 @@
 package com.googlesource.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.EventDeserializer;
-import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.server.events.Event;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.pubsub.v1.PubsubMessage;
@@ -32,7 +32,7 @@ import java.util.function.Consumer;
 public class PubSubEventSubscriber {
 
   public interface Factory {
-    public PubSubEventSubscriber create(String topic, Consumer<EventMessage> messageProcessor);
+    public PubSubEventSubscriber create(String topic, Consumer<Event> messageProcessor);
   }
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -40,7 +40,7 @@ public class PubSubEventSubscriber {
   private final EventDeserializer eventsDeserializer;
   private final PubSubSubscriberMetrics subscriberMetrics;
   private final String topic;
-  private final Consumer<EventMessage> messageProcessor;
+  private final Consumer<Event> messageProcessor;
   private final SubscriberProvider subscriberProvider;
   private final PubSubConfiguration config;
   private Subscriber subscriber;
@@ -52,7 +52,7 @@ public class PubSubEventSubscriber {
       PubSubConfiguration config,
       PubSubSubscriberMetrics subscriberMetrics,
       @Assisted String topic,
-      @Assisted Consumer<EventMessage> messageProcessor) {
+      @Assisted Consumer<Event> messageProcessor) {
     this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
     this.topic = topic;
@@ -78,7 +78,7 @@ public class PubSubEventSubscriber {
     return topic;
   }
 
-  public Consumer<EventMessage> getMessageProcessor() {
+  public Consumer<Event> getMessageProcessor() {
     return messageProcessor;
   }
 
@@ -100,7 +100,7 @@ public class PubSubEventSubscriber {
   MessageReceiver getMessageReceiver() {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
       try {
-        EventMessage event = eventsDeserializer.deserialize(message.getData().toStringUtf8());
+        Event event = eventsDeserializer.deserialize(message.getData().toStringUtf8());
         messageProcessor.accept(event);
         subscriberMetrics.incrementSucceedToConsumeMessage();
       } catch (Exception e) {
