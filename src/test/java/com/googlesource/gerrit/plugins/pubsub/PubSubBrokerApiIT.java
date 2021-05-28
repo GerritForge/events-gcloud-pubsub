@@ -19,7 +19,6 @@ import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
-import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.rpc.FixedTransportChannelProvider;
@@ -116,12 +115,11 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
       value = PRIVATE_KEY_LOCATION)
   public void shouldSendEvent() throws IOException {
     createSubscription(SUBSCRIPTION_ID, TOPIC_ID, channelProvider, credentialsProvider);
-    UUID id = UUID.randomUUID();
     Event event = new ProjectCreatedEvent();
-    EventMessage eventMessage = new EventMessage(new EventMessage.Header(id, id), event);
-    String expectedMessageJson = gson.toJson(eventMessage);
+    event.instanceId = UUID.randomUUID().toString();
+    String expectedMessageJson = gson.toJson(event);
 
-    objectUnderTest.send(TOPIC_ID, eventMessage);
+    objectUnderTest.send(TOPIC_ID, event);
 
     readMessageAndValidate(
         (pullResponse) -> {
@@ -168,15 +166,14 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
       name = "plugin.events-gcloud-pubsub.privateKeyLocation",
       value = PRIVATE_KEY_LOCATION)
   public void shouldConsumeEvent() throws InterruptedException {
-    UUID id = UUID.randomUUID();
     Event event = new ProjectCreatedEvent();
-    EventMessage eventMessage = new EventMessage(new EventMessage.Header(id, id), event);
-    String expectedMessageJson = gson.toJson(eventMessage);
+    event.instanceId = UUID.randomUUID().toString();
+    String expectedMessageJson = gson.toJson(event);
     TestConsumer consumer = new TestConsumer();
 
     objectUnderTest.receiveAsync(TOPIC_ID, consumer);
 
-    objectUnderTest.send(TOPIC_ID, eventMessage);
+    objectUnderTest.send(TOPIC_ID, event);
 
     WaitUtil.waitUntil(
         () ->
@@ -248,15 +245,15 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
         .getName();
   }
 
-  private class TestConsumer implements Consumer<EventMessage> {
-    private EventMessage msg;
+  private class TestConsumer implements Consumer<Event> {
+    private Event msg;
 
     @Override
-    public void accept(EventMessage msg) {
+    public void accept(Event msg) {
       this.msg = msg;
     }
 
-    public EventMessage getMessage() {
+    public Event getMessage() {
       return msg;
     }
   }
