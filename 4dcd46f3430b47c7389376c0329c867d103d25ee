@@ -6,11 +6,12 @@
       "updated": "2021-06-14T07:36:34Z"
     },
     "gerritforge:plugins-events-gcloud-pubsub-code-style": {
-      "state": "RUNNING",
+      "state": "SUCCESSFUL",
       "url": "https://gerrit-ci.gerritforge.com/job/plugin-events-gcloud-pubsub-verifier/job/22%252F308022%252F2/1/console",
       "started": "2021-06-14T07:41:13Z",
+      "finished": "2021-06-14T07:41:24Z",
       "created": "2021-06-14T07:36:36Z",
-      "updated": "2021-06-14T07:39:44Z"
+      "updated": "2021-06-14T07:39:55Z"
     }
   }
 }
