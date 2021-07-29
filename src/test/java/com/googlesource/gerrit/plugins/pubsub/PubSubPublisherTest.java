@@ -19,13 +19,12 @@ import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.api.core.ApiFutures;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.gerrit.json.OutputFormat;
+import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
 import java.io.IOException;
-import java.util.UUID;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -42,9 +41,7 @@ public class PubSubPublisherTest {
   @Mock PubSubPublisherMetrics pubSubPublisherMetricsMock;
 
   private static final String TOPIC = "foo";
-  private static final EventMessage eventMessage =
-      new EventMessage(
-          new EventMessage.Header(UUID.randomUUID(), UUID.randomUUID()), new ProjectCreatedEvent());
+  private static final Event eventMessage = new ProjectCreatedEvent();
 
   @Before
   public void setUp() throws IOException {

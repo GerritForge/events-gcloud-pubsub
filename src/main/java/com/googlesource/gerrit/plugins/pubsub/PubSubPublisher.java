@@ -14,7 +14,6 @@
 
 package com.googlesource.gerrit.plugins.pubsub;
 
-import com.gerritforge.gerrit.eventbroker.EventMessage;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
@@ -64,10 +63,6 @@ public class PubSubPublisher {
   }
 
   public ListenableFuture<Boolean> publish(Event event) {
-    return publish(gson.toJson(event));
-  }
-
-  public ListenableFuture<Boolean> publish(EventMessage event) {
     return publish(gson.toJson(event));
   }
 
