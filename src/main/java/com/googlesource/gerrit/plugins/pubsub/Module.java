@@ -18,7 +18,6 @@ import com.google.api.gax.core.CredentialsProvider;
 import com.google.gerrit.extensions.config.FactoryModule;
 import com.google.gerrit.extensions.events.LifecycleListener;
 import com.google.gerrit.extensions.registration.DynamicSet;
-import com.google.gerrit.server.events.EventListener;
 import com.google.inject.Inject;
 import com.google.inject.Scopes;
 import com.googlesource.gerrit.plugins.pubsub.local.EnvironmentChecker;
@@ -40,7 +39,6 @@ class Module extends FactoryModule {
   @Override
   protected void configure() {
     DynamicSet.bind(binder(), LifecycleListener.class).to(Manager.class);
-    DynamicSet.bind(binder(), EventListener.class).to(PubSubEventListener.class);
     factory(PubSubPublisher.Factory.class);
     factory(PubSubEventSubscriber.Factory.class);
 

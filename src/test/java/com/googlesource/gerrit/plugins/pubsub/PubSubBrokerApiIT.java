@@ -15,8 +15,6 @@
 package com.googlesource.gerrit.plugins.pubsub;
 
 import static com.google.common.truth.Truth.assertThat;
-import static java.util.stream.Collectors.counting;
-import static java.util.stream.Collectors.groupingBy;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.google.api.gax.core.NoCredentialsProvider;
@@ -38,22 +36,18 @@ import com.google.gerrit.acceptance.config.GerritConfig;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
-import com.google.gerrit.server.events.RefUpdatedEvent;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
 import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.PullRequest;
 import com.google.pubsub.v1.PullResponse;
 import com.google.pubsub.v1.PushConfig;
-import com.google.pubsub.v1.ReceivedMessage;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.local.EnvironmentChecker;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
 import java.time.Duration;
-import java.util.List;
-import java.util.Map;
 import java.util.function.Consumer;
 import org.junit.Test;
 import org.testcontainers.containers.PubSubEmulatorContainer;
@@ -127,36 +121,6 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
           assertThat(pullResponse.getReceivedMessages(0).getMessage().getData().toStringUtf8())
               .isEqualTo(expectedMessageJson);
         });
-  }
-
-  @Test
-  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
-  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
-  @GerritConfig(
-      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
-      value = PRIVATE_KEY_LOCATION)
-  public void shouldProduceStreamEvents() throws Exception {
-    String subscriptionId = "gerrit-subscription-id";
-    String topicId = "gerrit";
-    createSubscription(subscriptionId, topicId, channelProvider, credentialsProvider);
-
-    createChange();
-
-    readMessageAndValidate(
-        (pullResponse) -> {
-          List<ReceivedMessage> messages = pullResponse.getReceivedMessagesList();
-          assertThat(messages).hasSize(4);
-          Map<String, Long> messageTypeCount =
-              messages.stream()
-                  .map(m -> gson.fromJson(m.getMessage().getData().toStringUtf8(), Map.class))
-                  .map(m -> m.get("type").toString())
-                  .collect(groupingBy(t -> t, counting()));
-
-          assertThat(messageTypeCount.get(RefUpdatedEvent.TYPE)).isEqualTo(3);
-          assertThat(messageTypeCount.get("patchset-created")).isEqualTo(1);
-        },
-        PROJECT_ID,
-        subscriptionId);
   }
 
   @Test
