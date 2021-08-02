@@ -16,6 +16,24 @@
       "message": "missing Issue id",
       "revId": "1d2d6f086136e1d9b8da5dd9bfc9704220d05c5b",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "590cdfbb_2c310ca1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 1
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-08-02T07:54:25Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22b35dbd_e339f28d",
+      "revId": "1d2d6f086136e1d9b8da5dd9bfc9704220d05c5b",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
