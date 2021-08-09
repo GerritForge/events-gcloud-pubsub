@@ -15,7 +15,7 @@
 package com.googlesource.gerrit.plugins.pubsub.local;
 
 import com.google.api.gax.core.CredentialsProvider;
-import com.google.api.gax.core.FixedExecutorProvider;
+import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.rpc.AlreadyExistsException;
@@ -28,13 +28,12 @@ import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.inject.Inject;
 import com.google.pubsub.v1.TopicName;
-import com.googlesource.gerrit.plugins.pubsub.ConsumerExecutor;
+import com.googlesource.gerrit.plugins.pubsub.ConsumerExecutorProvider;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
 import com.googlesource.gerrit.plugins.pubsub.SubscriberProvider;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class LocalSubscriberProvider extends SubscriberProvider {
   private EnvironmentChecker environmentChecker;
@@ -44,8 +43,8 @@ public class LocalSubscriberProvider extends SubscriberProvider {
       PubSubConfiguration pubSubProperties,
       CredentialsProvider credentials,
       EnvironmentChecker environmentChecker,
-      @ConsumerExecutor ScheduledExecutorService executor) {
-    super(credentials, pubSubProperties, executor);
+      @ConsumerExecutorProvider ExecutorProvider executorProvider) {
+    super(credentials, pubSubProperties, executorProvider);
     this.environmentChecker = environmentChecker;
   }
 
@@ -53,10 +52,8 @@ public class LocalSubscriberProvider extends SubscriberProvider {
   public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
     TransportChannelProvider channelProvider = createChannelProvider();
     createTopic(channelProvider, pubSubProperties.getGCloudProject(), topic);
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
-        .setChannelProvider(channelProvider)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
+    return configure(Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver))
+        .setEndpoint(environmentChecker.getLocalHostAndPort().get())
         .build();
   }
 

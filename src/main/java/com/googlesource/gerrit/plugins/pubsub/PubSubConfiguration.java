@@ -28,6 +28,7 @@ public class PubSubConfiguration {
   private static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
   private static final String DEFAULT_SUBSCTIPRION_TIMEOUT = "10";
   private static final String DEFAULT_SHUTDOWN_TIMEOUT = "10";
+  private static final String DEFAULT_PUBLISHER_THREADS = "16";
 
   private final String gcloudProject;
   private final String subscriptionId;
@@ -37,6 +38,7 @@ public class PubSubConfiguration {
   private final Long subscribtionTimeoutInSeconds;
   private final Long shutdownTimeoutInSeconds;
   private final PluginConfig fromGerritConfig;
+  private final Integer publisherThreads;
 
   @Inject
   public PubSubConfiguration(
@@ -60,6 +62,8 @@ public class PubSubConfiguration {
     this.shutdownTimeoutInSeconds =
         Long.parseLong(
             fromGerritConfig.getString("shutdownTimeoutInSeconds", DEFAULT_SHUTDOWN_TIMEOUT));
+    this.publisherThreads =
+        Integer.parseInt(fromGerritConfig.getString("publisherThreads", DEFAULT_PUBLISHER_THREADS));
   }
 
   public String getGCloudProject() {
@@ -88,6 +92,10 @@ public class PubSubConfiguration {
 
   public Long getShutdownTimeoutInSeconds() {
     return shutdownTimeoutInSeconds;
+  }
+
+  public int getPublisherThreads() {
+    return publisherThreads;
   }
 
   private String getMandatoryString(String name) throws IllegalStateException {
