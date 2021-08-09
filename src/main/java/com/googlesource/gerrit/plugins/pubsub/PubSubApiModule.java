@@ -16,6 +16,8 @@ package com.googlesource.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.google.api.gax.core.ExecutorProvider;
+import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.common.collect.Sets;
 import com.google.gerrit.extensions.registration.DynamicItem;
 import com.google.gerrit.lifecycle.LifecycleModule;
@@ -24,7 +26,6 @@ import com.google.inject.Inject;
 import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import java.util.Set;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class PubSubApiModule extends LifecycleModule {
   WorkQueue workQueue;
@@ -56,10 +57,18 @@ public class PubSubApiModule extends LifecycleModule {
 
   @Override
   protected void configure() {
-    bind(ScheduledExecutorService.class)
-        .annotatedWith(ConsumerExecutor.class)
-        .toProvider(ScheduledExecutorServiceProvider.class)
-        .in(Scopes.SINGLETON);
+    bind(ExecutorProvider.class)
+        .annotatedWith(ConsumerExecutorProvider.class)
+        .toInstance(
+            FixedExecutorProvider.create(
+                workQueue.createQueue(
+                    configuration.getNumberOfSubscribers(), "pubsub-subscriber")));
+
+    bind(ExecutorProvider.class)
+        .annotatedWith(PublisherExecutorProvider.class)
+        .toInstance(
+            FixedExecutorProvider.create(
+                workQueue.createQueue(configuration.getPublisherThreads(), "pubsub-publisher")));
 
     bind(new TypeLiteral<Set<TopicSubscriber>>() {}).toInstance(activeConsumers);
     DynamicItem.bind(binder(), BrokerApi.class).to(PubSubBrokerApi.class).in(Scopes.SINGLETON);

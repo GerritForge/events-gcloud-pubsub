@@ -15,17 +15,18 @@
 package com.googlesource.gerrit.plugins.pubsub.local;
 
 import com.google.api.gax.core.CredentialsProvider;
+import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.api.gax.rpc.FixedTransportChannelProvider;
-import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.pubsub.v1.Publisher;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.inject.Inject;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
+import com.googlesource.gerrit.plugins.pubsub.PublisherExecutorProvider;
 import com.googlesource.gerrit.plugins.pubsub.PublisherProvider;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -33,28 +34,31 @@ import java.io.IOException;
 
 public class LocalPublisherProvider extends PublisherProvider {
   private EnvironmentChecker environmentChecker;
+  private final ExecutorProvider executorProvider;
 
   @Inject
   public LocalPublisherProvider(
       CredentialsProvider credentials,
       PubSubConfiguration pubSubProperties,
-      EnvironmentChecker environmentChecker) {
-    super(credentials, pubSubProperties);
+      EnvironmentChecker environmentChecker,
+      @PublisherExecutorProvider ExecutorProvider executorProvider) {
+    super(credentials, pubSubProperties, executorProvider);
     this.environmentChecker = environmentChecker;
+    this.executorProvider = executorProvider;
   }
 
   @Override
   public Publisher get(String topic) throws IOException {
     ManagedChannel channel =
         ManagedChannelBuilder.forTarget(environmentChecker.getLocalHostAndPort().get())
+            .executor(executorProvider.getExecutor())
             .usePlaintext()
             .build();
-    TransportChannelProvider channelProvider =
-        FixedTransportChannelProvider.create(GrpcTransportChannel.create(channel));
+
     createTopic(channel, config.getGCloudProject(), topic);
-    return Publisher.newBuilder(TopicName.of(config.getGCloudProject(), topic))
-        .setChannelProvider(channelProvider)
-        .setCredentialsProvider(credentials)
+    return configure(
+            Publisher.newBuilder(TopicName.of(config.getGCloudProject(), topic))
+                .setEndpoint(environmentChecker.getLocalHostAndPort().get()))
         .build();
   }
 

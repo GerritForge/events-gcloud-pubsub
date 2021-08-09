@@ -15,12 +15,13 @@
 package com.googlesource.gerrit.plugins.pubsub;
 
 import com.google.api.gax.core.CredentialsProvider;
-import com.google.api.gax.core.FixedExecutorProvider;
+import com.google.api.gax.core.ExecutorProvider;
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.cloud.pubsub.v1.SubscriptionAdminClient;
 import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
+import com.google.cloud.pubsub.v1.stub.PublisherStubSettings;
 import com.google.common.flogger.FluentLogger;
 import com.google.inject.Inject;
 import com.google.protobuf.Duration;
@@ -30,34 +31,56 @@ import com.google.pubsub.v1.ProjectSubscriptionName;
 import com.google.pubsub.v1.SeekRequest;
 import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
+import io.grpc.netty.shaded.io.grpc.netty.NettyChannelBuilder;
+import io.grpc.netty.shaded.io.netty.channel.nio.NioEventLoopGroup;
+import io.grpc.netty.shaded.io.netty.channel.socket.nio.NioSocketChannel;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.Optional;
-import java.util.concurrent.ScheduledExecutorService;
 
 public class SubscriberProvider {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   protected CredentialsProvider credentials;
   protected PubSubConfiguration pubSubProperties;
-  protected ScheduledExecutorService executor;
+  protected ExecutorProvider executorProvider;
 
   @Inject
   public SubscriberProvider(
       CredentialsProvider credentials,
       PubSubConfiguration pubSubProperties,
-      @ConsumerExecutor ScheduledExecutorService executor) {
+      @ConsumerExecutorProvider ExecutorProvider executorProvider) {
     this.credentials = credentials;
     this.pubSubProperties = pubSubProperties;
-    this.executor = executor;
+    this.executorProvider = executorProvider;
   }
 
   public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
+    return configure(Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver))
         .build();
+  }
+
+  protected Subscriber.Builder configure(Subscriber.Builder builder) {
+    return builder
+        .setExecutorProvider(executorProvider)
+        .setCredentialsProvider(credentials)
+        .setChannelProvider(
+            PublisherStubSettings.defaultGrpcTransportProviderBuilder()
+                .setExecutor(executorProvider.getExecutor())
+                .setChannelConfigurator(
+                    managedChannelBuilder -> {
+                      NettyChannelBuilder nettyChannelBuilder =
+                          (NettyChannelBuilder)
+                              managedChannelBuilder.executor(executorProvider.getExecutor());
+                      nettyChannelBuilder.eventLoopGroup(
+                          new NioEventLoopGroup(1, executorProvider.getExecutor()));
+                      nettyChannelBuilder.channelType(NioSocketChannel.class);
+                      nettyChannelBuilder.usePlaintext();
+
+                      return nettyChannelBuilder;
+                    })
+                .build());
   }
 
   protected SubscriptionAdminSettings createSubscriptionAdminSettings() throws IOException {
