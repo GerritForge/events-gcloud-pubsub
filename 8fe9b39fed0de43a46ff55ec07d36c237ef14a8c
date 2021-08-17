@@ -22,6 +22,30 @@
       },
       "revId": "8fe9b39fed0de43a46ff55ec07d36c237ef14a8c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "448b707f_d64e90e6",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-08-17T06:13:27Z",
+      "side": 0,
+      "message": "We decided that events-* plugins should just transfer messages(they are just brokers) and should not contain any logic or setup any topics and listeners. All that setup should be done by plugins which use events-* plugins to sent events via specific broker(kafka, gcloud, aws). The reason why we did that is that you do not always want to expose stream events when using events-* plugin for example for websession-broker plugin. Maybe the solution to the Issue 14910 would be to create simple plugin which will bind StreamEventPublisher from events-broker library(the generic events publisher) and expose stream events via broker",
+      "parentUuid": "6c8e50f0_1bdff1bc",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "8fe9b39fed0de43a46ff55ec07d36c237ef14a8c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
