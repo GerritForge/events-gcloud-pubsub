@@ -94,6 +94,30 @@
       },
       "revId": "8fe9b39fed0de43a46ff55ec07d36c237ef14a8c",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cb39a936_1dacb21b",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 49,
+      "author": {
+        "id": 1006192
+      },
+      "writtenOn": "2021-08-17T09:58:46Z",
+      "side": 0,
+      "message": "\u003e Maybe we could just add a boolean option to the events-* plugins to set whether another plugin is responsible of publishing the events (multi-site for instance) \n\nYeah, that\u0027s the plan.",
+      "parentUuid": "96fdbe02_4bdceceb",
+      "range": {
+        "startLine": 46,
+        "startChar": 0,
+        "endLine": 49,
+        "endChar": 19
+      },
+      "revId": "8fe9b39fed0de43a46ff55ec07d36c237ef14a8c",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
