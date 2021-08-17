@@ -26,11 +26,16 @@ public class Manager implements LifecycleListener {
 
   private final Set<TopicSubscriber> consumers;
   private final BrokerApi brokerApi;
+  private final PubSubEventListener pubSubEventListener;
 
   @Inject
-  public Manager(Set<TopicSubscriber> consumers, BrokerApi brokerApi) {
+  public Manager(
+      Set<TopicSubscriber> consumers,
+      BrokerApi brokerApi,
+      PubSubEventListener pubSubEventListener) {
     this.consumers = consumers;
     this.brokerApi = brokerApi;
+    this.pubSubEventListener = pubSubEventListener;
   }
 
   @Override
@@ -43,5 +48,6 @@ public class Manager implements LifecycleListener {
   @Override
   public void stop() {
     brokerApi.disconnect();
+    pubSubEventListener.disconnect();
   }
 }
