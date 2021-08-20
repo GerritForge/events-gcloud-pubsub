@@ -135,6 +135,7 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
   @GerritConfig(
       name = "plugin.events-gcloud-pubsub.privateKeyLocation",
       value = PRIVATE_KEY_LOCATION)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.sendStreamEvents", value = "true")
   public void shouldProduceStreamEvents() throws Exception {
     String subscriptionId = "gerrit-subscription-id";
     String topicId = "gerrit";
@@ -155,6 +156,26 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
           assertThat(messageTypeCount.get(RefUpdatedEvent.TYPE)).isEqualTo(3);
           assertThat(messageTypeCount.get("patchset-created")).isEqualTo(1);
         },
+        PROJECT_ID,
+        subscriptionId);
+  }
+
+  @Test
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.sendStreamEvents", value = "false")
+  public void shouldNotProduceStreamEventsWhenDisabled() throws Exception {
+    String subscriptionId = "gerrit-subscription-id";
+    String topicId = "gerrit";
+    createSubscription(subscriptionId, topicId, channelProvider, credentialsProvider);
+
+    createChange();
+
+    readMessageAndValidate(
+        (pullResponse) -> assertThat(pullResponse.getReceivedMessagesList()).isEmpty(),
         PROJECT_ID,
         subscriptionId);
   }
