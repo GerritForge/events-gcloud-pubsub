@@ -47,3 +47,7 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Optional. Name of the GCloud PubSub topic for stream events. events-gcloud-pubsub plugin exposes
     all stream events under this topic name.
     Default: gerrit
+
+`plugin.events-gcloud-pubsub.sendStreamEvents`
+:   Whether to send stream events to the `streamEventsTopic` topic.
+    Default: false
