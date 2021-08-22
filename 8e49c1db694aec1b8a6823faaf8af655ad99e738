@@ -9,9 +9,9 @@
       "updated": "2021-08-20T16:42:04Z"
     },
     "gerritforge:plugins-events-gcloud-pubsub-code-style": {
-      "state": "NOT_STARTED",
+      "state": "SCHEDULED",
       "created": "2021-08-20T16:29:33Z",
-      "updated": "2021-08-22T10:58:33Z"
+      "updated": "2021-08-22T11:05:30Z"
     }
   }
 }
