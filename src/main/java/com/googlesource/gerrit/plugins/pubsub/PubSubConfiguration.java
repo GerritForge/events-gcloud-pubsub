@@ -24,12 +24,22 @@ import com.google.inject.Singleton;
 
 @Singleton
 public class PubSubConfiguration {
-  private static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
-  private static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
-  private static final String DEFAULT_SUBSCTIPRION_TIMEOUT = "10";
-  private static final String DEFAULT_SHUTDOWN_TIMEOUT = "10";
-  private static final String DEFAULT_STREAM_EVENTS_TOPIC = "gerrit";
-  private static final boolean DEFAULT_SEND_STREAM_EVENTS = false;
+  static final String GCLOUD_PROJECT_FIELD = "gcloudProject";
+  static final String SUBSCRIPTION_ID_FIELD = "subscriptionId";
+  static final String PRIVATE_KEY_LOCATION_FIELD = "privateKeyLocation";
+  static final String STREAM_EVENTS_TOPIC_FIELD = "streamEventsTopic";
+  static final String SEND_STREAM_EVENTS_FIELD = "sendStreamEvents";
+  static final String NUMBER_OF_SUBSCRIBERS_FIELD = "numberOfSubscribers";
+  static final String ACK_DEADLINE_SECONDS_FIELD = "ackDeadlineSeconds";
+  static final String SUBSCRIPTION_TIMEOUT_SECONDS_FIELD = "subscribtionTimeoutInSeconds";
+  static final String SHUTDOWN_TIMEOUT_SECONDS_FIELD = "shutdownTimeoutInSeconds";
+
+  static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
+  static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
+  static final String DEFAULT_SUBSCTIPRION_TIMEOUT = "10";
+  static final String DEFAULT_SHUTDOWN_TIMEOUT = "10";
+  static final String DEFAULT_STREAM_EVENTS_TOPIC = "gerrit";
+  static final boolean DEFAULT_SEND_STREAM_EVENTS = false;
 
   private final String gcloudProject;
   private final String subscriptionId;
@@ -48,26 +58,26 @@ public class PubSubConfiguration {
       @PluginName String pluginName,
       @Nullable @GerritInstanceId String instanceId) {
     this.fromGerritConfig = configFactory.getFromGerritConfig(pluginName);
-    this.gcloudProject = getMandatoryString("gcloudProject");
-    this.subscriptionId = getMandatoryString("subscriptionId", instanceId);
-    this.privateKeyLocation = getMandatoryString("privateKeyLocation");
+    this.gcloudProject = getMandatoryString(GCLOUD_PROJECT_FIELD);
+    this.subscriptionId = getMandatoryString(SUBSCRIPTION_ID_FIELD, instanceId);
+    this.privateKeyLocation = getMandatoryString(PRIVATE_KEY_LOCATION_FIELD);
     this.streamEventsTopic =
-        fromGerritConfig.getString("streamEventsTopic", DEFAULT_STREAM_EVENTS_TOPIC);
+        fromGerritConfig.getString(STREAM_EVENTS_TOPIC_FIELD, DEFAULT_STREAM_EVENTS_TOPIC);
     this.sendStreamEvents =
-        fromGerritConfig.getBoolean("sendStreamEvents", DEFAULT_SEND_STREAM_EVENTS);
+        fromGerritConfig.getBoolean(SEND_STREAM_EVENTS_FIELD, DEFAULT_SEND_STREAM_EVENTS);
     this.numberOfSubscribers =
         Integer.parseInt(
-            fromGerritConfig.getString("numberOfSubscribers", DEFAULT_NUMBER_OF_SUBSCRIBERS));
+            fromGerritConfig.getString(NUMBER_OF_SUBSCRIBERS_FIELD, DEFAULT_NUMBER_OF_SUBSCRIBERS));
     this.ackDeadlineSeconds =
         Integer.parseInt(
-            fromGerritConfig.getString("ackDeadlineSeconds", DEFAULT_ACK_DEADLINE_SECONDS));
+            fromGerritConfig.getString(ACK_DEADLINE_SECONDS_FIELD, DEFAULT_ACK_DEADLINE_SECONDS));
     this.subscribtionTimeoutInSeconds =
         Long.parseLong(
             fromGerritConfig.getString(
-                "subscribtionTimeoutInSeconds", DEFAULT_SUBSCTIPRION_TIMEOUT));
+                SUBSCRIPTION_TIMEOUT_SECONDS_FIELD, DEFAULT_SUBSCTIPRION_TIMEOUT));
     this.shutdownTimeoutInSeconds =
         Long.parseLong(
-            fromGerritConfig.getString("shutdownTimeoutInSeconds", DEFAULT_SHUTDOWN_TIMEOUT));
+            fromGerritConfig.getString(SHUTDOWN_TIMEOUT_SECONDS_FIELD, DEFAULT_SHUTDOWN_TIMEOUT));
   }
 
   public String getGCloudProject() {
