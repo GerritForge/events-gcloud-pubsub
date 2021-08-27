@@ -22,6 +22,30 @@
       },
       "revId": "03943f800c9dc08dbbed29ce1eed4043367f00bd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "bc691525_d8dfcbee",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-08-27T18:22:37Z",
+      "side": 1,
+      "message": "I just thought it represents the name of the field rather than the field itself:\n\nIf it were called GCLOUD_PROJECT only, for example, I could mistaken to contain the value of the *actual* project.\n\nCalling it GCLOUD_PROJECT_FIELD makes it obvious that is a field name rather than the project itself.",
+      "parentUuid": "80c10084_d23ec96c",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "03943f800c9dc08dbbed29ce1eed4043367f00bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
