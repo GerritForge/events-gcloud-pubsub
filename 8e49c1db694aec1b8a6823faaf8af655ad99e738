@@ -16,6 +16,24 @@
       "message": "@Adrià could you please help us testing this one?\nCan you confirm this now works for you by explicitly setting \n\n```\n[plugin \"events-gcloud-pubsub\"]\n   sendStreamEvents\u003dtrue\n```\n\nIn the gerrit.config?\n\nThanks a lot for your help!",
       "revId": "8e49c1db694aec1b8a6823faaf8af655ad99e738",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0294b3ac_7e0e047b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1106305
+      },
+      "writtenOn": "2021-08-27T20:59:13Z",
+      "side": 1,
+      "message": "I just built the plugin with this change (commit 8e49c1d) and loaded it into my Gerrit instance.\n\nWhen I set \"sendStreamEvents\u003dtrue\" in gerrit.config, the events are indeed being published, and when I unset it and restart Gerrit they aren\u0027t published, so it seems like this change is working properly at least in my instance.\n\nThanks! :)",
+      "parentUuid": "0143e153_2483278a",
+      "revId": "8e49c1db694aec1b8a6823faaf8af655ad99e738",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
