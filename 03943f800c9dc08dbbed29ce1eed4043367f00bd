@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "80c10084_d23ec96c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 27,
+      "author": {
+        "id": 1083454
+      },
+      "writtenOn": "2021-08-27T17:43:45Z",
+      "side": 1,
+      "message": "Why we have this _FIELD suffix?",
+      "range": {
+        "startLine": 27,
+        "startChar": 36,
+        "endLine": 27,
+        "endChar": 42
+      },
+      "revId": "03943f800c9dc08dbbed29ce1eed4043367f00bd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
