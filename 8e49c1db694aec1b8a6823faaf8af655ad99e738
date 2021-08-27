@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "0143e153_2483278a",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2021-08-27T15:35:47Z",
+      "side": 1,
+      "message": "@Adrià could you please help us testing this one?\nCan you confirm this now works for you by explicitly setting \n\n```\n[plugin \"events-gcloud-pubsub\"]\n   sendStreamEvents\u003dtrue\n```\n\nIn the gerrit.config?\n\nThanks a lot for your help!",
+      "revId": "8e49c1db694aec1b8a6823faaf8af655ad99e738",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
