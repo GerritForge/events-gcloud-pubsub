@@ -42,3 +42,8 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 `plugin.events-gcloud-pubsub.subscribtionTimeoutInSeconds`
 :   Optional. Maximum time in seconds to wait for the subscriber to connect to GCloud PubSub topic.
     Default: 10
+
+`plugin.events-gcloud-pubsub.streamEventsTopic`
+:   Optional. Name of the GCloud PubSub topic for stream events. events-gcloud-pubsub plugin exposes
+    all stream events under this topic name.
+    Default: gerrit

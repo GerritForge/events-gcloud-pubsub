@@ -28,6 +28,7 @@ public class PubSubConfiguration {
   private static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
   private static final String DEFAULT_SUBSCTIPRION_TIMEOUT = "10";
   private static final String DEFAULT_SHUTDOWN_TIMEOUT = "10";
+  private static final String DEFAULT_STREAM_EVENTS_TOPIC = "gerrit";
 
   private final String gcloudProject;
   private final String subscriptionId;
@@ -36,6 +37,7 @@ public class PubSubConfiguration {
   private final Integer ackDeadlineSeconds;
   private final Long subscribtionTimeoutInSeconds;
   private final Long shutdownTimeoutInSeconds;
+  private final String streamEventsTopic;
   private final PluginConfig fromGerritConfig;
 
   @Inject
@@ -47,6 +49,8 @@ public class PubSubConfiguration {
     this.gcloudProject = getMandatoryString("gcloudProject");
     this.subscriptionId = getMandatoryString("subscriptionId", instanceId);
     this.privateKeyLocation = getMandatoryString("privateKeyLocation");
+    this.streamEventsTopic =
+        fromGerritConfig.getString("streamEventsTopic", DEFAULT_STREAM_EVENTS_TOPIC);
     this.numberOfSubscribers =
         Integer.parseInt(
             fromGerritConfig.getString("numberOfSubscribers", DEFAULT_NUMBER_OF_SUBSCRIBERS));
@@ -88,6 +92,10 @@ public class PubSubConfiguration {
 
   public Long getShutdownTimeoutInSeconds() {
     return shutdownTimeoutInSeconds;
+  }
+
+  public String getStreamEventsTopic() {
+    return streamEventsTopic;
   }
 
   private String getMandatoryString(String name) throws IllegalStateException {
