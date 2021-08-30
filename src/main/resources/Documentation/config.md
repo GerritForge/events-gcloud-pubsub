@@ -47,3 +47,27 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Optional. Name of the GCloud PubSub topic for stream events. events-gcloud-pubsub plugin exposes
     all stream events under this topic name.
     Default: gerrit
+
+`plugin.events-gcloud-pubsub.sendStreamEvents`
+:   Whether to send stream events to the `streamEventsTopic` topic.
+    Default: false
+
+Gerrit init integration
+-----------------------
+
+The @PLUGIN@ plugin provides an init step that helps to set up the configuration.
+
+```
+*** events-gcloud-pubsub plugin
+***
+
+Should send stream events?     [y/N]? y
+Stream events topic            [gerrit]:
+Number of subscribers          [6]:
+Timeout for subscriber ACKs (secs) [10]:
+Timeout for subscriber connection (secs) [10]:
+Timeout for subscriber shutdown (secs) [10]:
+Gcloud Project name            : some_project
+Subscriber Id                  [6f174800-b1fa-477f-af49-26734f433280]:
+Private key location           : /path/ssh/id_rsa
+```

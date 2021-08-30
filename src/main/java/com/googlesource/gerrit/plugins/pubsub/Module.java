@@ -30,17 +30,25 @@ class Module extends FactoryModule {
 
   private PubSubApiModule pubSubApiModule;
   private EnvironmentChecker environmentChecker;
+  private final PubSubConfiguration configuration;
 
   @Inject
-  public Module(PubSubApiModule pubSubApiModule, EnvironmentChecker environmentChecker) {
+  public Module(
+      PubSubApiModule pubSubApiModule,
+      EnvironmentChecker environmentChecker,
+      PubSubConfiguration configuration) {
     this.pubSubApiModule = pubSubApiModule;
     this.environmentChecker = environmentChecker;
+    this.configuration = configuration;
   }
 
   @Override
   protected void configure() {
     DynamicSet.bind(binder(), LifecycleListener.class).to(Manager.class);
-    DynamicSet.bind(binder(), EventListener.class).to(PubSubEventListener.class);
+
+    if (configuration.isSendStreamEvents()) {
+      DynamicSet.bind(binder(), EventListener.class).to(PubSubEventListener.class);
+    }
     factory(PubSubPublisher.Factory.class);
     factory(PubSubEventSubscriber.Factory.class);
 
