@@ -18,13 +18,12 @@ import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
-import com.google.gerrit.extensions.restapi.AuthException;
-import com.google.gerrit.extensions.restapi.BadRequestException;
-import com.google.gerrit.extensions.restapi.ResourceConflictException;
 import com.google.gerrit.extensions.restapi.Response;
-import com.google.gerrit.extensions.restapi.RestModifyView;
+import com.google.gerrit.server.CurrentUser;
 import com.google.gerrit.server.account.AccountResource;
+import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.Topic;
 import com.googlesource.gerrit.plugins.pubsub.TopicProvider;
@@ -32,19 +31,22 @@ import java.io.IOException;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
-public class PutTopic implements RestModifyView<AccountResource, Input> {
+public class PutTopic extends PubSubRestModifyView {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicProvider topicProvider;
 
   @Inject
-  public PutTopic(TopicProvider topicProvider) {
+  public PutTopic(
+      Provider<CurrentUser> userProvider,
+      PermissionBackend permissionBackend,
+      TopicProvider topicProvider) {
+    super(userProvider, permissionBackend);
     this.topicProvider = topicProvider;
   }
 
   @Override
-  public Response<?> apply(AccountResource rsrc, Input input)
-      throws AuthException, BadRequestException, ResourceConflictException, IOException {
+  Response<?> applyImpl(AccountResource rsrc, Input input) throws IOException {
     try {
       Topic topic = topicProvider.createForAccount(rsrc.getUser().getAccountId());
       logger.atInfo().log("Created pubsub topic: %s", topic.getName());

@@ -21,9 +21,11 @@ import static org.junit.Assert.assertThrows;
 
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
+import com.google.gerrit.acceptance.TestAccount;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.acceptance.config.GerritConfig;
 import com.google.gerrit.acceptance.testsuite.project.ProjectOperations;
+import com.google.gerrit.common.data.GlobalCapability;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gson.Gson;
 import com.google.inject.Inject;
@@ -125,6 +127,34 @@ public class PubSubUserStreamEventsIT extends LightweightPluginDaemonTest {
       name = "plugin.events-gcloud-pubsub.privateKeyLocation",
       value = PRIVATE_KEY_LOCATION)
   @GerritConfig(name = "plugin.events-gcloud-pubsub.enableUserStreamEvents", value = "true")
+  public void shouldPermitCreateTopicForOtherUserOnlyForServerMaintainers() throws Exception {
+    TestAccount user2 = accountCreator.user2();
+    projectOperations
+        .allProjectsForUpdate()
+        .add(
+            allowCapability("events-gcloud-pubsub-" + SubscribePubSubStreamEventsCapability.ID)
+                .group(REGISTERED_USERS))
+        .update();
+    userRestSession
+        .put(String.format("/accounts/%d/pubsub.topic", user2.id().get()))
+        .assertForbidden();
+    projectOperations
+        .allProjectsForUpdate()
+        .add(allowCapability(GlobalCapability.MAINTAIN_SERVER).group(REGISTERED_USERS))
+        .update();
+    userRestSession
+        .put(String.format("/accounts/%d/pubsub.topic", user2.id().get()))
+        .assertCreated();
+    assertThat(topicProvider.getForAccount(user2.id())).isNotNull();
+  }
+
+  @Test
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.enableUserStreamEvents", value = "true")
   public void shouldDeleteTopicForUser() throws Exception {
     adminRestSession.put("/accounts/self/pubsub.topic").assertCreated();
     assertThat(topicProvider.getForAccount(admin.id())).isNotNull();
@@ -151,6 +181,34 @@ public class PubSubUserStreamEventsIT extends LightweightPluginDaemonTest {
                 .group(REGISTERED_USERS))
         .update();
     userRestSession.delete("/accounts/self/pubsub.topic").assertNoContent();
+    assertThrows(NotFoundException.class, () -> topicProvider.getForAccount(user.id()));
+  }
+
+  @Test
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.enableUserStreamEvents", value = "true")
+  public void shouldPermitDeleteTopicForOtherUserOnlyForServerMaintainers() throws Exception {
+    TestAccount user2 = accountCreator.user2();
+    projectOperations
+        .allProjectsForUpdate()
+        .add(
+            allowCapability("events-gcloud-pubsub-" + SubscribePubSubStreamEventsCapability.ID)
+                .group(REGISTERED_USERS))
+        .update();
+    userRestSession
+        .delete(String.format("/accounts/%d/pubsub.topic", user2.id().get()))
+        .assertForbidden();
+    projectOperations
+        .allProjectsForUpdate()
+        .add(allowCapability(GlobalCapability.MAINTAIN_SERVER).group(REGISTERED_USERS))
+        .update();
+    userRestSession
+        .delete(String.format("/accounts/%d/pubsub.topic", user2.id().get()))
+        .assertNoContent();
     assertThrows(NotFoundException.class, () -> topicProvider.getForAccount(user.id()));
   }
 }
