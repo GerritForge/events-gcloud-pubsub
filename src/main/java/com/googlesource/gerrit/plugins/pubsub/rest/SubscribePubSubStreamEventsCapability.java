@@ -14,22 +14,14 @@
 
 package com.googlesource.gerrit.plugins.pubsub.rest;
 
-import static com.google.gerrit.server.account.AccountResource.ACCOUNT_KIND;
-
-import com.google.gerrit.extensions.annotations.Exports;
 import com.google.gerrit.extensions.config.CapabilityDefinition;
-import com.google.gerrit.extensions.restapi.RestApiModule;
 
-public class PubSubRestModule extends RestApiModule {
+public class SubscribePubSubStreamEventsCapability extends CapabilityDefinition {
+
+  public static final String ID = "subscribePubSub";
+
   @Override
-  protected void configure() {
-    bind(PubsubTopicNameFactory.class);
-
-    bind(CapabilityDefinition.class)
-        .annotatedWith(Exports.named(SubscribePubSubStreamEventsCapability.ID))
-        .to(SubscribePubSubStreamEventsCapability.class);
-
-    put(ACCOUNT_KIND, "pubsub.topic").to(PutTopic.class);
-    delete(ACCOUNT_KIND, "pubsub.topic").to(DeleteTopic.class);
+  public String getDescription() {
+    return "Subscribe to stream events in PubSub";
   }
 }
