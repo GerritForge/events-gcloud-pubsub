@@ -15,7 +15,9 @@
 package com.googlesource.gerrit.plugins.pubsub.user;
 
 import static com.google.common.truth.Truth.assertThat;
+import static org.junit.Assert.assertThrows;
 
+import com.google.api.gax.rpc.NotFoundException;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.acceptance.config.GerritConfig;
@@ -76,6 +78,7 @@ public class PubSubUserStreamEventsIT extends LightweightPluginDaemonTest {
   @GerritConfig(name = "plugin.events-gcloud-pubsub.enableUserStreamEvents", value = "false")
   public void shouldNotExposeRestApiForUserIfUserStreamEventsAreDisabled() throws Exception {
     adminRestSession.put("/accounts/self/pubsub.topic").assertNotFound();
+    adminRestSession.delete("/accounts/self/pubsub.topic").assertNotFound();
   }
 
   @Test
@@ -89,5 +92,19 @@ public class PubSubUserStreamEventsIT extends LightweightPluginDaemonTest {
     adminRestSession.put("/accounts/self/pubsub.topic").assertCreated();
     assertThat(topicProvider.getForAccount(admin.id())).isNotNull();
     adminRestSession.put("/accounts/self/pubsub.topic").assertNoContent();
+  }
+
+  @Test
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.enableUserStreamEvents", value = "true")
+  public void shouldDeleteTopicForUser() throws Exception {
+    adminRestSession.put("/accounts/self/pubsub.topic").assertCreated();
+    assertThat(topicProvider.getForAccount(admin.id())).isNotNull();
+    adminRestSession.delete("/accounts/self/pubsub.topic").assertNoContent();
+    assertThrows(NotFoundException.class, () -> topicProvider.getForAccount(admin.id()));
   }
 }
