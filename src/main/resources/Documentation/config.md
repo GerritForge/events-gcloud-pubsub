@@ -60,6 +60,10 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
     events and bring their site up-to-date.
     Default: true
 
+`plugin.events-gcloud-pubsub.enableUserStreamEvents`
+:   Whether to allow users to subscribe to stream events published to PubSub.
+    Default: false
+
 Gerrit init integration
 -----------------------
 
