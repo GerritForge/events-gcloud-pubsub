@@ -34,6 +34,7 @@ public class PubSubConfiguration {
   static final String SUBSCRIPTION_TIMEOUT_SECONDS_FIELD = "subscribtionTimeoutInSeconds";
   static final String SHUTDOWN_TIMEOUT_SECONDS_FIELD = "shutdownTimeoutInSeconds";
   static final String SUBSCRIPTION_RETAIN_ACKED_MESSAGES_FIELD = "subscriptionRetainAckedMessages";
+  static final String ENABLE_USER_STREAM_EVENTS_FIELD = "enableUserStreamEvents";
 
   static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
   static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
@@ -42,6 +43,7 @@ public class PubSubConfiguration {
   static final String DEFAULT_STREAM_EVENTS_TOPIC = "gerrit";
   static final boolean DEFAULT_SEND_STREAM_EVENTS = false;
   static final boolean DEFAULT_SUBSCRIPTION_RETAIN_ACKED_MESSAGES = true;
+  static final boolean DEFAULT_ENABLE_USER_STREAM_EVENTS = false;
 
   private final String gcloudProject;
   private final String subscriptionId;
@@ -54,6 +56,7 @@ public class PubSubConfiguration {
   private final PluginConfig fromGerritConfig;
   private final boolean sendStreamEvents;
   private final boolean subscriptionRetainAckedMessages;
+  private final boolean enableUserStreamEvents;
 
   @Inject
   public PubSubConfiguration(
@@ -84,6 +87,9 @@ public class PubSubConfiguration {
     this.subscriptionRetainAckedMessages =
         fromGerritConfig.getBoolean(
             SUBSCRIPTION_RETAIN_ACKED_MESSAGES_FIELD, DEFAULT_SUBSCRIPTION_RETAIN_ACKED_MESSAGES);
+    this.enableUserStreamEvents =
+        fromGerritConfig.getBoolean(
+            ENABLE_USER_STREAM_EVENTS_FIELD, DEFAULT_ENABLE_USER_STREAM_EVENTS);
   }
 
   public String getGCloudProject() {
@@ -137,5 +143,9 @@ public class PubSubConfiguration {
 
   public boolean isSubscriptionRetainAckedMessages() {
     return subscriptionRetainAckedMessages;
+  }
+
+  public boolean isEnableUserStreamEvents() {
+    return enableUserStreamEvents;
   }
 }
