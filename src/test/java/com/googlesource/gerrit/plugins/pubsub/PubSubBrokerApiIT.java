@@ -31,7 +31,6 @@ import com.google.cloud.pubsub.v1.stub.GrpcSubscriberStub;
 import com.google.cloud.pubsub.v1.stub.SubscriberStub;
 import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
-import com.google.gerrit.acceptance.NoHttpd;
 import com.google.gerrit.acceptance.TestPlugin;
 import com.google.gerrit.acceptance.WaitUtil;
 import com.google.gerrit.acceptance.config.GerritConfig;
@@ -59,7 +58,6 @@ import org.junit.Test;
 import org.testcontainers.containers.PubSubEmulatorContainer;
 import org.testcontainers.utility.DockerImageName;
 
-@NoHttpd
 @TestPlugin(
     name = "events-gcloud-pubsub",
     sysModule = "com.googlesource.gerrit.plugins.pubsub.Module")
