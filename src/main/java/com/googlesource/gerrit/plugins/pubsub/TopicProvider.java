@@ -71,6 +71,18 @@ public class TopicProvider {
     }
   }
 
+  public TopicName deleteForAccount(Account.Id accountId) throws IOException {
+    TopicName topicName = topicNameFactory.createForAccount(accountId);
+    delete(topicName);
+    return topicName;
+  }
+
+  public void delete(TopicName name) throws IOException {
+    try (TopicAdminClient topicAdminClient = getTopicAdminClient()) {
+      topicAdminClient.deleteTopic(name);
+    }
+  }
+
   @VisibleForTesting
   public TopicAdminClient getTopicAdminClient() throws IOException {
     return TopicAdminClient.create(topicAdminSettings);
