@@ -16,6 +16,7 @@ package com.googlesource.gerrit.plugins.pubsub.rest;
 
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
 import com.google.gerrit.extensions.restapi.AuthException;
 import com.google.gerrit.extensions.restapi.BadRequestException;
@@ -30,6 +31,7 @@ import com.googlesource.gerrit.plugins.pubsub.TopicProvider;
 import java.io.IOException;
 
 @Singleton
+@RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
 public class DeleteTopic implements RestModifyView<AccountResource, Input> {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
