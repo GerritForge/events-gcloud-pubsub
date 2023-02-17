@@ -47,6 +47,23 @@ If the topic already existed:
 ```
 
 
+### <a id="delete-topic"> Delete Topic
+_DELETE /accounts/[\{account-id\}](../../../Documentation/rest-api-accounts.html#account-id)/pubsub.topic_
+
+Deletes the PubSub topic for the account.
+
+#### Request
+
+```
+  DELETE /accounts/self/pubsub.topic HTTP/1.0
+```
+
+#### Response
+
+```
+  HTTP/1.1 204 No Content
+```
+
 GERRIT
 ------
 Part of [Gerrit Code Review](../../../Documentation/index.html)
