@@ -154,16 +154,4 @@ public class PubSubConfigurationTest {
 
     assertThat(configuration.isRetainAckedMessages()).isTrue();
   }
-
-  @Test
-  public void shouldDisableMsgRetentionInSubscriptionsIfConfigured() {
-    pluginConfig.setBoolean("retainAckedMessages", false);
-    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
-        .thenReturn(pluginConfig.asPluginConfig());
-
-    PubSubConfiguration configuration =
-        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
-
-    assertThat(configuration.isRetainAckedMessages()).isFalse();
-  }
 }

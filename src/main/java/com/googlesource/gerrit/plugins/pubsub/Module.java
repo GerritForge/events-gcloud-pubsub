@@ -25,6 +25,8 @@ import com.googlesource.gerrit.plugins.pubsub.local.EnvironmentChecker;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalCredentialsProvider;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalPublisherProvider;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalSubscriberProvider;
+import com.googlesource.gerrit.plugins.pubsub.local.LocalTopicProvider;
+import com.googlesource.gerrit.plugins.pubsub.rest.PubSubRestModule;
 
 class Module extends FactoryModule {
 
@@ -58,13 +60,16 @@ class Module extends FactoryModule {
           .in(Scopes.SINGLETON);
       bind(SubscriberProvider.class).to(LocalSubscriberProvider.class);
       bind(PublisherProvider.class).to(LocalPublisherProvider.class);
+      bind(TopicProvider.class).to(LocalTopicProvider.class);
     } else {
       bind(CredentialsProvider.class)
           .toProvider(ServiceAccountCredentialsProvider.class)
           .in(Scopes.SINGLETON);
       bind(SubscriberProvider.class);
       bind(PublisherProvider.class);
+      bind(TopicProvider.class);
     }
     install(pubSubApiModule);
+    install(new PubSubRestModule(configuration));
   }
 }
