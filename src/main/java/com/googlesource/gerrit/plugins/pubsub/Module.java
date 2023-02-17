@@ -25,6 +25,7 @@ import com.googlesource.gerrit.plugins.pubsub.local.EnvironmentChecker;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalCredentialsProvider;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalPublisherProvider;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalSubscriberProvider;
+import com.googlesource.gerrit.plugins.pubsub.rest.PubSubRestModule;
 
 class Module extends FactoryModule {
 
@@ -66,5 +67,6 @@ class Module extends FactoryModule {
       bind(PublisherProvider.class);
     }
     install(pubSubApiModule);
+    install(new PubSubRestModule(configuration));
   }
 }
