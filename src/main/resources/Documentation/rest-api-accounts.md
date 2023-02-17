@@ -2,6 +2,8 @@
 ==============================
 
 This page describes the REST endpoints that are added by the @PLUGIN@.
+To subscribe to stream events via PubSub the `Subscribe to stream events in PubSub`
+capability is required.
 
 Please also take note of the general information on the
 [REST API](../../../Documentation/rest-api.html).
