@@ -21,36 +21,39 @@ import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
-import com.google.gerrit.extensions.restapi.AuthException;
-import com.google.gerrit.extensions.restapi.BadRequestException;
-import com.google.gerrit.extensions.restapi.ResourceConflictException;
 import com.google.gerrit.extensions.restapi.Response;
-import com.google.gerrit.extensions.restapi.RestModifyView;
+import com.google.gerrit.server.CurrentUser;
 import com.google.gerrit.server.account.AccountResource;
+import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.TopicName;
 import java.io.IOException;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
-public class DeleteTopic implements RestModifyView<AccountResource, Input> {
+public class DeleteTopic extends PubSubRestModifyView {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicAdminSettings topicAdminSettings;
   private final PubsubTopicNameFactory topicNameFactory;
 
   @Inject
-  public DeleteTopic(CredentialsProvider credentials, PubsubTopicNameFactory topicNameFactory)
+  public DeleteTopic(
+      Provider<CurrentUser> userProvider,
+      PermissionBackend permissionBackend,
+      CredentialsProvider credentials,
+      PubsubTopicNameFactory topicNameFactory)
       throws IOException {
+    super(userProvider, permissionBackend);
     this.topicAdminSettings =
         TopicAdminSettings.newBuilder().setCredentialsProvider(credentials).build();
     this.topicNameFactory = topicNameFactory;
   }
 
   @Override
-  public Response<?> apply(AccountResource rsrc, Input input)
-      throws AuthException, BadRequestException, ResourceConflictException, IOException {
+  public Response<?> applyImpl(AccountResource rsrc, Input input) throws IOException {
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings)) {
       TopicName topicName = topicNameFactory.createForAccount(rsrc.getUser().getAccountId());
       topicAdminClient.deleteTopic(topicName);
