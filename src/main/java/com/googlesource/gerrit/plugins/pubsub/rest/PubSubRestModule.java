@@ -16,6 +16,8 @@ package com.googlesource.gerrit.plugins.pubsub.rest;
 
 import static com.google.gerrit.server.account.AccountResource.ACCOUNT_KIND;
 
+import com.google.gerrit.extensions.annotations.Exports;
+import com.google.gerrit.extensions.config.CapabilityDefinition;
 import com.google.gerrit.extensions.restapi.RestApiModule;
 import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
@@ -32,6 +34,10 @@ public class PubSubRestModule extends RestApiModule {
   protected void configure() {
     if (configuration.isEnableUserStreamEvents()) {
       bind(PubSubUserTopicNameFactory.class);
+
+      bind(CapabilityDefinition.class)
+          .annotatedWith(Exports.named(SubscribePubSubStreamEventsCapability.ID))
+          .to(SubscribePubSubStreamEventsCapability.class);
 
       put(ACCOUNT_KIND, "pubsub.topic").to(PutTopic.class);
       delete(ACCOUNT_KIND, "pubsub.topic").to(DeleteTopic.class);
