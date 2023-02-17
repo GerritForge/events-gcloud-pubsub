@@ -19,6 +19,7 @@ import com.google.api.gax.rpc.NotFoundException;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
 import com.google.gerrit.extensions.restapi.AuthException;
 import com.google.gerrit.extensions.restapi.BadRequestException;
@@ -32,6 +33,7 @@ import com.google.pubsub.v1.TopicName;
 import java.io.IOException;
 
 @Singleton
+@RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
 public class DeleteTopic implements RestModifyView<AccountResource, Input> {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
