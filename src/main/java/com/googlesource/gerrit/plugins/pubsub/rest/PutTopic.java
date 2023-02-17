@@ -21,36 +21,39 @@ import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
-import com.google.gerrit.extensions.restapi.AuthException;
-import com.google.gerrit.extensions.restapi.BadRequestException;
-import com.google.gerrit.extensions.restapi.ResourceConflictException;
 import com.google.gerrit.extensions.restapi.Response;
-import com.google.gerrit.extensions.restapi.RestModifyView;
+import com.google.gerrit.server.CurrentUser;
 import com.google.gerrit.server.account.AccountResource;
+import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.inject.Inject;
+import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.Topic;
 import java.io.IOException;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
-public class PutTopic implements RestModifyView<AccountResource, Input> {
+public class PutTopic extends PubSubRestModifyView {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicAdminSettings topicAdminSettings;
   private final PubsubTopicNameFactory topicNameFactory;
 
   @Inject
-  public PutTopic(CredentialsProvider credentials, PubsubTopicNameFactory topicNameFactory)
+  public PutTopic(
+      Provider<CurrentUser> userProvider,
+      PermissionBackend permissionBackend,
+      CredentialsProvider credentials,
+      PubsubTopicNameFactory topicNameFactory)
       throws IOException {
+    super(userProvider, permissionBackend);
     this.topicAdminSettings =
         TopicAdminSettings.newBuilder().setCredentialsProvider(credentials).build();
     this.topicNameFactory = topicNameFactory;
   }
 
   @Override
-  public Response<?> apply(AccountResource rsrc, Input input)
-      throws AuthException, BadRequestException, ResourceConflictException, IOException {
+  Response<?> applyImpl(AccountResource rsrc, Input input) throws IOException {
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings)) {
       Topic topic =
           topicAdminClient.createTopic(
