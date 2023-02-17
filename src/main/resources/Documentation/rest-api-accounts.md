@@ -14,8 +14,9 @@ Please also take note of the general information on the
 ### <a id="create-topic"> Create Topic
 _PUT /accounts/[\{account-id\}](../../../Documentation/rest-api-accounts.html#account-id)/pubsub.topic_
 
-Creates a PubSub topic for the account. Only a single topic can be
-created per account.
+Creates a PubSub topic for the account. Users that do not have the
+`Maintain Server` capability can only create topics for themselves.
+Only a single topic can be created per account.
 
 Note, that Google PubSub limits the number of topics per project to
 [10000](https://cloud.google.com/pubsub/quotas#resource_limits).
