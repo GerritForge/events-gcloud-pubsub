@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.googlesource.gerrit.plugins.pubsub.rest;
+package com.googlesource.gerrit.plugins.pubsub.user;
 
 import com.google.gerrit.entities.Account;
 import com.google.gerrit.server.config.GerritServerId;
@@ -20,21 +20,29 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
+import java.util.Optional;
 
 @Singleton
-public class PubsubTopicNameFactory {
+public class PubSubUserTopicNameFactory {
   private static final String TOPIC_NAME_PREFIX = "stream-events-";
 
   private final String gcpProjectId;
   private final String serverId;
 
   @Inject
-  public PubsubTopicNameFactory(@GerritServerId String serverId, PubSubConfiguration config) {
+  public PubSubUserTopicNameFactory(@GerritServerId String serverId, PubSubConfiguration config) {
     this.serverId = serverId;
     this.gcpProjectId = config.getGCloudProject();
   }
 
   public TopicName createForAccount(Account.Id accountId) {
     return TopicName.of(gcpProjectId, TOPIC_NAME_PREFIX + serverId + "-" + accountId.get());
+  }
+
+  public Optional<Account.Id> getAccountId(String topicName) {
+    if (topicName.startsWith(TOPIC_NAME_PREFIX)) {
+      return Account.Id.tryParse(topicName.substring(TOPIC_NAME_PREFIX.length()));
+    }
+    return Optional.empty();
   }
 }
