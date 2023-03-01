@@ -14,9 +14,14 @@ Please also take note of the general information on the
 ### <a id="create-topic"> Create Topic
 _PUT /accounts/[\{account-id\}](../../../Documentation/rest-api-accounts.html#account-id)/pubsub.topic_
 
-Creates a PubSub topic for the account. Users that do not have the
+Creates a PubSub topic for the account.  Users that do not have the
 `Maintain Server` capability can only create topics for themselves.
-Only a single topic can be created per account.
+Only a single topic can be created per account. Gerrit will
+automatically start to publish events visible to the account to
+the topic.
+
+When Gerrit starts, it will start to publish events to all already existing
+topics.
 
 Note, that Google PubSub limits the number of topics per project to
 [10000](https://cloud.google.com/pubsub/quotas#resource_limits).

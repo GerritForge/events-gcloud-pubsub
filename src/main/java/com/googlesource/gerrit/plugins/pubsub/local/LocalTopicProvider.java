@@ -20,7 +20,7 @@ import com.google.api.gax.rpc.FixedTransportChannelProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.inject.Inject;
 import com.googlesource.gerrit.plugins.pubsub.TopicProvider;
-import com.googlesource.gerrit.plugins.pubsub.rest.PubSubUserTopicNameFactory;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserTopicNameFactory;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
