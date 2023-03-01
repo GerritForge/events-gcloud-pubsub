@@ -17,13 +17,15 @@ package com.googlesource.gerrit.plugins.pubsub;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.rpc.TransportChannelProvider;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
+import com.google.cloud.pubsub.v1.TopicAdminClient.ListTopicsPagedResponse;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.gerrit.entities.Account;
 import com.google.inject.Inject;
+import com.google.pubsub.v1.ProjectName;
 import com.google.pubsub.v1.Topic;
 import com.google.pubsub.v1.TopicName;
-import com.googlesource.gerrit.plugins.pubsub.rest.PubSubUserTopicNameFactory;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserTopicNameFactory;
 import java.io.IOException;
 
 public class TopicProvider {
@@ -68,6 +70,12 @@ public class TopicProvider {
   public Topic get(TopicName name) throws IOException {
     try (TopicAdminClient topicAdminClient = getTopicAdminClient()) {
       return topicAdminClient.getTopic(name);
+    }
+  }
+
+  public ListTopicsPagedResponse list(ProjectName project) throws IOException {
+    try (TopicAdminClient topicAdminClient = getTopicAdminClient()) {
+      return topicAdminClient.listTopics(project);
     }
   }
 
