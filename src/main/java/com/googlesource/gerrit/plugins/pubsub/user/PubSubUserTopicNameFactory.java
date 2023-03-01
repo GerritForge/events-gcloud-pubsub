@@ -12,7 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package com.googlesource.gerrit.plugins.pubsub.rest;
+package com.googlesource.gerrit.plugins.pubsub.user;
 
 import com.google.gerrit.entities.Account;
 import com.google.gerrit.server.config.GerritServerId;
@@ -20,6 +20,7 @@ import com.google.inject.Inject;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
+import java.util.Optional;
 
 @Singleton
 public class PubSubUserTopicNameFactory {
@@ -36,5 +37,13 @@ public class PubSubUserTopicNameFactory {
 
   public TopicName createForAccount(Account.Id accountId) {
     return TopicName.of(gcpProjectId, TOPIC_NAME_PREFIX + serverId + "-" + accountId.get());
+  }
+
+  public Optional<Account.Id> getAccountId(String topicName) {
+    if (topicName.startsWith(TOPIC_NAME_PREFIX)) {
+      String[] topicNameParts = topicName.split("-");
+      return Account.Id.tryParse(topicNameParts[topicNameParts.length - 1]);
+    }
+    return Optional.empty();
   }
 }
