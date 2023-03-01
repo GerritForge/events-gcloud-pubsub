@@ -193,6 +193,9 @@ public class PubSubUserStreamEventsIT extends LightweightPluginDaemonTest {
   @GerritConfig(name = "plugin.events-gcloud-pubsub.enableUserStreamEvents", value = "true")
   public void shouldPermitDeleteTopicForOtherUserOnlyForServerMaintainers() throws Exception {
     TestAccount user2 = accountCreator.user2();
+    adminRestSession
+        .put(String.format("/accounts/%d/pubsub.topic", user2.id().get()))
+        .assertCreated();
     projectOperations
         .allProjectsForUpdate()
         .add(

@@ -24,6 +24,7 @@ import com.google.cloud.pubsub.v1.Publisher;
 import com.google.gerrit.json.OutputFormat;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
+import com.google.pubsub.v1.TopicName;
 import java.io.IOException;
 import org.junit.Before;
 import org.junit.Test;
@@ -38,20 +39,25 @@ public class PubSubPublisherTest {
   @Mock PubSubConfiguration confMock;
   @Mock PublisherProvider publisherProviderMock;
   @Mock Publisher publisherMock;
+  @Mock PubSubPublisherMetrics.Factory pubSubPublisherMetricsMockFactory;
   @Mock PubSubPublisherMetrics pubSubPublisherMetricsMock;
 
+  private static final String PROJECT = "bar";
   private static final String TOPIC = "foo";
   private static final Event eventMessage = new ProjectCreatedEvent();
 
   @Before
   public void setUp() throws IOException {
+    when(confMock.getGCloudProject()).thenReturn(PROJECT);
+    when(pubSubPublisherMetricsMockFactory.create(TopicName.of(PROJECT, TOPIC)))
+        .thenReturn(pubSubPublisherMetricsMock);
     when(publisherProviderMock.get(TOPIC)).thenReturn(publisherMock);
     objectUnderTest =
         new PubSubPublisher(
             confMock,
             publisherProviderMock,
             OutputFormat.JSON_COMPACT.newGson(),
-            pubSubPublisherMetricsMock,
+            pubSubPublisherMetricsMockFactory,
             TOPIC);
   }
 
