@@ -30,6 +30,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
+import com.google.pubsub.v1.TopicName;
 import java.io.IOException;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
@@ -52,12 +53,13 @@ public class PubSubPublisher {
       PubSubConfiguration pubSubProperties,
       PublisherProvider publisherProvider,
       @EventGson Gson gson,
-      PubSubPublisherMetrics publisherMetrics,
+      PubSubPublisherMetrics.Factory publisherMetricsFactory,
       @Assisted String topic)
       throws IOException {
     this.gson = gson;
-    this.publisherMetrics = publisherMetrics;
     this.topic = topic;
+    this.publisherMetrics =
+        publisherMetricsFactory.create(TopicName.of(pubSubProperties.getGCloudProject(), topic));
     this.publisher = publisherProvider.get(topic);
     this.pubSubProperties = pubSubProperties;
   }

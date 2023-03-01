@@ -33,8 +33,6 @@ public class PubSubRestModule extends RestApiModule {
   @Override
   protected void configure() {
     if (configuration.isEnableUserStreamEvents()) {
-      bind(PubsubTopicNameFactory.class);
-
       bind(CapabilityDefinition.class)
           .annotatedWith(Exports.named(SubscribePubSubStreamEventsCapability.ID))
           .to(SubscribePubSubStreamEventsCapability.class);
