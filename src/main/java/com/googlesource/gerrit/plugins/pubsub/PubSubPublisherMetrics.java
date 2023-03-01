@@ -16,10 +16,10 @@ package com.googlesource.gerrit.plugins.pubsub;
 import com.google.gerrit.extensions.annotations.PluginName;
 import com.google.gerrit.metrics.Counter1;
 import com.google.gerrit.metrics.MetricMaker;
-import com.google.inject.Inject;
-import com.google.inject.Singleton;
+import com.google.inject.assistedinject.Assisted;
+import com.google.inject.assistedinject.AssistedInject;
+import com.google.pubsub.v1.TopicName;
 
-@Singleton
 public class PubSubPublisherMetrics extends PubSubEventsMetrics {
   private static final String PUBLISHER_SUCCESS_COUNTER = "publisher_success_counter";
   private static final String PUBLISHER_FAILURE_COUNTER = "publisher_failure_counter";
@@ -27,17 +27,22 @@ public class PubSubPublisherMetrics extends PubSubEventsMetrics {
   private final Counter1<String> publisherSuccessCounter;
   private final Counter1<String> publisherFailureCounter;
 
-  @Inject
-  public PubSubPublisherMetrics(MetricMaker metricMaker, @PluginName String pluginName) {
+  public interface Factory {
+    PubSubPublisherMetrics create(TopicName topicName);
+  }
+
+  @AssistedInject
+  public PubSubPublisherMetrics(
+      MetricMaker metricMaker, @PluginName String pluginName, @Assisted TopicName topicName) {
 
     this.publisherSuccessCounter =
         metricMaker.newCounter(
-            String.join("/", pluginName, PUBLISHER_SUCCESS_COUNTER),
+            String.join("/", pluginName, topicName.getTopic(), PUBLISHER_SUCCESS_COUNTER),
             rateDescription("messages", "Number of successfully published messages"),
             stringField(PUBLISHER_SUCCESS_COUNTER, "Count of published messages"));
     this.publisherFailureCounter =
         metricMaker.newCounter(
-            String.join("/", pluginName, PUBLISHER_FAILURE_COUNTER),
+            String.join("/", pluginName, topicName.getTopic(), PUBLISHER_FAILURE_COUNTER),
             rateDescription("errors", "Number of messages failed to publish"),
             stringField(PUBLISHER_FAILURE_COUNTER, "Count of messages failed to publish"));
   }

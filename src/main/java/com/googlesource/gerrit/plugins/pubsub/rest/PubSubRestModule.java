@@ -23,8 +23,6 @@ import com.google.gerrit.extensions.restapi.RestApiModule;
 public class PubSubRestModule extends RestApiModule {
   @Override
   protected void configure() {
-    bind(PubsubTopicNameFactory.class);
-
     bind(CapabilityDefinition.class)
         .annotatedWith(Exports.named(SubscribePubSubStreamEventsCapability.ID))
         .to(SubscribePubSubStreamEventsCapability.class);
