@@ -27,6 +27,7 @@ import com.googlesource.gerrit.plugins.pubsub.local.LocalPublisherProvider;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalSubscriberProvider;
 import com.googlesource.gerrit.plugins.pubsub.local.LocalTopicProvider;
 import com.googlesource.gerrit.plugins.pubsub.rest.PubSubRestModule;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserEventListenerModule;
 
 class Module extends FactoryModule {
 
@@ -51,6 +52,7 @@ class Module extends FactoryModule {
     if (configuration.isSendStreamEvents()) {
       DynamicSet.bind(binder(), EventListener.class).to(PubSubEventListener.class);
     }
+    factory(PubSubPublisherMetrics.Factory.class);
     factory(PubSubPublisher.Factory.class);
     factory(PubSubEventSubscriber.Factory.class);
 
@@ -71,5 +73,8 @@ class Module extends FactoryModule {
     }
     install(pubSubApiModule);
     install(new PubSubRestModule(configuration));
+    if (configuration.isEnableUserStreamEvents()) {
+      install(new PubSubUserEventListenerModule());
+    }
   }
 }

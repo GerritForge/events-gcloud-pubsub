@@ -16,6 +16,7 @@ package com.googlesource.gerrit.plugins.pubsub.rest;
 
 import com.google.api.gax.rpc.NotFoundException;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.entities.Account;
 import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
 import com.google.gerrit.extensions.restapi.Response;
@@ -27,7 +28,10 @@ import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.TopicProvider;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubRegistrationHandle;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserEventListenerHandlers;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentMap;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
@@ -35,18 +39,27 @@ public class DeleteTopic extends PubSubRestModifyView {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicProvider topicProvider;
+  private final ConcurrentMap<Account.Id, PubSubRegistrationHandle>
+      pubSubUserStreamEventListenerHandlers;
 
   @Inject
   public DeleteTopic(
       Provider<CurrentUser> userProvider,
       PermissionBackend permissionBackend,
-      TopicProvider topicProvider) {
+      TopicProvider topicProvider,
+      @PubSubUserEventListenerHandlers
+          ConcurrentMap<Account.Id, PubSubRegistrationHandle>
+              pubSubUserStreamEventListenerHandlers) {
     super(userProvider, permissionBackend);
     this.topicProvider = topicProvider;
+    this.pubSubUserStreamEventListenerHandlers = pubSubUserStreamEventListenerHandlers;
   }
 
   @Override
   public Response<?> applyImpl(AccountResource rsrc, Input input) throws IOException {
+    Account.Id accountId = rsrc.getUser().getAccountId();
+    pubSubUserStreamEventListenerHandlers.get(accountId).remove();
+    pubSubUserStreamEventListenerHandlers.remove(accountId);
     try {
       TopicName topicName = topicProvider.deleteForAccount(rsrc.getUser().getAccountId());
       logger.atInfo().log("Deleted pubsub topic: %s", topicName.toString());

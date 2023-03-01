@@ -23,7 +23,7 @@ import com.google.gerrit.entities.Account;
 import com.google.inject.Inject;
 import com.google.pubsub.v1.Topic;
 import com.google.pubsub.v1.TopicName;
-import com.googlesource.gerrit.plugins.pubsub.rest.PubSubUserTopicNameFactory;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserTopicNameFactory;
 import java.io.IOException;
 
 public class TopicProvider {
