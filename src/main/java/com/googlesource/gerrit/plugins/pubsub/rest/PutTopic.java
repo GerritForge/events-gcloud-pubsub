@@ -19,6 +19,7 @@ import com.google.api.gax.rpc.AlreadyExistsException;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.entities.Account;
 import com.google.gerrit.extensions.annotations.RequiresCapability;
 import com.google.gerrit.extensions.common.Input;
 import com.google.gerrit.extensions.restapi.Response;
@@ -29,7 +30,13 @@ import com.google.inject.Inject;
 import com.google.inject.Provider;
 import com.google.inject.Singleton;
 import com.google.pubsub.v1.Topic;
+import com.google.pubsub.v1.TopicName;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubRegistrationHandle;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserEventListenerHandlers;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserScopedEventListener;
+import com.googlesource.gerrit.plugins.pubsub.user.PubSubUserTopicNameFactory;
 import java.io.IOException;
+import java.util.concurrent.ConcurrentMap;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
@@ -37,31 +44,41 @@ public class PutTopic extends PubSubRestModifyView {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicAdminSettings topicAdminSettings;
-  private final PubsubTopicNameFactory topicNameFactory;
+  private final PubSubUserTopicNameFactory topicNameFactory;
+  private final ConcurrentMap<Account.Id, PubSubRegistrationHandle>
+      pubSubUserStreamEventListenerHandlers;
+  private final PubSubUserScopedEventListener.Factory userScopedEventListenerFactory;
 
   @Inject
   public PutTopic(
       Provider<CurrentUser> userProvider,
       PermissionBackend permissionBackend,
       CredentialsProvider credentials,
-      PubsubTopicNameFactory topicNameFactory)
+      PubSubUserTopicNameFactory topicNameFactory,
+      @PubSubUserEventListenerHandlers
+          ConcurrentMap<Account.Id, PubSubRegistrationHandle> pubSubUserStreamEventListenerHandlers,
+      PubSubUserScopedEventListener.Factory userScopedEventListenerFactory)
       throws IOException {
     super(userProvider, permissionBackend);
     this.topicAdminSettings =
         TopicAdminSettings.newBuilder().setCredentialsProvider(credentials).build();
     this.topicNameFactory = topicNameFactory;
+    this.pubSubUserStreamEventListenerHandlers = pubSubUserStreamEventListenerHandlers;
+    this.userScopedEventListenerFactory = userScopedEventListenerFactory;
   }
 
   @Override
   Response<?> applyImpl(AccountResource rsrc, Input input) throws IOException {
+    TopicName topicName = topicNameFactory.createForAccount(rsrc.getUser().getAccountId());
     try (TopicAdminClient topicAdminClient = TopicAdminClient.create(topicAdminSettings)) {
-      Topic topic =
-          topicAdminClient.createTopic(
-              topicNameFactory.createForAccount(rsrc.getUser().getAccountId()));
+      Topic topic = topicAdminClient.createTopic(topicName);
       logger.atInfo().log("Created pubsub topic: %s", topic.getName());
     } catch (AlreadyExistsException e) {
-      return Response.none();
     }
+    if (!pubSubUserStreamEventListenerHandlers.containsKey(rsrc.getUser().getAccountId())) {
+      userScopedEventListenerFactory.create(rsrc.getUser());
+    }
+
     return Response.created();
   }
 }
