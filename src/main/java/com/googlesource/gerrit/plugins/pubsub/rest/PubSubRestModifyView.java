@@ -2,7 +2,6 @@ package com.googlesource.gerrit.plugins.pubsub.rest;
 
 import static com.google.gerrit.server.permissions.GlobalPermission.MAINTAIN_SERVER;
 
-import com.google.gerrit.extensions.common.Input;
 import com.google.gerrit.extensions.restapi.AuthException;
 import com.google.gerrit.extensions.restapi.MethodNotAllowedException;
 import com.google.gerrit.extensions.restapi.Response;
@@ -12,9 +11,8 @@ import com.google.gerrit.server.IdentifiedUser;
 import com.google.gerrit.server.account.AccountResource;
 import com.google.gerrit.server.permissions.PermissionBackend;
 import com.google.inject.Provider;
-import java.io.IOException;
 
-public abstract class PubSubRestModifyView implements RestModifyView<AccountResource, Input> {
+public abstract class PubSubRestModifyView<I> implements RestModifyView<AccountResource, I> {
 
   private final Provider<CurrentUser> userProvider;
   private final PermissionBackend permissionBackend;
@@ -25,11 +23,10 @@ public abstract class PubSubRestModifyView implements RestModifyView<AccountReso
     this.permissionBackend = permissionBackend;
   }
 
-  abstract Response<?> applyImpl(AccountResource rsrc, Input input) throws IOException;
+  abstract Response<?> applyImpl(AccountResource rsrc, I input) throws Exception;
 
   @Override
-  public Response<?> apply(AccountResource rsrc, Input input)
-      throws IOException, AuthException, MethodNotAllowedException {
+  public Response<?> apply(AccountResource rsrc, I input) throws Exception {
     checkPermission(rsrc.getUser());
     return applyImpl(rsrc, input);
   }
