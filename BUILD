@@ -94,6 +94,7 @@ java_library(
         "@visible-assertions//jar",
         "@jna//jar",
         "@testcontainers-gcloud//jar",
+        "@wiremock//jar",
         "@grpc-api//jar",
         "@gax-grpc//jar",
         "@grpc-netty-shaded//jar",
