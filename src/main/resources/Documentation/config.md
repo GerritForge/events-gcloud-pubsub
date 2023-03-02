@@ -52,6 +52,11 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Whether to send stream events to the `streamEventsTopic` topic.
     Default: false
 
+`plugin.events-gcloud-pubsub.retainAckedMessages`
+:   Whether to retain acknowledged messages in subscriptions. This will cause
+    additional storage costs.
+    Default: true
+
 Gerrit init integration
 -----------------------
 
