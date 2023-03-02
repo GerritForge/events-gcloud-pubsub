@@ -61,6 +61,10 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Whether to allow users to subscribe to stream events published to PubSub.
     Default: false
 
+`plugin.events-gcloud-pubsub.serviceAccountForUserSubs`
+:   ServiceAccount that is used for authentication of push subscriptions
+    pushing events to endusers.
+
 Gerrit init integration
 -----------------------
 

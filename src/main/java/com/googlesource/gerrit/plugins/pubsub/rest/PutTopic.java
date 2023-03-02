@@ -40,7 +40,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
-public class PutTopic extends PubSubRestModifyView {
+public class PutTopic extends PubSubRestModifyView<Input> {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicAdminSettings topicAdminSettings;
