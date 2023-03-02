@@ -74,7 +74,7 @@ class Module extends FactoryModule {
     install(pubSubApiModule);
     install(new PubSubRestModule(configuration));
     if (configuration.isEnableUserStreamEvents()) {
-      install(new PubSubUserEventListenerModule());
+      install(new PubSubUserEventListenerModule(environmentChecker));
     }
   }
 }
