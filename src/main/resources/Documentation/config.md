@@ -52,6 +52,14 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Whether to send stream events to the `streamEventsTopic` topic.
     Default: false
 
+`plugin.events-gcloud-pubsub.subscriptionRetainAckedMessages`
+:   Whether to retain acknowledged messages in subscriptions. This will cause
+    [additional storage costs](https://cloud.google.com/pubsub/docs/replay-overview#subscription_message_retention).
+    Note, that topics used for sharing events should retain acknowledged messages
+    to allow new subscribers, e.g. new Gerrit sites, to replay the most recent
+    events and bring their site up-to-date.
+    Default: true
+
 Gerrit init integration
 -----------------------
 

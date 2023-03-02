@@ -86,7 +86,7 @@ public class SubscriberProvider {
         .setName(projectSubscriptionName.toString())
         .setTopic(TopicName.of(pubSubProperties.getGCloudProject(), topicId).toString())
         .setAckDeadlineSeconds(pubSubProperties.getAckDeadlineSeconds())
-        .setRetainAckedMessages(true)
+        .setRetainAckedMessages(pubSubProperties.isSubscriptionRetainAckedMessages())
         .build();
   }
 

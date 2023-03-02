@@ -143,4 +143,27 @@ public class PubSubConfigurationTest {
 
     assertThat(thrown).hasMessageThat().contains("parameter 'privateKeyLocation' is mandatory");
   }
+
+  @Test
+  public void shouldByDefaultEnableMsgRetentionInSubscriptions() {
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    PubSubConfiguration configuration =
+        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
+
+    assertThat(configuration.isSubscriptionRetainAckedMessages()).isTrue();
+  }
+
+  @Test
+  public void shouldDisableMsgRetentionInSubscriptionsIfConfigured() {
+    pluginConfig.setBoolean("subscriptionRetainAckedMessages", false);
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    PubSubConfiguration configuration =
+        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
+
+    assertThat(configuration.isSubscriptionRetainAckedMessages()).isFalse();
+  }
 }
