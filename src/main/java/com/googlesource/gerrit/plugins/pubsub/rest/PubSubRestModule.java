@@ -29,5 +29,6 @@ public class PubSubRestModule extends RestApiModule {
 
     put(ACCOUNT_KIND, "pubsub.topic").to(PutTopic.class);
     delete(ACCOUNT_KIND, "pubsub.topic").to(DeleteTopic.class);
+    put(ACCOUNT_KIND, "pubsub.sub").to(PutSubscription.class);
   }
 }
