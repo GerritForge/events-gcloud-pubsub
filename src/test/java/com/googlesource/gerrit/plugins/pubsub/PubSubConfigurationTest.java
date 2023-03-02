@@ -34,6 +34,7 @@ public class PubSubConfigurationTest {
   private static final String gerritInstanceId = "some-gerrit-id";
   private static final String gCloudProject = "gcloud-test-project";
   private static final String privateKeyLocation = "/some/path";
+  private static final String serviceAccount = "service@account.example.com";
 
   private PluginConfig.Update pluginConfig;
   @Mock private PluginConfigFactory pluginConfigFactoryMock;
@@ -44,6 +45,7 @@ public class PubSubConfigurationTest {
     pluginConfig.setString("subscriptionId", subscriptionId);
     pluginConfig.setString("gcloudProject", gCloudProject);
     pluginConfig.setString("privateKeyLocation", privateKeyLocation);
+    pluginConfig.setString("serviceAccountForUserSubs", serviceAccount);
   }
 
   @Test
@@ -165,5 +167,43 @@ public class PubSubConfigurationTest {
         new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
 
     assertThat(configuration.isSubscriptionRetainAckedMessages()).isFalse();
+  }
+
+  @Test
+  public void shouldServiceAccountForUserSubscriptionsWhenConfigured() {
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    PubSubConfiguration configuration =
+        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
+
+    assertThat(configuration.getServiceAccountForUserSubs()).isEqualTo(serviceAccount);
+  }
+
+  @Test
+  public void shouldThrowExceptionWhenServiceAccountForUserSubscriptionsIsNotDefined() {
+    pluginConfig.setBoolean("enableUserStreamEvents", true);
+    pluginConfig.setString("serviceAccountForUserSubs", "");
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    IllegalStateException thrown =
+        assertThrows(
+            IllegalStateException.class,
+            () -> new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId));
+
+    assertThat(thrown)
+        .hasMessageThat()
+        .contains("parameter 'serviceAccountForUserSubs' is mandatory");
+
+    pluginConfig.setBoolean("enableUserStreamEvents", false);
+    pluginConfig.setString("serviceAccountForUserSubs", "");
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    PubSubConfiguration configuration =
+        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
+
+    assertThat(configuration.getServiceAccountForUserSubs()).isEqualTo(null);
   }
 }

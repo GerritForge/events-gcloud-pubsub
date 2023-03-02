@@ -64,6 +64,18 @@ def external_plugin_deps():
     )
 
     maven_jar(
+        name = "testcontainers-mockserver",
+        artifact = "org.testcontainers:mockserver:" + TESTCONTAINERS_VERSION,
+        sha1 = "1ed99c6342f73e031291cd0e22e8c86e821fcef9",
+    )
+
+    maven_jar(
+        name = "wiremock",
+        artifact = "com.github.tomakehurst:wiremock-standalone:2.27.2",
+        sha1 = "327647a19b2319af2526b9c33a5733a2241723e0",
+    )
+
+    maven_jar(
         name = "duct-tape",
         artifact = "org.rnorth.duct-tape:duct-tape:1.0.8",
         sha1 = "92edc22a9ab2f3e17c9bf700aaee377d50e8b530",
