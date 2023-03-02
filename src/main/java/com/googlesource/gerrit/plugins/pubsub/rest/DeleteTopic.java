@@ -35,7 +35,7 @@ import java.util.concurrent.ConcurrentMap;
 
 @Singleton
 @RequiresCapability(SubscribePubSubStreamEventsCapability.ID)
-public class DeleteTopic extends PubSubRestModifyView {
+public class DeleteTopic extends PubSubRestModifyView<Input> {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
 
   private final TopicProvider topicProvider;
