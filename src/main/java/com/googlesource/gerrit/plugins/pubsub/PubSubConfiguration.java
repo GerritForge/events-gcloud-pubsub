@@ -33,6 +33,7 @@ public class PubSubConfiguration {
   static final String ACK_DEADLINE_SECONDS_FIELD = "ackDeadlineSeconds";
   static final String SUBSCRIPTION_TIMEOUT_SECONDS_FIELD = "subscribtionTimeoutInSeconds";
   static final String SHUTDOWN_TIMEOUT_SECONDS_FIELD = "shutdownTimeoutInSeconds";
+  static final String RETAIN_ACKED_MESSAGES_FIELD = "retainAckedMessages";
 
   static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
   static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
@@ -40,6 +41,7 @@ public class PubSubConfiguration {
   static final String DEFAULT_SHUTDOWN_TIMEOUT = "10";
   static final String DEFAULT_STREAM_EVENTS_TOPIC = "gerrit";
   static final boolean DEFAULT_SEND_STREAM_EVENTS = false;
+  static final boolean RETAIN_ACKED_MESSAGES = true;
 
   private final String gcloudProject;
   private final String subscriptionId;
@@ -51,6 +53,7 @@ public class PubSubConfiguration {
   private final String streamEventsTopic;
   private final PluginConfig fromGerritConfig;
   private final boolean sendStreamEvents;
+  private final boolean retainAckedMessages;
 
   @Inject
   public PubSubConfiguration(
@@ -78,6 +81,8 @@ public class PubSubConfiguration {
     this.shutdownTimeoutInSeconds =
         Long.parseLong(
             fromGerritConfig.getString(SHUTDOWN_TIMEOUT_SECONDS_FIELD, DEFAULT_SHUTDOWN_TIMEOUT));
+    this.retainAckedMessages =
+        fromGerritConfig.getBoolean(RETAIN_ACKED_MESSAGES_FIELD, RETAIN_ACKED_MESSAGES);
   }
 
   public String getGCloudProject() {
@@ -127,5 +132,9 @@ public class PubSubConfiguration {
 
   public boolean isSendStreamEvents() {
     return sendStreamEvents;
+  }
+
+  public boolean isRetainAckedMessages() {
+    return retainAckedMessages;
   }
 }
