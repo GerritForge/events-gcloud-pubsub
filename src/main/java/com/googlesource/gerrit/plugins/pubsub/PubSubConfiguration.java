@@ -35,6 +35,7 @@ public class PubSubConfiguration {
   static final String SHUTDOWN_TIMEOUT_SECONDS_FIELD = "shutdownTimeoutInSeconds";
   static final String RETAIN_ACKED_MESSAGES_FIELD = "retainAckedMessages";
   static final String USER_SUBSCRIPTION_SERVICE_ACCOUNT_FIELD = "serviceAccountForUserSubs";
+  static final String USER_SUBSCRIPTION_PROXY_ENDPOINT_FIELD = "userSubProxyEndpoint";
 
   static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
   static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
@@ -56,6 +57,7 @@ public class PubSubConfiguration {
   private final boolean sendStreamEvents;
   private final boolean retainAckedMessages;
   private final String serviceAccountForUserSubs;
+  private final String userSubProxyEndpoint;
 
   @Inject
   public PubSubConfiguration(
@@ -87,6 +89,7 @@ public class PubSubConfiguration {
         fromGerritConfig.getBoolean(RETAIN_ACKED_MESSAGES_FIELD, RETAIN_ACKED_MESSAGES);
     this.serviceAccountForUserSubs =
         fromGerritConfig.getString(USER_SUBSCRIPTION_SERVICE_ACCOUNT_FIELD);
+    this.userSubProxyEndpoint = fromGerritConfig.getString(USER_SUBSCRIPTION_PROXY_ENDPOINT_FIELD);
   }
 
   public String getGCloudProject() {
@@ -144,5 +147,9 @@ public class PubSubConfiguration {
 
   public String getServiceAccountForUserSubs() {
     return serviceAccountForUserSubs;
+  }
+
+  public String getUserSubProxyEndpoint() {
+    return userSubProxyEndpoint;
   }
 }
