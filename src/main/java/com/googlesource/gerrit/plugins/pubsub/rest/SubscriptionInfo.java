@@ -20,10 +20,11 @@ import com.google.pubsub.v1.Subscription;
 @AutoValue
 public abstract class SubscriptionInfo {
 
-  public static SubscriptionInfo create(Subscription subscription, String verificationToken) {
+  public static SubscriptionInfo create(
+      Subscription subscription, String verificationToken, String audience) {
     return new AutoValue_SubscriptionInfo(
         subscription.getName(),
-        subscription.getPushConfig().getOidcToken().getAudience(),
+        audience,
         verificationToken,
         subscription.getPushConfig().getOidcToken().getServiceAccountEmail());
   }
