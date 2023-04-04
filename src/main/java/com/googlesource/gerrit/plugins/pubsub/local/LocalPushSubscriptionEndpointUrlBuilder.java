@@ -14,9 +14,18 @@
 
 package com.googlesource.gerrit.plugins.pubsub.local;
 
+import com.google.inject.Inject;
+import com.google.inject.Singleton;
+import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
 import com.googlesource.gerrit.plugins.pubsub.user.PushSubscriptionEndpointUrlBuilder;
 
+@Singleton
 public class LocalPushSubscriptionEndpointUrlBuilder extends PushSubscriptionEndpointUrlBuilder {
+
+  @Inject
+  public LocalPushSubscriptionEndpointUrlBuilder(PubSubConfiguration pubSubProperties) {
+    super(pubSubProperties);
+  }
 
   @Override
   public String getProtocol() {
