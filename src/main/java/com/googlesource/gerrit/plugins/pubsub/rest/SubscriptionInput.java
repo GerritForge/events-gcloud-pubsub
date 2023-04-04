@@ -20,4 +20,5 @@ import com.google.gerrit.extensions.common.Input;
 public class SubscriptionInput extends Input {
   String pushEndpoint;
   @Nullable String verificationToken;
+  boolean internal;
 }

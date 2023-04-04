@@ -65,7 +65,8 @@ public class PutSubscription extends PubSubRestModifyView<SubscriptionInput> {
               topicNameFactory.createForAccount(accountId).getTopic(),
               rsrc.getUser(),
               new URI(input.pushEndpoint),
-              input.verificationToken);
+              input.verificationToken,
+              input.internal);
       return Response.created(SubscriptionInfo.create(sub, input.verificationToken));
     } catch (IOException e) {
       logger.atSevere().withCause(e).log("Failed to create subscription for account %s", accountId);
