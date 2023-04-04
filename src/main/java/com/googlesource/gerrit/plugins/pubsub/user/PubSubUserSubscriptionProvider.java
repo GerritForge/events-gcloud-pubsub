@@ -76,28 +76,42 @@ public class PubSubUserSubscriptionProvider {
   }
 
   public Subscription getOrCreate(
-      String topicId, CurrentUser user, String pushEndpoint, String verificationToken)
+      String topicId,
+      CurrentUser user,
+      String pushEndpoint,
+      String verificationToken,
+      boolean internal)
       throws IOException {
     try (SubscriptionAdminClient subscriptionAdminClient =
         SubscriptionAdminClient.create(settings)) {
-      String pushEndpointWithToken = endpointBuilder.build(pushEndpoint, verificationToken);
+      String pushEndpointWithParameters;
+      String audience;
+      if (internal) {
+        pushEndpointWithParameters = endpointBuilder.buildProxied(pushEndpoint, verificationToken);
+        audience = pubSubProperties.getUserSubProxyEndpoint();
+      } else {
+        pushEndpointWithParameters = endpointBuilder.build(pushEndpoint, verificationToken);
+        audience = user.getLoggableName();
+      }
       return getSubscription(subscriptionAdminClient, user.getAccountId())
           .orElseGet(
               () ->
                   subscriptionAdminClient.createSubscription(
-                      createSubscriptionRequest(user, topicId, pushEndpointWithToken)));
+                      createSubscriptionRequest(
+                          user, topicId, pushEndpointWithParameters, audience)));
     }
   }
 
   private Subscription createSubscriptionRequest(
-      CurrentUser user, String topicId, String pushEndpoint) {
+      CurrentUser user, String topicId, String pushEndpoint, String audience) {
     OidcToken token =
         OidcToken.newBuilder()
             .setServiceAccountEmail(pubSubProperties.getServiceAccountForUserSubs())
-            .setAudience(user.getLoggableName())
+            .setAudience(audience)
             .build();
     PushConfig pushConfig =
         PushConfig.newBuilder().setPushEndpoint(pushEndpoint).setOidcToken(token).build();
+
     return Subscription.newBuilder()
         .setName(subNameFactory.createForAccount(user.getAccountId()).toString())
         .setPushConfig(pushConfig)
