@@ -65,6 +65,11 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   ServiceAccount that is used for authentication of push subscriptions
     pushing events to endusers.
 
+`plugin.events-gcloud-pubsub.userSubProxyEndpoint`
+:   If some enduser subscriber endpoints are within a private network,
+    requests have to be proxied through CloudRun. The URL of the CloudRun
+    service has to be configured here.
+
 Gerrit init integration
 -----------------------
 
