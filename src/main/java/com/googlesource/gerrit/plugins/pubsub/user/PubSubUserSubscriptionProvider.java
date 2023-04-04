@@ -56,32 +56,61 @@ public class PubSubUserSubscriptionProvider {
   }
 
   public Subscription getOrCreate(
-      String topicId, CurrentUser user, URI pushEndpoint, String verificationToken)
+      String topicId,
+      CurrentUser user,
+      URI pushEndpoint,
+      String verificationToken,
+      boolean internal)
       throws IOException, URISyntaxException {
     try (SubscriptionAdminClient subscriptionAdminClient =
         SubscriptionAdminClient.create(settings)) {
-      URI pushEndpointWithToken =
-          new URIBuilder(pushEndpoint).addParameter("token", verificationToken).build();
+      URI pushEndpointWithParameters;
+      String audience;
+      if (internal) {
+        pushEndpointWithParameters = buildProxyPushEndpointURI(pushEndpoint, verificationToken);
+        audience = String.format("https://%s", pubSubProperties.getUserSubProxyEndpoint());
+      } else {
+        pushEndpointWithParameters =
+            new URIBuilder(pushEndpoint).addParameter("token", verificationToken).build();
+        audience = user.getLoggableName();
+      }
       return getSubscription(subscriptionAdminClient, user)
           .orElseGet(
               () ->
                   subscriptionAdminClient.createSubscription(
-                      createSubscriptionRequest(user, topicId, pushEndpointWithToken)));
+                      createSubscriptionRequest(
+                          user, topicId, pushEndpointWithParameters, audience)));
     }
   }
 
+  private URI buildProxyPushEndpointURI(URI pushEndpoint, String verificationToken)
+      throws URISyntaxException {
+    String proxyHost = pubSubProperties.getUserSubProxyEndpoint();
+    if (proxyHost == null || proxyHost.isBlank()) {
+      throw new IllegalArgumentException("Can't push to internal network. Proxu URL not set.");
+    }
+    return new URIBuilder()
+        .setScheme("https")
+        .setHost(proxyHost)
+        .setParameter("host", pushEndpoint.getHost())
+        .setParameter("path", pushEndpoint.getPath())
+        .setParameter("token", verificationToken)
+        .build();
+  }
+
   private Subscription createSubscriptionRequest(
-      CurrentUser user, String topicId, URI pushEndpoint) {
+      CurrentUser user, String topicId, URI pushEndpoint, String audience) {
     OidcToken token =
         OidcToken.newBuilder()
             .setServiceAccountEmail(pubSubProperties.getServiceAccountForUserSubs())
-            .setAudience(user.getLoggableName())
+            .setAudience(audience)
             .build();
     PushConfig pushConfig =
         PushConfig.newBuilder()
             .setPushEndpoint(pushEndpoint.toString())
             .setOidcToken(token)
             .build();
+
     return Subscription.newBuilder()
         .setName(subNameFactory.createForAccount(user.getAccountId()).toString())
         .setPushConfig(pushConfig)
