@@ -36,6 +36,7 @@ public class PubSubConfiguration {
   static final String RETAIN_ACKED_MESSAGES_FIELD = "retainAckedMessages";
   static final String ENABLE_USER_STREAM_EVENTS_FIELD = "enableUserStreamEvents";
   static final String USER_SUBSCRIPTION_SERVICE_ACCOUNT_FIELD = "serviceAccountForUserSubs";
+  static final String USER_SUBSCRIPTION_PROXY_ENDPOINT_FIELD = "userSubProxyEndpoint";
 
   static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
   static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
@@ -59,6 +60,7 @@ public class PubSubConfiguration {
   private final boolean retainAckedMessages;
   private final boolean enableUserStreamEvents;
   private final String serviceAccountForUserSubs;
+  private final String userSubProxyEndpoint;
 
   @Inject
   public PubSubConfiguration(
@@ -94,6 +96,7 @@ public class PubSubConfiguration {
     this.serviceAccountForUserSubs =
         getConditionallyMandatoryString(
             USER_SUBSCRIPTION_SERVICE_ACCOUNT_FIELD, enableUserStreamEvents);
+    this.userSubProxyEndpoint = readUserSubProxyEndpoint();
   }
 
   public String getGCloudProject() {
@@ -163,5 +166,24 @@ public class PubSubConfiguration {
 
   public String getServiceAccountForUserSubs() {
     return serviceAccountForUserSubs;
+  }
+
+  private String readUserSubProxyEndpoint() {
+    return addHttpsProtocolIfNecessary(
+        fromGerritConfig.getString(USER_SUBSCRIPTION_PROXY_ENDPOINT_FIELD));
+  }
+
+  public String getUserSubProxyEndpoint() {
+    return addHttpsProtocolIfNecessary(userSubProxyEndpoint);
+  }
+
+  private static String addHttpsProtocolIfNecessary(String url) {
+    if (url == null || url.isBlank() || url.startsWith("https://")) {
+      return url;
+    }
+    if (url.contains("://")) {
+      throw new IllegalStateException("The protocol used has to be HTTPS.");
+    }
+    return "https://" + url;
   }
 }
