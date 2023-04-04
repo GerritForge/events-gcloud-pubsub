@@ -88,7 +88,8 @@ per account to serve multiple subscribers.
 
   {
     "push_endpoint": "https://example.com/events",
-    "verification_token" "token1234"
+    "verification_token" "token1234",
+    "internal": false
   }
 ```
 
@@ -116,8 +117,9 @@ per account to serve multiple subscribers.
 The `SubscriptionInput` entity contains parameters required for the
 creation of a PubSub subscription.
 
-* _push_endpoint_ : The URL PubSub should push the events to. Has to use HTTPS and publicly available.
+* _push_endpoint_ : The URL PubSub should push the events to. Has to use HTTPS.
 * _verification_token_ : A string that will be send with the token parameter in the request to verify the request's origin.
+* _internal_ : Whether the endpoint is in a private network.
 
 
 ### <a id="subscription-info"></a>SubscriptionInfo
