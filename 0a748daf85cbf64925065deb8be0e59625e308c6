@@ -9,12 +9,12 @@
       "updated": "2023-04-05T13:42:27Z"
     },
     "gerritforge:plugins-events-gcloud-pubsub-code-style": {
-      "state": "SUCCESSFUL",
-      "url": "https://gerrit-ci.gerritforge.com/job/plugin-events-gcloud-pubsub-verifier/job/00%252F363000%252F2/1/console",
-      "started": "2023-04-05T13:39:05Z",
+      "state": "RUNNING",
+      "url": "https://gerrit-ci.gerritforge.com/job/plugin-events-gcloud-pubsub-verifier/job/00%252F363000%252F2/2/console",
+      "started": "2023-04-05T13:45:52Z",
       "finished": "2023-04-05T13:39:12Z",
       "created": "2023-04-05T13:39:06Z",
-      "updated": "2023-04-05T13:39:12Z"
+      "updated": "2023-04-05T13:45:52Z"
     }
   }
 }
