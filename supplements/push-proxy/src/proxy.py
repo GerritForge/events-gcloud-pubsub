@@ -74,7 +74,7 @@ def index():
         enduser_endpoint_with_token,
         json=request.get_json(),
         headers=headers,
-        verify=False,
+        verify="/etc/ssl/certs/ca-certificates.crt",
     )
 
     return ("", response.status_code)
