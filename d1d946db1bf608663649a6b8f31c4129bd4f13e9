@@ -1,11 +1,12 @@
 {
   "checks": {
     "gerritforge:plugins-events-gcloud-pubsub-build-test": {
-      "state": "RUNNING",
+      "state": "FAILED",
       "url": "https://gerrit-ci.gerritforge.com/job/plugin-events-gcloud-pubsub-verifier/job/99%252F362999%252F6/1/console",
       "started": "2023-04-06T11:46:20Z",
+      "finished": "2023-04-06T11:58:40Z",
       "created": "2023-04-06T11:46:20Z",
-      "updated": "2023-04-06T11:46:20Z"
+      "updated": "2023-04-06T11:58:41Z"
     },
     "gerritforge:plugins-events-gcloud-pubsub-code-style": {
       "state": "SUCCESSFUL",
