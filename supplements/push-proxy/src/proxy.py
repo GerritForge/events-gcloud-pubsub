@@ -64,7 +64,11 @@ def index():
     headers = {
         "Authorization": _get_auth_header(request, host)
     }
-    response = session.post(enduser_endpoint, json=request.get_json(), headers=headers, verify=False)
+    response = session.post(
+        enduser_endpoint,
+        json=request.get_json(),
+        headers=headers,
+        verify="/etc/ssl/certs/ca-certificates.crt")
 
     return ("", response.status_code)
 
