@@ -104,6 +104,9 @@ The sources for a docker container that can proxy push requests are provided
 under `/supplements/push-proxy`. Build the container and push it to the GCR
 repository in the same GCP project used for PubSub.
 
+In case custom CA-certificates for TLS verification are required, the default
+`/etc/ssl/certs/ca-certificates.crt` can be overwritten during image build.
+
 Create a CloudRun Service:
 
 1) Select the container image described above.
