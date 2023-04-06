@@ -7,6 +7,10 @@ WORKDIR /pushproxy
 
 RUN pip install --require-hashes -r requirements.txt
 
+# If custom CA-certificates are required, this can be used to overwrite the
+# default.
+# COPY certs/ca-certificates.crt /etc/ssl/certs/ca-certificates.crt
+
 CMD exec gunicorn \
     --chdir /pushproxy \
     --bind 0.0.0.0:8080 \
