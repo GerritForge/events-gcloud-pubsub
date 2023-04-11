@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "140b1675_61c8ccd9",
+        "filename": "src/main/resources/Documentation/user-stream-event-subscriptions.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:49:30Z",
+      "side": 1,
+      "message": "isn\u0027t the default `true` already?",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "cb2c56dcea8fc141902c62514d0015de276b3ebf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "caa71d92_401765c2",
+        "filename": "src/main/resources/Documentation/user-stream-event-subscriptions.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:49:30Z",
+      "side": 1,
+      "message": "What\u0027s the added benefit of adding a separate topic for each user?\nWouldn\u0027t users interested in consuming the stream events just be able to create their own subscription?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 80
+      },
+      "revId": "cb2c56dcea8fc141902c62514d0015de276b3ebf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
