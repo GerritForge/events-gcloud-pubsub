@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "20726b37_73cae292",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/DeleteTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 53,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:45:05Z",
+      "side": 1,
+      "message": "As mentioned in the previous change in this chain, should we not check that the user making the request is removing herself here?\n\nI believe we could do with a test for this",
+      "revId": "d9c96fc0afbfd0579c6388d28984ce10e427f5ad",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
