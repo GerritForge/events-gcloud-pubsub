@@ -1,0 +1,228 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "11ba4f50_104b39c8",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "it is not clear from the commit message (nor from the documentation) what\u0027s the use case for it.\n\nWhat would the topic be used for? what messages would be published to it and who would consume it?",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "758a450a_f1481de9",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "I think it\u0027d be worth documenting that gcloud will impose a per-project limit to the number of topics that can be created [1], which is 10000.\n\nIf the number of users exceeds this value a request to increase this limit should be done.\n\n[1]https://cloud.google.com/pubsub/quotas",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b655b2a7_7fe9fd0d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/Module.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "if `userStreamEvents` is not enabled, `PubSubRestModule` will do nothing.\nWhy not avoiding to install it by controlling the condition here?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a72cf65e_56eab9ed",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "nit: consider prefixing with _DEFAULT_",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 48
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "027211d6_f7e4a8e2",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PubsubTopicNameFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "Consider adding a test for this",
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ba235a43_084c2ed9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PutTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "What if the user that called the endpoint didn\u0027t use `/accounts/self/...`, but an explicit account id here?\n\nShould we not check that the resource account id always matches the identity of the user performing the request?\n\nIn any case we should probably add tests for this behaviour",
+      "range": {
+        "startLine": 55,
+        "startChar": 48,
+        "endLine": 55,
+        "endChar": 77
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a7dd83c_cd65232f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PutTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "What would be the permissions granted to this topic?\nWho can write/read from it? will it use whatever defaults are set in gcloud? can the gerrit admin amend this?",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 80
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e91a3737_4001c5dd",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PutTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 60,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "Could you please document which metrics are made available out of the box when calling this endpoint? It would help the gerrit admin to monitor its usage",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 60,
+        "endChar": 30
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e4aded15_afef8de6",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "I am struggling to understand how this relates to the user being able to create a new topic.\n\nHow is that related to stream events at all?\nCould you please expand the documentation and commit the message with the intention of this?\n\nPerhaps this will become obvious when reviewing subsequent changes in this chain, but it is difficult to grasp from this CR only.",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e951cf09_616ec558",
+        "filename": "src/main/resources/Documentation/rest-api-accounts.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:44:49Z",
+      "side": 1,
+      "message": "Can you give more details about what will be the name of the created topic?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
