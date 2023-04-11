@@ -1,0 +1,96 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "cfb390ff_c6dcd2a0",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:43:25Z",
+      "side": 1,
+      "message": "I think you are referring to the `replayAllEvents` functionality (i.e. not `replayAll()`.\nBut that _is_ actually used, see an example here [1]\n\n[1]https://gerrit.googlesource.com/plugins/websession-broker/+/refs/heads/master/src/main/java/com/googlesource/gerrit/plugins/websession/broker/BrokerBasedWebSessionCache.java#234",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2c76b7ee_18c56d6b",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:43:25Z",
+      "side": 1,
+      "message": "nit: consider prefixing this with DEFAULT_ for consistency with other defaults",
+      "range": {
+        "startLine": 85,
+        "startChar": 65,
+        "endLine": 85,
+        "endChar": 86
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c7ab88b0_f2ddfc6c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:43:25Z",
+      "side": 1,
+      "message": "Could you please add at least one test in `PubSubConfigurationTest` for this?",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 3
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ad370c01_ec70a6c3",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-04-11T06:43:25Z",
+      "side": 1,
+      "message": "Please could you share a link to the documentation here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
