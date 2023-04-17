@@ -71,6 +71,54 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "2e2491e4_2a986897",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "d9dd6a37_f74e9204",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 10,
+        "endChar": 18
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "bbf691f9_7e431271",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 10,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Done in the rest-api documentation.\nI don\u0027t believe however that this will become an issue. Having 10.000 users that stream events seems unlikely even for the largest setups.",
+      "parentUuid": "758a450a_f1481de9",
+      "range": {
+        "startLine": 10,
+        "startChar": 19,
+        "endLine": 10,
+        "endChar": 54
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b655b2a7_7fe9fd0d",
@@ -84,6 +132,30 @@
       "writtenOn": "2023-04-11T06:44:49Z",
       "side": 1,
       "message": "if `userStreamEvents` is not enabled, `PubSubRestModule` will do nothing.\nWhy not avoiding to install it by controlling the condition here?",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "89890a66_16ad8c86",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/Module.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "I thought about it, but since I chose quite a general name `PubSubRestModule` which could be used to control other endpoints in the future that are not related to this feature, I decided to install it unconditionally, but control what is bound based on this option.",
+      "parentUuid": "b655b2a7_7fe9fd0d",
       "range": {
         "startLine": 70,
         "startChar": 0,
@@ -117,6 +189,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "91e76d9a_f9fe69bd",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 46,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "a72cf65e_56eab9ed",
+      "range": {
+        "startLine": 46,
+        "startChar": 23,
+        "endLine": 46,
+        "endChar": 48
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "027211d6_f7e4a8e2",
@@ -130,6 +226,24 @@
       "writtenOn": "2023-04-11T06:44:49Z",
       "side": 1,
       "message": "Consider adding a test for this",
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7f8194e7_e246c1fe",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PubsubTopicNameFactory.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 38,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "027211d6_f7e4a8e2",
       "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -204,6 +318,54 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "73c6ef1a_43f7d6be",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PutTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Ack. I was anyway planning to add tests for everything now, while already putting this out for general discussion. (not very test driven I know :-()",
+      "parentUuid": "e352c0ea_720004d7",
+      "range": {
+        "startLine": 55,
+        "startChar": 48,
+        "endLine": 55,
+        "endChar": 77
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "d053b180_ec15cdff",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PutTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Gerrit users should not be able to directly do something with the topic at all. In the end they have to do everything through Gerrit. The reason for that is, that we would not like to share any credentials with third parties.\nIn the followup changes Gerrit users will become able to create subscriptions through Gerrit. That way they will be able to retrieve events. To make this possible without requiring GCP credentials from the end user, these will be push subscriptions.\nBy default, GCP users with the corresponding pubsub roles will be able to view/edit them. I think there is no reason to add finer grained permissions to the topic.\n\nAdmins will be able to amend the topics and they will continue to be usable as long as the serviceAccount used by Gerrit can still access them, e.g. attach subscriptions.",
+      "parentUuid": "9a7dd83c_cd65232f",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 80
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e91a3737_4001c5dd",
@@ -250,6 +412,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "19142677_86d2d71b",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 62,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Sorry for that. The whole feature requires addition of a lot of new smaller pieces to give a complete picture. Squashing those would have made the change huge. A design document as a first change would however have been a good idea.\n\nTo answer the question here as well for reference. This plugin provides unfiltered stream events. However, stream events for end users (as implemented with SSH) are filtered according to the user\u0027s permissions. I want to achieve that here as well. This can however only be done by having one topic per user. Another reason for these changes is, that we don\u0027t want to hand out GCP credentials to our users. Thus, we implemented a way to perform all necessary interactions requiring GCP credentials through Gerrit.",
+      "parentUuid": "e4aded15_afef8de6",
+      "range": {
+        "startLine": 60,
+        "startChar": 0,
+        "endLine": 62,
+        "endChar": 18
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e951cf09_616ec558",
@@ -263,6 +449,30 @@
       "writtenOn": "2023-04-11T06:44:49Z",
       "side": 1,
       "message": "Can you give more details about what will be the name of the created topic?",
+      "range": {
+        "startLine": 15,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 39
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "4c8086e8_be6941a3",
+        "filename": "src/main/resources/Documentation/rest-api-accounts.md",
+        "patchSetId": 3
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:35Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e951cf09_616ec558",
       "range": {
         "startLine": 15,
         "startChar": 0,
