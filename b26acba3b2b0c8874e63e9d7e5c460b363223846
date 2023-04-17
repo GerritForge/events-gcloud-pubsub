@@ -26,6 +26,30 @@
     {
       "unresolved": true,
       "key": {
+        "uuid": "f3c9af0f_4a0dbc52",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 15,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:27Z",
+      "side": 1,
+      "message": "Thanks for the hint. Didn\u0027t check this plugin.\nJust for clarification let me summarize how the websession-broker plugin would be affected by this change:\nThe websession-broker plugin replays all retained events, when it is loaded to update the cache. There are several scenarios to consider:\n\n- retain acked messages in topic: false \u0026\u0026 retain acked messages in subscription: false \u0026\u0026 new Gerrit site (empty cache, no existing subscription) \u003d\u003e Cache would stay empty.\n\n- retain acked messages in topic: false \u0026\u0026 retain acked messages in subscription: false \u0026\u0026 existing Gerrit site (down due to restart) \u003d\u003e All unacked events would be replayed, if the downtime was shorter than the max retention time. The cache would be up-to-date.\n\n- retain acked messages in topic: false \u0026\u0026 retain acked messages in subscription: true \u0026\u0026 new Gerrit site (empty cache, no existing subscription) \u003d\u003e Cache would stay empty, since the subscription did not exist yet and thus did not retain any event.\n\n- retain acked messages in topic: false \u0026\u0026 retain acked messages in subscription: true \u0026\u0026 existing Gerrit site (down due to restart) \u003d\u003e All events would be replayed. The cache would be up-to-date. A lot of events would cause no-op cache updates, since the cache was already containing the entry.\n\n- retain acked messages in topic: true \u0026\u0026 retain acked messages in subscription: false/true \u0026\u0026 new Gerrit site (empty cache, no existing subscription) \u003d\u003e Cache would be up-to-date.\n\n- retain acked messages in topic: true \u0026\u0026 retain acked messages in subscription: false/true \u0026\u0026 existing Gerrit site (down due to restart) \u003d\u003e All events would be replayed. The cache would be up-to-date. A lot of events would cause no-op cache updates, since the cache was already containing the entry.\n\nThus, having retention enabled on the subscription would not bring any benefit. It should be enabled on topic level to ensure proper initialization of new sites. The only reason for using retention of acked messages in subscriptions over topics would be that not all subscribers should be able to replay events, which is not the case in this scenario.",
+      "parentUuid": "cfb390ff_c6dcd2a0",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 15,
+        "endChar": 4
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
         "uuid": "2c76b7ee_18c56d6b",
         "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
         "patchSetId": 2
@@ -37,6 +61,30 @@
       "writtenOn": "2023-04-11T06:43:25Z",
       "side": 1,
       "message": "nit: consider prefixing this with DEFAULT_ for consistency with other defaults",
+      "range": {
+        "startLine": 85,
+        "startChar": 65,
+        "endLine": 85,
+        "endChar": 86
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "74db5fa5_02100f88",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 85,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2c76b7ee_18c56d6b",
       "range": {
         "startLine": 85,
         "startChar": 65,
@@ -70,6 +118,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5f6764f1_1499aee1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 139,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "c7ab88b0_f2ddfc6c",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 139,
+        "endChar": 3
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "ad370c01_ec70a6c3",
@@ -83,6 +155,30 @@
       "writtenOn": "2023-04-11T06:43:25Z",
       "side": 1,
       "message": "Please could you share a link to the documentation here?",
+      "range": {
+        "startLine": 56,
+        "startChar": 0,
+        "endLine": 57,
+        "endChar": 29
+      },
+      "revId": "b26acba3b2b0c8874e63e9d7e5c460b363223846",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "0cb47a33_355b74af",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-17T08:23:27Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "ad370c01_ec70a6c3",
       "range": {
         "startLine": 56,
         "startChar": 0,
