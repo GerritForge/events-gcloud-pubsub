@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e22203ac_4992b20d",
+        "filename": "src/main/resources/Documentation/user-stream-event-subscriptions.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 32,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-18T13:54:22Z",
+      "side": 1,
+      "message": "No, it is `false`. Since most people will likely still use this plugin only to distribute messages between Gerrit instances, I also think distributing events to users should be disabled by default.",
+      "parentUuid": "140b1675_61c8ccd9",
+      "range": {
+        "startLine": 32,
+        "startChar": 0,
+        "endLine": 32,
+        "endChar": 51
+      },
+      "revId": "cb2c56dcea8fc141902c62514d0015de276b3ebf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "caa71d92_401765c2",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-04-11T06:49:30Z",
       "side": 1,
       "message": "What\u0027s the added benefit of adding a separate topic for each user?\nWouldn\u0027t users interested in consuming the stream events just be able to create their own subscription?",
+      "range": {
+        "startLine": 43,
+        "startChar": 0,
+        "endLine": 43,
+        "endChar": 80
+      },
+      "revId": "cb2c56dcea8fc141902c62514d0015de276b3ebf",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6789a09f_9d6869d8",
+        "filename": "src/main/resources/Documentation/user-stream-event-subscriptions.md",
+        "patchSetId": 4
+      },
+      "lineNbr": 43,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-18T13:54:22Z",
+      "side": 1,
+      "message": "Unfortunately not. Stream events consumed by users are filtered dependent on the access permissions of the user. This filtering can however only happen before we publish the event to PubSub, which means we need a topic per user.",
+      "parentUuid": "caa71d92_401765c2",
       "range": {
         "startLine": 43,
         "startChar": 0,
