@@ -34,6 +34,24 @@
       "parentUuid": "8904a200_4a1bf91e",
       "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "41f538e9_4e7afc1f",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1157810
+      },
+      "writtenOn": "2023-04-19T11:21:24Z",
+      "side": 1,
+      "message": "I agree with @Ponch that infrastructure should not be managed by the plugin. \n\nYou\u0027re right @Thomas that this plugin is already managing some infra, \nI don\u0027t know why that\u0027s the case, but I don\u0027t think that\u0027s right. \n\nThe plugin should do one thing and only one thing, and this is the provision \nof producer/consumer capabilities for stream events. I think we should create \na monorail issue to move the infrastructure management logic out of this plugin.\n\nI don\u0027t know where this logic would be moved, ie whether it goes into a separate plugin, dedicated to infra management, or into somewhere else (ie managed by each organisation internally). Although, in my eyes, I don\u0027t see how managing the infrastructure via a plugin would be better over the org\u0027s established practises.\nBut I am new to gerrit and this plugin so I could be missing something.",
+      "parentUuid": "fc50f947_9c89b3f2",
+      "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
