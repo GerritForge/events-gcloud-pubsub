@@ -52,6 +52,24 @@
       "parentUuid": "fc50f947_9c89b3f2",
       "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "ca78417d_a32e5029",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-19T12:09:16Z",
+      "side": 1,
+      "message": "To be exact the plugin already creates subscriptions, but you can also configure your own subscription, if you would rather use Terraform/Pulumi or whatever. I guess, having that subscription creation in Gerrit helps, if the infrastructure management is not yet fully automated.\n\nIn the event subscription for users, we need to somehow manage the lifecycle of topics and subscriptions that is accessible to users and has some authentication/authorization system. This doesn\u0027t have to be Gerrit, but could also be some other service, which could also trigger some GitOps-based process or so. Gerrit just already brings a lot of the components making implementing such a registration service much easier.",
+      "parentUuid": "41f538e9_4e7afc1f",
+      "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
