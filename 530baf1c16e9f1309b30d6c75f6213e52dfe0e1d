@@ -16,6 +16,24 @@
       "message": "I don\u0027t think Gerrit should be used as a gateway to manage infrastructure.\n\nWhat\u0027s the use case for managing the infrastructure via Gerrit?\n\nI believe this plugin is only meant to provide an events-broker implementation, i.e.: provide producer/consumer capabilities for a particular broker technology.\n\nIf there is a use case I would rather create a different plugin dedicated to infrastructure management, so it doesn\u0027t get in the way of the main functionality of this plugin.\n\nAnyhow, if there is a strong consensus in adding this functionality here I think we should add interfaces of the API in the events-broker and implementations in each `events-*` plugin.\n\n@luca WDYT?",
       "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "fc50f947_9c89b3f2",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-04-19T06:39:30Z",
+      "side": 1,
+      "message": "\u003e What\u0027s the use case for managing the infrastructure via Gerrit?\n\nThis change series is meant to enable endusers to subscribe to events via PubSub. For our servers, we have a lot of stakeholders. Thus, it would be impossible for us to manually provide them with access to PubSub, if they require it. It has to be a self service and one that does not expose GCP credentials to the enduser. We could develop a separate web service for that, but that would come with a significant overhead and would make things like authorization quite a bit more complicated for us and the endusers.\nAnd this plugin was already managing infrastructure: It creates subscriptions for the Gerrit instance it is running in.\n\n\u003e If there is a use case I would rather create a different plugin dedicated to infrastructure management, so it doesn\u0027t get in the way of the main functionality of this plugin.\n\nI also already though about putting this functionality into a separate plugin. I originally thought that I would use a lot of existing components of the plugin, but looking at the current state, I am basically only using the TopicProvider and PubSubConfiguration. Having two TopicProviders and some duplicated configuration, e.g. location of the service account key should be fine I think. Let me bring it on the mailing list.\n\n\u003e Anyhow, if there is a strong consensus in adding this functionality here I think we should add interfaces of the API in the events-broker and implementations in each events-* plugin.\n\nYes, the interfaces should go into the events-broker module. I have planned to do that as soon as this series is stable, i.e. it works and discussions agree upon that this is a workable alternative to SSH stream events.",
+      "parentUuid": "8904a200_4a1bf91e",
+      "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
