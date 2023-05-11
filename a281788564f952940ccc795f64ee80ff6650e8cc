@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "c2146c28_ec206008",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-05-11T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "e5d9af8d_c18575f5",
+      "range": {
+        "startLine": 7,
+        "startChar": 0,
+        "endLine": 7,
+        "endChar": 35
+      },
+      "revId": "a281788564f952940ccc795f64ee80ff6650e8cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "1d3879ad_7b177a36",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-04-19T10:07:38Z",
       "side": 1,
       "message": "```suggestion\nGoogle PubSub allows to retain messages already acknowledged\nmessages in a subscription. This allows the subscription to keep a log of all past\nmessages up to a certain period of time, but comes with additional storage costs. \nThis behaviour is currently enabled in the plugin, this change makes the setting configurable to allow clients to choose the desired behaviour. \n```",
+      "range": {
+        "startLine": 9,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 49
+      },
+      "revId": "a281788564f952940ccc795f64ee80ff6650e8cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "9d82a67c_bc61f6a7",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 3
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-05-11T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "1d3879ad_7b177a36",
       "range": {
         "startLine": 9,
         "startChar": 0,
@@ -87,6 +135,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "296d7738_7b63a230",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 36,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-05-11T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "7c9b1043_55d653d2",
+      "range": {
+        "startLine": 36,
+        "startChar": 22,
+        "endLine": 36,
+        "endChar": 49
+      },
+      "revId": "a281788564f952940ccc795f64ee80ff6650e8cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "665da6ce_5efb0613",
@@ -100,6 +172,30 @@
       "writtenOn": "2023-04-19T10:07:38Z",
       "side": 1,
       "message": "```suggestion\n  static final boolean SUBSCRIPTION_DEFAULT_RETAIN_ACKED_MESSAGES \u003d true;\n```",
+      "range": {
+        "startLine": 44,
+        "startChar": 23,
+        "endLine": 44,
+        "endChar": 52
+      },
+      "revId": "a281788564f952940ccc795f64ee80ff6650e8cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "315d0273_b53d52d0",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-05-11T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "665da6ce_5efb0613",
       "range": {
         "startLine": 44,
         "startChar": 23,
@@ -133,6 +229,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e21579c0_111cec4d",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 56,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-05-11T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "22d70e50_c3217767",
+      "range": {
+        "startLine": 56,
+        "startChar": 2,
+        "endLine": 56,
+        "endChar": 44
+      },
+      "revId": "a281788564f952940ccc795f64ee80ff6650e8cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "0e1de828_6e401e1e",
@@ -146,6 +266,30 @@
       "writtenOn": "2023-04-19T10:07:38Z",
       "side": 1,
       "message": "```suggestion\n  public boolean isSubscriptionRetainAckedMessages() {\n```",
+      "range": {
+        "startLine": 137,
+        "startChar": 0,
+        "endLine": 137,
+        "endChar": 42
+      },
+      "revId": "a281788564f952940ccc795f64ee80ff6650e8cc",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "48476f3d_1e5092c3",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 137,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-05-11T07:42:12Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "0e1de828_6e401e1e",
       "range": {
         "startLine": 137,
         "startChar": 0,
