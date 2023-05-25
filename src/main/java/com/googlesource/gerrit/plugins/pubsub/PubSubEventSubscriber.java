@@ -21,6 +21,8 @@ import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.flogger.FluentLogger;
 import com.google.gerrit.server.events.Event;
+import com.google.gerrit.server.util.ManualRequestContext;
+import com.google.gerrit.server.util.OneOffRequestContext;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.pubsub.v1.PubsubMessage;
@@ -39,6 +41,7 @@ public class PubSubEventSubscriber {
 
   private final EventDeserializer eventsDeserializer;
   private final PubSubSubscriberMetrics subscriberMetrics;
+  private final OneOffRequestContext oneOffRequestContext;
   private final String topic;
   private final Consumer<Event> messageProcessor;
   private final SubscriberProvider subscriberProvider;
@@ -51,10 +54,12 @@ public class PubSubEventSubscriber {
       SubscriberProvider subscriberProvider,
       PubSubConfiguration config,
       PubSubSubscriberMetrics subscriberMetrics,
+      OneOffRequestContext oneOffRequestContext,
       @Assisted String topic,
       @Assisted Consumer<Event> messageProcessor) {
     this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
+    this.oneOffRequestContext = oneOffRequestContext;
     this.topic = topic;
     this.messageProcessor = messageProcessor;
     this.subscriberProvider = subscriberProvider;
@@ -99,7 +104,7 @@ public class PubSubEventSubscriber {
   @VisibleForTesting
   MessageReceiver getMessageReceiver() {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
-      try {
+      try (ManualRequestContext ctx = oneOffRequestContext.open()) {
         Event event = eventsDeserializer.deserialize(message.getData().toStringUtf8());
         messageProcessor.accept(event);
         subscriberMetrics.incrementSucceedToConsumeMessage();
