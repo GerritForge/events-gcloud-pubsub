@@ -26,6 +26,7 @@ import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGsonProvider;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
+import com.google.gerrit.server.util.OneOffRequestContext;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
@@ -43,6 +44,7 @@ public class PubSubEventSubscriberTest {
   @Mock PubSubConfiguration confMock;
   @Mock SubscriberProvider subscriberProviderMock;
   @Mock PubSubSubscriberMetrics pubSubSubscriberMetricsMock;
+  @Mock OneOffRequestContext oneOffRequestConext;
   @Mock AckReplyConsumer ackReplyConsumerMock;
   @Mock Consumer<Event> succeedingConsumer;
   @Captor ArgumentCaptor<Event> eventMessageCaptor;
@@ -123,6 +125,7 @@ public class PubSubEventSubscriberTest {
             subscriberProviderMock,
             confMock,
             pubSubSubscriberMetricsMock,
+            oneOffRequestConext,
             TOPIC,
             consumer)
         .getMessageReceiver();
