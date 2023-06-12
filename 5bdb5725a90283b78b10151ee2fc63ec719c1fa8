@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "6f450c6c_34653cab",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 2
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1003873
+      },
+      "writtenOn": "2023-06-12T11:25:46Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "6872057b_c8c109b5",
+      "range": {
+        "startLine": 11,
+        "startChar": 43,
+        "endLine": 11,
+        "endChar": 59
+      },
+      "revId": "5bdb5725a90283b78b10151ee2fc63ec719c1fa8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "167f2d1e_67606024",
@@ -37,6 +61,30 @@
       "writtenOn": "2023-06-12T09:31:46Z",
       "side": 1,
       "message": "Shouldn\u0027t the messageProcesser, e.g. the part in the pull replication plugin creating projects, take care of setting the context they require?",
+      "range": {
+        "startLine": 64,
+        "startChar": 28,
+        "endLine": 64,
+        "endChar": 44
+      },
+      "revId": "5bdb5725a90283b78b10151ee2fc63ec719c1fa8",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2c2a5174_c82db800",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 64,
+      "author": {
+        "id": 1003873
+      },
+      "writtenOn": "2023-06-12T11:25:46Z",
+      "side": 1,
+      "message": "You might be correct with that remark. However, the events-kafka does the same thing (sets up ManualRequestContext) and I just wanted to be consistent with it. See [1].\n\nIf we move setup of the request context to the pull-replication plugin then we have to remove it from the events-kafka too. If we decide to do that then it would be better to have another change set for that purpose only. \n\n[1] https://gerrit.googlesource.com/plugins/events-kafka/+/refs/heads/master/src/main/java/com/googlesource/gerrit/plugins/kafka/subscribe/KafkaEventSubscriber.java#148",
+      "parentUuid": "167f2d1e_67606024",
       "range": {
         "startLine": 64,
         "startChar": 28,
