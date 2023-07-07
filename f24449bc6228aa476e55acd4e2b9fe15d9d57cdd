@@ -18,6 +18,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e099e947_165fb919",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 47,
+      "author": {
+        "id": 1003873
+      },
+      "writtenOn": "2023-07-07T09:41:34Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "24f0678f_b160453e",
+      "revId": "f24449bc6228aa476e55acd4e2b9fe15d9d57cdd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "e2af1593_b6962bd2",
@@ -31,6 +49,24 @@
       "writtenOn": "2023-07-07T09:21:15Z",
       "side": 1,
       "message": "```suggestion\n            oneOffRequestContext,\n```",
+      "revId": "f24449bc6228aa476e55acd4e2b9fe15d9d57cdd",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "03a4e161_e7d43a1d",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1003873
+      },
+      "writtenOn": "2023-07-07T09:41:34Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "e2af1593_b6962bd2",
       "revId": "f24449bc6228aa476e55acd4e2b9fe15d9d57cdd",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
