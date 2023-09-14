@@ -70,6 +70,24 @@
       "parentUuid": "41f538e9_4e7afc1f",
       "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "658d2ce7_af781414",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-14T13:46:33Z",
+      "side": 1,
+      "message": "@ponch78@gmail.com @thomas.draebing@sap.com if I remember correctly it was agreed on the mailing list that adding these changes to this plugin is fine correct?\n\nCould you add a reference to that conversation and the result of that meeting you had?",
+      "parentUuid": "ca78417d_a32e5029",
+      "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }

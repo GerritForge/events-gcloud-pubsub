@@ -166,6 +166,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "eab71d10_179fcd81",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/Module.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-14T13:46:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "89890a66_16ad8c86",
+      "range": {
+        "startLine": 70,
+        "startChar": 0,
+        "endLine": 70,
+        "endChar": 49
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a72cf65e_56eab9ed",
@@ -356,6 +380,30 @@
       "side": 1,
       "message": "Gerrit users should not be able to directly do something with the topic at all. In the end they have to do everything through Gerrit. The reason for that is, that we would not like to share any credentials with third parties.\nIn the followup changes Gerrit users will become able to create subscriptions through Gerrit. That way they will be able to retrieve events. To make this possible without requiring GCP credentials from the end user, these will be push subscriptions.\nBy default, GCP users with the corresponding pubsub roles will be able to view/edit them. I think there is no reason to add finer grained permissions to the topic.\n\nAdmins will be able to amend the topics and they will continue to be usable as long as the serviceAccount used by Gerrit can still access them, e.g. attach subscriptions.",
       "parentUuid": "9a7dd83c_cd65232f",
+      "range": {
+        "startLine": 53,
+        "startChar": 0,
+        "endLine": 55,
+        "endChar": 80
+      },
+      "revId": "a0e704faaa77fba5e482d2d0e87a733d79faaac5",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "f75adb67_2841964f",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/rest/PutTopic.java",
+        "patchSetId": 3
+      },
+      "lineNbr": 55,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-14T13:46:33Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "d053b180_ec15cdff",
       "range": {
         "startLine": 53,
         "startChar": 0,
