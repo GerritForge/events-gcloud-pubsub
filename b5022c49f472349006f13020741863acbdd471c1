@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "56fc34bb_962c7f2d",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-14T11:33:53Z",
+      "side": 1,
+      "message": "Hi @Thomas, what was the final decision on this set of changes?\nIs the plan to still go ahead with these?",
+      "revId": "b5022c49f472349006f13020741863acbdd471c1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
