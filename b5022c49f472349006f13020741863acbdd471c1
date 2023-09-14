@@ -16,6 +16,24 @@
       "message": "Hi @Thomas, what was the final decision on this set of changes?\nIs the plan to still go ahead with these?",
       "revId": "b5022c49f472349006f13020741863acbdd471c1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "6e1a6da4_33dce2fc",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-09-14T11:45:57Z",
+      "side": 1,
+      "message": "Hi @syntonyze@gmail.com,\nwe definitely wat to have this at some point. Due to time constraints and deadlines given to us, we had to reduce the priority on this feature, i.e. we will only be able to roll it out when our current project (moving our Gerrit instances to Kubernetes) is complete.\nIt would still be nice to submit these changes. However, there is still one major limitation, this feature does not yet work in a multisite (multimaster) context, since creation of a subscription is not forwarded to the other instances, i.e. they won\u0027t be starting to publish events to the user\u0027s topic. If it would be OK for you, we could bring in the current state and I will add multisite support later.",
+      "parentUuid": "56fc34bb_962c7f2d",
+      "revId": "b5022c49f472349006f13020741863acbdd471c1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
