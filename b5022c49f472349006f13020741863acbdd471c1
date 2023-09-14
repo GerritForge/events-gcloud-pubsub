@@ -34,6 +34,24 @@
       "parentUuid": "56fc34bb_962c7f2d",
       "revId": "b5022c49f472349006f13020741863acbdd471c1",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "99e48c64_92b5ea30",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-14T13:53:04Z",
+      "side": 1,
+      "message": "Makes sense @gdthomas@google.com\nI have reviewed the majority of this chain, you already addressed my comments and feedbacks.\n\n@maczech@gmail.com @ponch78@gmail.com @luca.milanesio@gmail.com, @christoforos.miliotis.dev@gmail.com unless you have any other feedbacks on this I suggest we merge this chain?",
+      "parentUuid": "6e1a6da4_33dce2fc",
+      "revId": "b5022c49f472349006f13020741863acbdd471c1",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
