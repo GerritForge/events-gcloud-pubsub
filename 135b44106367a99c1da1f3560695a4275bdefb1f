@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "aa5b77fc_78ae15ea",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 16
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-14T14:26:57Z",
+      "side": 1,
+      "message": "@thomas.draebing@sap.com can you trigger another test run?",
+      "revId": "135b44106367a99c1da1f3560695a4275bdefb1f",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
