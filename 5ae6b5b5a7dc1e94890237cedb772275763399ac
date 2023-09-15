@@ -1,0 +1,130 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "67c9c3df_25e54ee1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/user/PushSubscriptionEndpointUrlBuilder.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-15T07:45:39Z",
+      "side": 1,
+      "message": "Is this specific to CloudRun?\nIf so, consider renaming accordingly",
+      "range": {
+        "startLine": 22,
+        "startChar": 13,
+        "endLine": 22,
+        "endChar": 47
+      },
+      "revId": "5ae6b5b5a7dc1e94890237cedb772275763399ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "f1e7fcb6_d2bb59ee",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/user/PushSubscriptionEndpointUrlBuilder.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 22,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-15T07:45:39Z",
+      "side": 1,
+      "message": "Could you provide some javadoc for this new public class?",
+      "revId": "5ae6b5b5a7dc1e94890237cedb772275763399ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9a34f66e_d266cfd1",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/user/PushSubscriptionEndpointUrlBuilder.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 44,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-15T07:45:39Z",
+      "side": 1,
+      "message": "This logic is very similar to the ones used by\nsrc/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubConfiguration.java#addHttpsProtocolIfNecessary\n\nIt is also used in the buildProxied() method.\n\nCould you DRY this out in a separate static method and use it everywhere?",
+      "range": {
+        "startLine": 35,
+        "startChar": 0,
+        "endLine": 44,
+        "endChar": 7
+      },
+      "revId": "5ae6b5b5a7dc1e94890237cedb772275763399ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "819a6228_839905e9",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/user/PushSubscriptionEndpointUrlBuilder.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 57,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-15T07:45:39Z",
+      "side": 1,
+      "message": "I am not familiar with what this cloudRun URL is supposed to look like.\nCould you please add some documentation and perhaps some pointers where the specs of this URL are specified?",
+      "revId": "5ae6b5b5a7dc1e94890237cedb772275763399ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "7b954b00_79e9bdcc",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/user/PushSubscriptionEndpointUrlBuilder.java",
+        "patchSetId": 18
+      },
+      "lineNbr": 74,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-15T07:45:39Z",
+      "side": 1,
+      "message": "nit: consider avoiding this magic number and store it in named variable instead?",
+      "range": {
+        "startLine": 74,
+        "startChar": 56,
+        "endLine": 74,
+        "endChar": 59
+      },
+      "revId": "5ae6b5b5a7dc1e94890237cedb772275763399ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5cea5e9f_d29a6cf1",
+        "filename": "supplements/push-proxy/Dockerfile",
+        "patchSetId": 18
+      },
+      "lineNbr": 1,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2023-09-15T07:45:39Z",
+      "side": 1,
+      "message": "nit: could use the newer `3.11.5-slim` here.",
+      "range": {
+        "startLine": 1,
+        "startChar": 5,
+        "endLine": 1,
+        "endChar": 23
+      },
+      "revId": "5ae6b5b5a7dc1e94890237cedb772275763399ac",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
