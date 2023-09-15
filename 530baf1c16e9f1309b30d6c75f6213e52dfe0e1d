@@ -106,6 +106,24 @@
       "parentUuid": "658d2ce7_af781414",
       "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2b936138_ccd53b3b",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1054778
+      },
+      "writtenOn": "2023-09-15T07:41:25Z",
+      "side": 1,
+      "message": "\u003e But I also remember that we concluded the discussion that this would be fine as long as this stays an optional feature, which it is, and that we could move it to a separate plugin, when something like plugin interdependencies is supported in Gerrit.\n\nCorrect. We didn\u0027t even recorded the meeting unfortunately.",
+      "parentUuid": "2ab51f5f_af3bacd1",
+      "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
