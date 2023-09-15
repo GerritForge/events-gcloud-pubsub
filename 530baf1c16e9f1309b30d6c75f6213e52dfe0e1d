@@ -88,6 +88,24 @@
       "parentUuid": "ca78417d_a32e5029",
       "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2ab51f5f_af3bacd1",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 4
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1065256
+      },
+      "writtenOn": "2023-09-15T07:11:01Z",
+      "side": 1,
+      "message": "The mail thread unfortunately does not mention the result of the discussion [1].\n\nBut I also remember that we concluded the discussion that this would be fine as long as this stays an optional feature, which it is, and that we could move it to a separate plugin, when something like plugin interdependencies is supported in Gerrit. I believe Luca wants to work on it during the hackathon. Having this feature would be awesome!\n\n[1] https://groups.google.com/g/repo-discuss/c/7Iw1UeYihoo/m/NSNbEAzpAAAJ?utm_medium\u003demail\u0026utm_source\u003dfooter",
+      "parentUuid": "658d2ce7_af781414",
+      "revId": "530baf1c16e9f1309b30d6c75f6213e52dfe0e1d",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
   ]
 }
