@@ -44,12 +44,6 @@ def external_plugin_deps():
     )
 
     maven_jar(
-        name = "events-broker",
-        artifact = "com.gerritforge:events-broker:3.4.0.4",
-        sha1 = "8d361d863382290e33828116e65698190118d0f1",
-    )
-
-    maven_jar(
         name = "testcontainers-gcloud",
         artifact = "org.testcontainers:gcloud:1.15.2",
         sha1 = "0ad02bb83edc818469e1080995cae409f5d40694",

@@ -17,8 +17,8 @@ gerrit_plugin(
     ],
     resources = glob(["src/main/resources/**/*"]),
     deps = [
+        ":events-broker-neverlink",
         "@api-common//jar",
-        "@events-broker//jar:neverlink",
         "@gax-grpc//jar",
         "@gax//jar",
         "@google-auth-library-credentials//jar",
@@ -52,8 +52,8 @@ junit_tests(
     deps = [
         ":events-gcloud-pubsub__plugin_test_deps",
         "//lib/testcontainers",
+        "//plugins/events-broker",
         "@api-common//jar",
-        "@events-broker//jar",
         "@gax-grpc//jar",
         "@gax//jar",
         "@google-auth-library-credentials//jar",
@@ -109,4 +109,10 @@ java_library(
         "@opencensus-api//jar",
         "@opencensus-contrib-http-util//jar",
     ],
+)
+
+java_library(
+    name = "events-broker-neverlink",
+    neverlink = 1,
+    exports = ["//plugins/events-broker"],
 )
