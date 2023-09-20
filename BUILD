@@ -18,8 +18,8 @@ gerrit_plugin(
     ],
     resources = glob(["src/main/resources/**/*"]),
     deps = [
+        ":events-broker-neverlink",
         "@api-common//jar",
-        "@events-broker//jar:neverlink",
         "@gax-grpc//jar",
         "@gax//jar",
         "@google-auth-library-credentials//jar",
@@ -52,8 +52,12 @@ junit_tests(
     tags = ["events-gcloud-pubsub"],
     deps = [
         ":events-gcloud-pubsub__plugin_test_deps",
+<<<<<<< HEAD
+=======
+        "//lib/testcontainers",
+        "//plugins/events-broker",
+>>>>>>> f08343c (Consume events-broker from source)
         "@api-common//jar",
-        "@events-broker//jar",
         "@gax-grpc//jar",
         "@gax//jar",
         "@google-auth-library-credentials//jar",
@@ -112,4 +116,10 @@ java_library(
         "@threetenbp//jar",
         "@visible-assertions//jar",
     ],
+)
+
+java_library(
+    name = "events-broker-neverlink",
+    neverlink = 1,
+    exports = ["//plugins/events-broker"],
 )
