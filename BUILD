@@ -52,7 +52,7 @@ junit_tests(
     deps = [
         ":events-gcloud-pubsub__plugin_test_deps",
         "//lib/testcontainers",
-        "//plugins/events-broker",
+        "//modules/events-broker",
         "@api-common//jar",
         "@gax-grpc//jar",
         "@gax//jar",
@@ -114,5 +114,5 @@ java_library(
 java_library(
     name = "events-broker-neverlink",
     neverlink = 1,
-    exports = ["//plugins/events-broker"],
+    exports = ["//modules/events-broker"],
 )
