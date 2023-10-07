@@ -2,7 +2,8 @@
 
 The events-gcloud-pubsub plugin can be built as a regular 'in-tree' plugin. That means
 that is required to clone a Gerrit source tree first and then to have the plugin
-source directory into the `/plugins` path.
+source directory into the `/plugins` path. The plugin depends on [events-broker](https://gerrit.googlesource.com/modules/events-broker)
+which is linked directly from source with the same 'in-tree' plugin structure.
 
 Additionally, the `plugins/external_plugin_deps.bzl` file needs to be updated to
 match the events-gcloud-pubsub plugin one.
@@ -11,6 +12,7 @@ match the events-gcloud-pubsub plugin one.
 git clone --recursive https://gerrit.googlesource.com/gerrit
 cd gerrit
 git clone "https://gerrit.googlesource.com/plugins/events-gcloud-pubsub" plugins/events-gcloud-pubsub
+git clone "https://gerrit.googlesource.com/modules/events-broker" plugins/events-broker
 ln -sf ../plugins/events-gcloud-pubsub/external_plugin_deps.bzl plugins/.
 bazelisk build plugins/events-gcloud-pubsub
 ```
