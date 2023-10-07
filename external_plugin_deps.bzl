@@ -43,12 +43,6 @@ def external_plugin_deps():
         sha1 = "11e565f1a65f7e2245238ac5c19875c0ddd25b14",
     )
 
-    maven_jar(
-        name = "events-broker",
-        artifact = "com.gerritforge:events-broker:3.6.0-rc3",
-        sha1 = "cb398afa4f76367be5c62b99a7ffce74ae1d3d8b",
-    )
-
     TESTCONTAINERS_VERSION = "1.15.3"
 
     maven_jar(
