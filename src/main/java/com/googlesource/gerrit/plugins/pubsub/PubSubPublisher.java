@@ -46,6 +46,7 @@ public class PubSubPublisher {
   private final String topic;
   private final Publisher publisher;
   private final PubSubConfiguration pubSubProperties;
+  private final Log4jPubsubMessageLogger msgLog;
 
   @Inject
   public PubSubPublisher(
@@ -53,13 +54,15 @@ public class PubSubPublisher {
       PublisherProvider publisherProvider,
       @EventGson Gson gson,
       PubSubPublisherMetrics publisherMetrics,
-      @Assisted String topic)
+      @Assisted String topic,
+      Log4jPubsubMessageLogger msgLog)
       throws IOException {
     this.gson = gson;
     this.publisherMetrics = publisherMetrics;
     this.topic = topic;
     this.publisher = publisherProvider.get(topic);
     this.pubSubProperties = pubSubProperties;
+    this.msgLog = msgLog;
   }
 
   public ListenableFuture<Boolean> publish(Event event) {
@@ -92,6 +95,7 @@ public class PubSubPublisher {
                 messageId, topic, pubsubMessage.getData().toStringUtf8());
 
             publisherMetrics.incrementSucceedToPublishMessage();
+            msgLog.log(topic, pubsubMessage.getData().toStringUtf8());
           }
         },
         MoreExecutors.directExecutor());
