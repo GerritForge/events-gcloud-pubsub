@@ -39,6 +39,7 @@ public class PubSubPublisherTest {
   @Mock PublisherProvider publisherProviderMock;
   @Mock Publisher publisherMock;
   @Mock PubSubPublisherMetrics pubSubPublisherMetricsMock;
+  @Mock Log4jPubsubMessageLogger msgLog;
 
   private static final String TOPIC = "foo";
   private static final Event eventMessage = new ProjectCreatedEvent();
@@ -52,7 +53,8 @@ public class PubSubPublisherTest {
             publisherProviderMock,
             OutputFormat.JSON_COMPACT.newGson(),
             pubSubPublisherMetricsMock,
-            TOPIC);
+            TOPIC,
+            msgLog);
   }
 
   @Test
@@ -72,5 +74,19 @@ public class PubSubPublisherTest {
     objectUnderTest.publish(eventMessage);
 
     verify(pubSubPublisherMetricsMock, only()).incrementSucceedToPublishMessage();
+  }
+
+  @Test
+  public void shouldUpdateMessageLogFileWhenAsyncPublishSucceeds() {
+    when(publisherMock.publish(any())).thenReturn(ApiFutures.immediateFuture("some-message-id"));
+
+    objectUnderTest.publish(eventMessage);
+
+    verify(msgLog)
+        .log(
+            TOPIC,
+            String.format(
+                "{\"type\":\"%s\",\"event_created_on\":%d}",
+                eventMessage.type, eventMessage.eventCreatedOn));
   }
 }
