@@ -66,6 +66,7 @@ import org.testcontainers.utility.DockerImageName;
 public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
   private static final String PROJECT_ID = "test_project";
   private static final String TOPIC_ID = "test_topic";
+  private static final String GROUP_ID = "test_group";
   private static final String SUBSCRIPTION_ID = "test_subscription_id";
 
   private static final Duration TEST_TIMEOUT = Duration.ofSeconds(5);
@@ -193,6 +194,29 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
     TestConsumer consumer = new TestConsumer();
 
     objectUnderTest.receiveAsync(TOPIC_ID, consumer);
+
+    objectUnderTest.send(TOPIC_ID, event);
+
+    WaitUtil.waitUntil(
+        () ->
+            consumer.getMessage() != null
+                && expectedMessageJson.equals(gson.toJson(consumer.getMessage())),
+        TEST_TIMEOUT);
+  }
+
+  @Test
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  public void shouldConsumeEventWithGroupId() throws InterruptedException {
+    Event event = new ProjectCreatedEvent();
+    event.instanceId = DEFAULT_INSTANCE_ID;
+    String expectedMessageJson = gson.toJson(event);
+    TestConsumer consumer = new TestConsumer();
+
+    objectUnderTest.receiveAsync(TOPIC_ID, GROUP_ID, consumer);
 
     objectUnderTest.send(TOPIC_ID, event);
 

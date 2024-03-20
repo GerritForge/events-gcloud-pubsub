@@ -54,10 +54,11 @@ public class SubscriberProvider {
   }
 
   public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
-        .build();
+    return doGet(getOrCreateSubscription(topic), receiver);
+  }
+
+  public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
+    return doGet(getOrCreateSubscription(topic, groupId), receiver);
   }
 
   protected SubscriptionAdminSettings createSubscriptionAdminSettings() throws IOException {
@@ -65,10 +66,14 @@ public class SubscriberProvider {
   }
 
   protected Subscription getOrCreateSubscription(String topicId) throws IOException {
+    return getOrCreateSubscription(topicId, pubSubProperties.getSubscriptionId());
+  }
+
+  protected Subscription getOrCreateSubscription(String topicId, String groupId)
+      throws IOException {
     try (SubscriptionAdminClient subscriptionAdminClient =
         SubscriptionAdminClient.create(createSubscriptionAdminSettings())) {
-      String subscriptionName =
-          String.format("%s-%s", pubSubProperties.getSubscriptionId(), topicId);
+      String subscriptionName = String.format("%s-%s", groupId, topicId);
       ProjectSubscriptionName projectSubscriptionName =
           ProjectSubscriptionName.of(pubSubProperties.getGCloudProject(), subscriptionName);
 
@@ -126,5 +131,13 @@ public class SubscriberProvider {
     } catch (IOException e) {
       logger.atSevere().withCause(e).log("Cannot replay messages");
     }
+  }
+
+  protected Subscriber doGet(Subscription subscription, MessageReceiver receiver)
+      throws IOException {
+    return Subscriber.newBuilder(subscription.getName(), receiver)
+        .setExecutorProvider(FixedExecutorProvider.create(executor))
+        .setCredentialsProvider(credentials)
+        .build();
   }
 }

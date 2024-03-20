@@ -27,6 +27,7 @@ import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.inject.Inject;
+import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.ConsumerExecutor;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
@@ -50,10 +51,10 @@ public class LocalSubscriberProvider extends SubscriberProvider {
   }
 
   @Override
-  public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
+  public Subscriber doGet(Subscription subscription, MessageReceiver receiver) throws IOException {
     TransportChannelProvider channelProvider = createChannelProvider();
-    createTopic(channelProvider, pubSubProperties.getGCloudProject(), topic);
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
+    createTopic(channelProvider, pubSubProperties.getGCloudProject(), subscription.getTopic());
+    return Subscriber.newBuilder(subscription.getName(), receiver)
         .setChannelProvider(channelProvider)
         .setExecutorProvider(FixedExecutorProvider.create(executor))
         .setCredentialsProvider(credentials)
