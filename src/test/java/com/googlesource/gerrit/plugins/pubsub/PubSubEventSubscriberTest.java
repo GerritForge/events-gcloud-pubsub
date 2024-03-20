@@ -50,6 +50,7 @@ public class PubSubEventSubscriberTest {
   @Captor ArgumentCaptor<Event> eventMessageCaptor;
 
   private static final String TOPIC = "foo";
+  private static final String GROUP_ID = "bar";
 
   private Gson gson = new EventGsonProvider().get();
   private EventDeserializer deserializer = new EventDeserializer(gson);
@@ -127,6 +128,7 @@ public class PubSubEventSubscriberTest {
             pubSubSubscriberMetricsMock,
             oneOffRequestContext,
             TOPIC,
+            GROUP_ID,
             consumer)
         .getMessageReceiver();
   }
