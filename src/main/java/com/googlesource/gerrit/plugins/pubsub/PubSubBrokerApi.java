@@ -16,12 +16,15 @@ package com.googlesource.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
 import com.google.common.flogger.FluentLogger;
 import com.google.common.util.concurrent.ListenableFuture;
+import com.google.gerrit.common.Nullable;
 import com.google.gerrit.server.events.Event;
 import com.google.inject.Inject;
 import java.util.Collections;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
@@ -29,6 +32,7 @@ import java.util.stream.Collectors;
 
 class PubSubBrokerApi implements BrokerApi {
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
+  private PubSubConfiguration configuration;
   private PubSubPublisher.Factory publisherFactory;
   private PubSubEventSubscriber.Factory subscriberFactory;
   private Map<String, PubSubPublisher> publishers = new ConcurrentHashMap<>();
@@ -36,7 +40,10 @@ class PubSubBrokerApi implements BrokerApi {
 
   @Inject
   public PubSubBrokerApi(
-      PubSubPublisher.Factory publisherFactory, PubSubEventSubscriber.Factory subscriberFactory) {
+      PubSubConfiguration configuration,
+      PubSubPublisher.Factory publisherFactory,
+      PubSubEventSubscriber.Factory subscriberFactory) {
+    this.configuration = configuration;
     this.publisherFactory = publisherFactory;
     this.subscriberFactory = subscriberFactory;
     subscribers = Collections.newSetFromMap(new ConcurrentHashMap<>());
@@ -49,9 +56,26 @@ class PubSubBrokerApi implements BrokerApi {
 
   @Override
   public void receiveAsync(String topic, Consumer<Event> eventConsumer) {
-    PubSubEventSubscriber subscriber = subscriberFactory.create(topic, eventConsumer);
+    receiveAsync(topic, null, eventConsumer);
+  }
+
+  @Override
+  public void receiveAsync(String topic, @Nullable String maybeGroupId, Consumer<Event> consumer) {
+    String groupId = Optional.ofNullable(maybeGroupId).orElse(configuration.getSubscriptionId());
+    PubSubEventSubscriber subscriber = subscriberFactory.create(topic, groupId, consumer);
     subscribers.add(subscriber);
     subscriber.subscribe();
+  }
+
+  @Override
+  public Set<TopicSubscriberWithGroupId> topicSubscribersWithGroupId() {
+    return subscribers.stream()
+        .map(
+            s ->
+                TopicSubscriberWithGroupId.topicSubscriberWithGroupId(
+                    s.getGroupId(),
+                    TopicSubscriber.topicSubscriber(s.getTopic(), s.getMessageProcessor())))
+        .collect(Collectors.toSet());
   }
 
   @Override
@@ -78,6 +102,17 @@ class PubSubBrokerApi implements BrokerApi {
       subscriber.shutdown();
     }
     subscribers.clear();
+  }
+
+  @Override
+  public void disconnect(String topic, String groupId) {
+    subscribers.stream()
+        .filter(s -> s.getGroupId().equals(groupId) && topic.equals(s.getTopic()))
+        .forEach(
+            c -> {
+              subscribers.remove(c);
+              c.shutdown();
+            });
   }
 
   @Override

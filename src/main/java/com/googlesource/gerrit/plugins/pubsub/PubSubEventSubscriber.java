@@ -34,7 +34,10 @@ import java.util.function.Consumer;
 public class PubSubEventSubscriber {
 
   public interface Factory {
-    public PubSubEventSubscriber create(String topic, Consumer<Event> messageProcessor);
+    public PubSubEventSubscriber create(
+        @Assisted("topic") String topic,
+        @Assisted("groupId") String groupId,
+        Consumer<Event> messageProcessor);
   }
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -43,6 +46,7 @@ public class PubSubEventSubscriber {
   private final PubSubSubscriberMetrics subscriberMetrics;
   private final OneOffRequestContext oneOffRequestContext;
   private final String topic;
+  private final String groupId;
   private final Consumer<Event> messageProcessor;
   private final SubscriberProvider subscriberProvider;
   private final PubSubConfiguration config;
@@ -55,12 +59,14 @@ public class PubSubEventSubscriber {
       PubSubConfiguration config,
       PubSubSubscriberMetrics subscriberMetrics,
       OneOffRequestContext oneOffRequestContext,
-      @Assisted String topic,
+      @Assisted("topic") String topic,
+      @Assisted("groupId") String groupId,
       @Assisted Consumer<Event> messageProcessor) {
     this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
     this.oneOffRequestContext = oneOffRequestContext;
     this.topic = topic;
+    this.groupId = groupId;
     this.messageProcessor = messageProcessor;
     this.subscriberProvider = subscriberProvider;
     this.config = config;
@@ -68,7 +74,7 @@ public class PubSubEventSubscriber {
 
   public void subscribe() {
     try {
-      subscriber = subscriberProvider.get(topic, getMessageReceiver());
+      subscriber = subscriberProvider.get(topic, groupId, getMessageReceiver());
       subscriber
           .startAsync()
           .awaitRunning(config.getSubscribtionTimeoutInSeconds(), TimeUnit.SECONDS);
@@ -81,6 +87,10 @@ public class PubSubEventSubscriber {
 
   public String getTopic() {
     return topic;
+  }
+
+  public String getGroupId() {
+    return groupId;
   }
 
   public Consumer<Event> getMessageProcessor() {
