@@ -53,8 +53,8 @@ public class SubscriberProvider {
     this.executor = executor;
   }
 
-  public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
+  public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
+    return Subscriber.newBuilder(getOrCreateSubscription(topic, groupId).getName(), receiver)
         .setExecutorProvider(FixedExecutorProvider.create(executor))
         .setCredentialsProvider(credentials)
         .build();
@@ -65,10 +65,14 @@ public class SubscriberProvider {
   }
 
   protected Subscription getOrCreateSubscription(String topicId) throws IOException {
+    return getOrCreateSubscription(topicId, pubSubProperties.getSubscriptionId());
+  }
+
+  protected Subscription getOrCreateSubscription(String topicId, String groupId)
+      throws IOException {
     try (SubscriptionAdminClient subscriptionAdminClient =
         SubscriptionAdminClient.create(createSubscriptionAdminSettings())) {
-      String subscriptionName =
-          String.format("%s-%s", pubSubProperties.getSubscriptionId(), topicId);
+      String subscriptionName = String.format("%s-%s", groupId, topicId);
       ProjectSubscriptionName projectSubscriptionName =
           ProjectSubscriptionName.of(pubSubProperties.getGCloudProject(), subscriptionName);
 
