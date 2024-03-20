@@ -20,6 +20,7 @@ import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
 import com.google.common.annotations.VisibleForTesting;
 import com.google.common.flogger.FluentLogger;
+import com.google.gerrit.common.Nullable;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.util.ManualRequestContext;
 import com.google.gerrit.server.util.OneOffRequestContext;
@@ -34,7 +35,10 @@ import java.util.function.Consumer;
 public class PubSubEventSubscriber {
 
   public interface Factory {
-    public PubSubEventSubscriber create(String topic, Consumer<Event> messageProcessor);
+    public PubSubEventSubscriber create(
+        @Assisted("topic") String topic,
+        @Assisted("groupId") @Nullable String groupId,
+        Consumer<Event> messageProcessor);
   }
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -43,6 +47,8 @@ public class PubSubEventSubscriber {
   private final PubSubSubscriberMetrics subscriberMetrics;
   private final OneOffRequestContext oneOffRequestContext;
   private final String topic;
+
+  private final String groupId;
   private final Consumer<Event> messageProcessor;
   private final SubscriberProvider subscriberProvider;
   private final PubSubConfiguration config;
@@ -55,12 +61,14 @@ public class PubSubEventSubscriber {
       PubSubConfiguration config,
       PubSubSubscriberMetrics subscriberMetrics,
       OneOffRequestContext oneOffRequestContext,
-      @Assisted String topic,
+      @Assisted("topic") String topic,
+      @Assisted("groupId") @Nullable String groupId,
       @Assisted Consumer<Event> messageProcessor) {
     this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
     this.oneOffRequestContext = oneOffRequestContext;
     this.topic = topic;
+    this.groupId = groupId;
     this.messageProcessor = messageProcessor;
     this.subscriberProvider = subscriberProvider;
     this.config = config;
@@ -68,7 +76,7 @@ public class PubSubEventSubscriber {
 
   public void subscribe() {
     try {
-      subscriber = subscriberProvider.get(topic, getMessageReceiver());
+      subscriber = doSubscribe();
       subscriber
           .startAsync()
           .awaitRunning(config.getSubscribtionTimeoutInSeconds(), TimeUnit.SECONDS);
@@ -81,6 +89,11 @@ public class PubSubEventSubscriber {
 
   public String getTopic() {
     return topic;
+  }
+
+  @Nullable
+  public String getGroupId() {
+    return groupId;
   }
 
   public Consumer<Event> getMessageProcessor() {
@@ -117,5 +130,12 @@ public class PubSubEventSubscriber {
         consumer.ack();
       }
     };
+  }
+
+  private Subscriber doSubscribe() throws IOException {
+    if (groupId != null) {
+      return subscriberProvider.get(topic, groupId, getMessageReceiver());
+    }
+    return subscriberProvider.get(topic, getMessageReceiver());
   }
 }

@@ -61,6 +61,17 @@ public class LocalSubscriberProvider extends SubscriberProvider {
   }
 
   @Override
+  public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
+    TransportChannelProvider channelProvider = createChannelProvider();
+    createTopic(channelProvider, pubSubProperties.getGCloudProject(), topic);
+    return Subscriber.newBuilder(getOrCreateSubscription(topic, groupId).getName(), receiver)
+        .setChannelProvider(channelProvider)
+        .setExecutorProvider(FixedExecutorProvider.create(executor))
+        .setCredentialsProvider(credentials)
+        .build();
+  }
+
+  @Override
   protected SubscriptionAdminSettings createSubscriptionAdminSettings() throws IOException {
     TransportChannelProvider channelProvider = createChannelProvider();
     return SubscriptionAdminSettings.newBuilder()
