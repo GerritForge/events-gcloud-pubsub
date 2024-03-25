@@ -54,17 +54,11 @@ public class SubscriberProvider {
   }
 
   public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
-        .build();
+    return doGet(getOrCreateSubscription(topic), receiver);
   }
 
   public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
-    return Subscriber.newBuilder(getOrCreateSubscription(topic, groupId).getName(), receiver)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
-        .build();
+    return doGet(getOrCreateSubscription(topic, groupId), receiver);
   }
 
   protected SubscriptionAdminSettings createSubscriptionAdminSettings() throws IOException {
@@ -137,5 +131,12 @@ public class SubscriberProvider {
     } catch (IOException e) {
       logger.atSevere().withCause(e).log("Cannot replay messages");
     }
+  }
+
+  private Subscriber doGet(Subscription subscription, MessageReceiver receiver) {
+    return Subscriber.newBuilder(subscription.getName(), receiver)
+        .setExecutorProvider(FixedExecutorProvider.create(executor))
+        .setCredentialsProvider(credentials)
+        .build();
   }
 }

@@ -27,6 +27,7 @@ import com.google.cloud.pubsub.v1.SubscriptionAdminSettings;
 import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.inject.Inject;
+import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 import com.googlesource.gerrit.plugins.pubsub.ConsumerExecutor;
 import com.googlesource.gerrit.plugins.pubsub.PubSubConfiguration;
@@ -53,22 +54,14 @@ public class LocalSubscriberProvider extends SubscriberProvider {
   public Subscriber get(String topic, MessageReceiver receiver) throws IOException {
     TransportChannelProvider channelProvider = createChannelProvider();
     createTopic(channelProvider, pubSubProperties.getGCloudProject(), topic);
-    return Subscriber.newBuilder(getOrCreateSubscription(topic).getName(), receiver)
-        .setChannelProvider(channelProvider)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
-        .build();
+    return doGet(getOrCreateSubscription(topic), channelProvider, receiver);
   }
 
   @Override
   public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
     TransportChannelProvider channelProvider = createChannelProvider();
     createTopic(channelProvider, pubSubProperties.getGCloudProject(), topic);
-    return Subscriber.newBuilder(getOrCreateSubscription(topic, groupId).getName(), receiver)
-        .setChannelProvider(channelProvider)
-        .setExecutorProvider(FixedExecutorProvider.create(executor))
-        .setCredentialsProvider(credentials)
-        .build();
+    return doGet(getOrCreateSubscription(topic, groupId), channelProvider, receiver);
   }
 
   @Override
@@ -104,5 +97,16 @@ public class LocalSubscriberProvider extends SubscriberProvider {
     } catch (AlreadyExistsException e) {
       // topic already exists do nothing
     }
+  }
+
+  private Subscriber doGet(
+      Subscription subscription,
+      TransportChannelProvider channelProvider,
+      MessageReceiver receiver) {
+    return Subscriber.newBuilder(subscription.getName(), receiver)
+        .setChannelProvider(channelProvider)
+        .setExecutorProvider(FixedExecutorProvider.create(executor))
+        .setCredentialsProvider(credentials)
+        .build();
   }
 }
