@@ -1,0 +1,78 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "e1c2d0b4_97a1fd79",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2024-03-28T12:29:37Z",
+      "side": 1,
+      "message": "`getGroupId` is annotated as `@Nullable`, yet here we are passing it to `topicSubscriberWithGroupId`, which always expects a non-null argument.\n\nAs I was suggesting in a different comment, if we model groupId to always be defined, this becomes a non-issue.\n\nWDYT?",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4ab2af96_2329a6b6",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2024-03-28T12:29:37Z",
+      "side": 1,
+      "message": "Similar to the conversation we had for the kinesis broker at [1], this doesn\u0027t necessarily need to be modelled as an optional (or nullable) assisted parameter.\n\nWe always have the groupId, if not provided we just use the subscriptionId.\n\nWDYT?\n\n[1] https://gerrit-review.googlesource.com/c/plugins/events-aws-kinesis/+/411799/comment/c589d66d_4023e434/",
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "860a43d7_1d132904",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2024-03-28T12:29:37Z",
+      "side": 1,
+      "message": "Have you considered adding a test to make sure disconnection by group id works?",
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5de6d5b6_81532f6c",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1072905
+      },
+      "writtenOn": "2024-03-28T12:29:37Z",
+      "side": 1,
+      "message": "How about we also assert that the subscriber is exclusively associated with the provided groupId?\n\nWe could do so by leveraging the new API\n\n```\nobjectUnderTest.topicSubscribersWithGroupId()\n```\n\nWDYT?",
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
