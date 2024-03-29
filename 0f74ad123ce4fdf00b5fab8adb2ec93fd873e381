@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "862297e7_9d36c5b0",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 4
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-03-29T09:57:13Z",
+      "side": 1,
+      "message": "The CI fails on setting up the Docker environment:\n```\n1) shouldDisconnectOnlySubscriberForSpecificGroupId(com.googlesource.gerrit.plugins.pubsub.PubSubBrokerApiIT)\njava.lang.IllegalStateException: Could not find a valid Docker environment. Please see logs and check configuration\n\tat org.testcontainers.dockerclient.DockerClientProviderStrategy.lambda$getFirstValidStrategy$7(DockerClientProviderStrategy.java:215)\n```\n\nWhich is unrelated to this change, but should be tackled in a separate change.",
+      "revId": "0f74ad123ce4fdf00b5fab8adb2ec93fd873e381",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    }
+  ]
+}
