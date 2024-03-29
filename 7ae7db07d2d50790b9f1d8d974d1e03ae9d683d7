@@ -24,6 +24,30 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "e0b3c1f0_03598ebe",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApi.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 69,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-03-29T09:40:52Z",
+      "side": 1,
+      "message": "Sure, I\u0027ll use the `subscriptionId` here. No one likes `null`s ;)",
+      "parentUuid": "e1c2d0b4_97a1fd79",
+      "range": {
+        "startLine": 69,
+        "startChar": 20,
+        "endLine": 69,
+        "endChar": 35
+      },
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "4ab2af96_2329a6b6",
@@ -37,6 +61,24 @@
       "writtenOn": "2024-03-28T12:29:37Z",
       "side": 1,
       "message": "Similar to the conversation we had for the kinesis broker at [1], this doesn\u0027t necessarily need to be modelled as an optional (or nullable) assisted parameter.\n\nWe always have the groupId, if not provided we just use the subscriptionId.\n\nWDYT?\n\n[1] https://gerrit-review.googlesource.com/c/plugins/events-aws-kinesis/+/411799/comment/c589d66d_4023e434/",
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "8e82cebe_cc39a00c",
+        "filename": "src/main/java/com/googlesource/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 65,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-03-29T09:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "4ab2af96_2329a6b6",
       "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
@@ -58,6 +100,24 @@
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "44760a3c_efe6f852",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 66,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-03-29T09:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "860a43d7_1d132904",
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5de6d5b6_81532f6c",
@@ -71,6 +131,24 @@
       "writtenOn": "2024-03-28T12:29:37Z",
       "side": 1,
       "message": "How about we also assert that the subscriber is exclusively associated with the provided groupId?\n\nWe could do so by leveraging the new API\n\n```\nobjectUnderTest.topicSubscribersWithGroupId()\n```\n\nWDYT?",
+      "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
+      "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "ae751f7f_d5b75bb0",
+        "filename": "src/test/java/com/googlesource/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 2
+      },
+      "lineNbr": 219,
+      "author": {
+        "id": 1010134
+      },
+      "writtenOn": "2024-03-29T09:40:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "5de6d5b6_81532f6c",
       "revId": "7ae7db07d2d50790b9f1d8d974d1e03ae9d683d7",
       "serverId": "173816e5-2b9a-37c3-8a2e-48639d4f1153"
     }
