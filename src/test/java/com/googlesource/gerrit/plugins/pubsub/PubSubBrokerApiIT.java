@@ -54,7 +54,6 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 import java.util.function.Consumer;
 import org.junit.Test;
 import org.testcontainers.containers.PubSubEmulatorContainer;
@@ -236,9 +235,9 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
       name = "plugin.events-gcloud-pubsub.privateKeyLocation",
       value = PRIVATE_KEY_LOCATION)
   public void shouldDisconnectOnlySubscriberForSpecificGroupId() throws Exception {
-    String streamName = UUID.randomUUID().toString();
-    String groupId1 = UUID.randomUUID().toString();
-    String groupId2 = UUID.randomUUID().toString();
+    String streamName = "stream_name";
+    String groupId1 = "group1";
+    String groupId2 = "group2";
     TestConsumer consumer = new TestConsumer();
 
     objectUnderTest.receiveAsync(streamName, groupId1, consumer);
