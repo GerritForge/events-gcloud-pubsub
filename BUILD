@@ -14,7 +14,7 @@ gerrit_plugin(
         "Gerrit-Module: com.gerritforge.gerrit.plugins.pubsub.Module",
         "Gerrit-InitStep: com.gerritforge.gerrit.plugins.pubsub.InitConfig",
         "Implementation-Title: Gerrit events listener to send events to an external GCloud PubSub broker",
-        "Implementation-URL: https://gerrit.googlesource.com/plugins/events-gcloud-pubsub",
+        "Implementation-URL: https://review.gerrithub.io/GerritForge/events-gcloud-pubsub",
     ],
     resources = glob(["src/main/resources/**/*"]),
     deps = [
