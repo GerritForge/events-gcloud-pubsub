@@ -1,0 +1,67 @@
+// Copyright (C) 2025 GerritForge, Inc.
+//
+// Licensed under the BSL 1.1 (the "License");
+// you may not use this file except in compliance with the License.
+//
+// Unless required by applicable law or agreed to in writing, software
+// distributed under the License is distributed on an "AS IS" BASIS,
+// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+// See the License for the specific language governing permissions and
+// limitations under the License.
+
+package com.gerritforge.gerrit.plugins.pubsub;
+
+import com.google.api.gax.core.CredentialsProvider;
+import com.google.gerrit.extensions.config.FactoryModule;
+import com.google.gerrit.extensions.events.LifecycleListener;
+import com.google.gerrit.extensions.registration.DynamicSet;
+import com.google.gerrit.server.events.EventListener;
+import com.google.inject.Inject;
+import com.google.inject.Scopes;
+import com.gerritforge.gerrit.plugins.pubsub.local.EnvironmentChecker;
+import com.gerritforge.gerrit.plugins.pubsub.local.LocalCredentialsProvider;
+import com.gerritforge.gerrit.plugins.pubsub.local.LocalPublisherProvider;
+import com.gerritforge.gerrit.plugins.pubsub.local.LocalSubscriberProvider;
+
+class Module extends FactoryModule {
+
+  private PubSubApiModule pubSubApiModule;
+  private EnvironmentChecker environmentChecker;
+  private final PubSubConfiguration configuration;
+
+  @Inject
+  public Module(
+      PubSubApiModule pubSubApiModule,
+      EnvironmentChecker environmentChecker,
+      PubSubConfiguration configuration) {
+    this.pubSubApiModule = pubSubApiModule;
+    this.environmentChecker = environmentChecker;
+    this.configuration = configuration;
+  }
+
+  @Override
+  protected void configure() {
+    DynamicSet.bind(binder(), LifecycleListener.class).to(Manager.class);
+
+    if (configuration.isSendStreamEvents()) {
+      DynamicSet.bind(binder(), EventListener.class).to(PubSubEventListener.class);
+    }
+    factory(PubSubPublisher.Factory.class);
+    factory(PubSubEventSubscriber.Factory.class);
+
+    if (environmentChecker.isLocalEnvironment()) {
+      bind(CredentialsProvider.class)
+          .toProvider(LocalCredentialsProvider.class)
+          .in(Scopes.SINGLETON);
+      bind(SubscriberProvider.class).to(LocalSubscriberProvider.class);
+      bind(PublisherProvider.class).to(LocalPublisherProvider.class);
+    } else {
+      bind(CredentialsProvider.class)
+          .toProvider(ServiceAccountCredentialsProvider.class)
+          .in(Scopes.SINGLETON);
+      bind(SubscriberProvider.class);
+      bind(PublisherProvider.class);
+    }
+    install(pubSubApiModule);
+  }
+}

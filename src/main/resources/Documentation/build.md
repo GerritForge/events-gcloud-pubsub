@@ -11,7 +11,7 @@ match the events-gcloud-pubsub plugin one.
 ```shell script
 git clone --recursive https://gerrit.googlesource.com/gerrit
 cd gerrit
-git clone "https://gerrit.googlesource.com/plugins/events-gcloud-pubsub" plugins/events-gcloud-pubsub
+git clone "https://github.com/GerritForge/events-gcloud-pubsub" plugins/events-gcloud-pubsub
 git clone "https://gerrit.googlesource.com/modules/events-broker" plugins/events-broker
 ln -sf ../plugins/events-gcloud-pubsub/external_plugin_deps.bzl plugins/.
 bazelisk build plugins/events-gcloud-pubsub
