@@ -24,6 +24,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "52838a60_38a4e139",
+        "filename": "BUILD",
+        "patchSetId": 2
+      },
+      "lineNbr": 17,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-11-09T11:18:02Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "0a7699da_c173787a",
+      "range": {
+        "startLine": 17,
+        "startChar": 29,
+        "endLine": 17,
+        "endChar": 89
+      },
+      "revId": "e965e5665d8d7be17d56fe48c009a4c1e04f21b0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "150ea356_998131e2",
@@ -37,6 +61,30 @@
       "writtenOn": "2025-11-09T11:17:36Z",
       "side": 1,
       "message": "This is stale.\n\n\n\n```suggestion\ngit clone \"https://github.com/GerritForge/events-gcloud-pubsub\" plugins/events-gcloud-pubsub\n```",
+      "range": {
+        "startLine": 14,
+        "startChar": 19,
+        "endLine": 14,
+        "endChar": 71
+      },
+      "revId": "e965e5665d8d7be17d56fe48c009a4c1e04f21b0",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "480a6e52_a2c57a0e",
+        "filename": "src/main/resources/Documentation/build.md",
+        "patchSetId": 2
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1000000
+      },
+      "writtenOn": "2025-11-09T11:18:02Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "150ea356_998131e2",
       "range": {
         "startLine": 14,
         "startChar": 19,
