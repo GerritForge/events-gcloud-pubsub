@@ -11,10 +11,10 @@ gerrit_plugin(
     srcs = glob(["src/main/java/**/*.java"]),
     manifest_entries = [
         "Gerrit-PluginName: events-gcloud-pubsub",
-        "Gerrit-Module: com.googlesource.gerrit.plugins.pubsub.Module",
-        "Gerrit-InitStep: com.googlesource.gerrit.plugins.pubsub.InitConfig",
+        "Gerrit-Module: com.gerritforge.gerrit.plugins.pubsub.Module",
+        "Gerrit-InitStep: com.gerritforge.gerrit.plugins.pubsub.InitConfig",
         "Implementation-Title: Gerrit events listener to send events to an external GCloud PubSub broker",
-        "Implementation-URL: https://gerrit.googlesource.com/plugins/events-gcloud-pubsub",
+        "Implementation-URL: https://github.com/GerritForge/events-gcloud-pubsub",
     ],
     resources = glob(["src/main/resources/**/*"]),
     deps = [
