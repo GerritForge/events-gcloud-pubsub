@@ -12,11 +12,13 @@ package com.gerritforge.gerrit.plugins.pubsub;
 
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.ACK_DEADLINE_SECONDS_FIELD;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_ACK_DEADLINE_SECONDS;
+import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_ENABLE_AUTO_COMMIT;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_NUMBER_OF_SUBSCRIBERS;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_SEND_STREAM_EVENTS;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_SHUTDOWN_TIMEOUT;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_STREAM_EVENTS_TOPIC;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.DEFAULT_SUBSCTIPRION_TIMEOUT;
+import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.ENABLE_AUTO_COMMIT_FIELD;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.GCLOUD_PROJECT_FIELD;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.NUMBER_OF_SUBSCRIBERS_FIELD;
 import static com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration.PRIVATE_KEY_LOCATION_FIELD;
@@ -71,6 +73,10 @@ public class InitConfig implements InitStep {
         "Timeout for subscriber ACKs (secs)",
         ACK_DEADLINE_SECONDS_FIELD,
         DEFAULT_ACK_DEADLINE_SECONDS);
+
+    boolean enableAutoCommit =
+        ui.yesno(DEFAULT_ENABLE_AUTO_COMMIT, "Should acknowledge messages automatically?");
+    pluginSection.set(ENABLE_AUTO_COMMIT_FIELD, Boolean.toString(enableAutoCommit));
 
     pluginSection.string(
         "Timeout for subscriber connection (secs)",
