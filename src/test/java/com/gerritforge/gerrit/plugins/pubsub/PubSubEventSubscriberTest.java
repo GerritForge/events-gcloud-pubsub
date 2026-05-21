@@ -12,23 +12,29 @@
 package com.gerritforge.gerrit.plugins.pubsub;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.gerrit.testing.GerritJUnit.assertThrows;
 import static org.mockito.ArgumentMatchers.refEq;
 import static org.mockito.Mockito.any;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.EventDeserializer;
+import com.gerritforge.gerrit.eventbroker.MessageAcknowledgement;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGsonProvider;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
+import com.google.gerrit.server.util.ManualRequestContext;
 import com.google.gerrit.server.util.OneOffRequestContext;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -43,15 +49,23 @@ public class PubSubEventSubscriberTest {
   @Mock SubscriberProvider subscriberProviderMock;
   @Mock PubSubSubscriberMetrics pubSubSubscriberMetricsMock;
   @Mock OneOffRequestContext oneOffRequestContext;
+  @Mock ManualRequestContext manualRequestContext;
   @Mock AckReplyConsumer ackReplyConsumerMock;
   @Mock AckAwareConsumer<Event> succeedingConsumer;
   @Captor ArgumentCaptor<Event> eventMessageCaptor;
+  @Captor ArgumentCaptor<MessageAcknowledgement<Event>> acknowledgementCaptor;
 
   private static final String TOPIC = "foo";
   private static final String GROUP_ID = "bar";
 
   private Gson gson = new EventGsonProvider().get();
   private EventDeserializer deserializer = new EventDeserializer(gson);
+
+  @Before
+  public void setUp() {
+    when(oneOffRequestContext.open()).thenReturn(manualRequestContext);
+    when(confMock.isAutoCommitEnabled()).thenReturn(true);
+  }
 
   @Test
   public void shouldIncrementFailedToConsumeMessageWhenReceivingFails() {
@@ -112,6 +126,45 @@ public class PubSubEventSubscriberTest {
     verify(succeedingConsumer, only()).accept(any(Event.class), any());
   }
 
+  @Test
+  public void shouldNotAcknowledgeAutomaticallyWhenManualAcknowledgementIsEnabled() {
+    when(confMock.isAutoCommitEnabled()).thenReturn(false);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    verify(ackReplyConsumerMock, never()).ack();
+  }
+
+  @Test
+  public void shouldAcknowledgeMessageWhenManualAcknowledgementIsCalled() {
+    when(confMock.isAutoCommitEnabled()).thenReturn(false);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    MessageAcknowledgement<Event> acknowledgement = capturedAcknowledgement();
+    acknowledgement.ack(capturedEvent());
+
+    verify(ackReplyConsumerMock, times(1)).ack();
+  }
+
+  @Test
+  public void shouldRejectExplicitAckWhenAutoCommitIsEnabled() {
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    IllegalStateException thrown =
+        assertThrows(
+            IllegalStateException.class, () -> capturedAcknowledgement().ack(capturedEvent()));
+
+    assertThat(thrown).hasMessageThat().contains("already acknowledged automatically");
+  }
+
   private PubsubMessage sampleMessage(Event event) {
     String eventPayload = gson.toJson(event);
     ByteString data = ByteString.copyFromUtf8(eventPayload);
@@ -129,5 +182,15 @@ public class PubSubEventSubscriberTest {
             GROUP_ID,
             consumer)
         .getMessageReceiver();
+  }
+
+  private Event capturedEvent() {
+    verify(succeedingConsumer).accept(eventMessageCaptor.capture(), any());
+    return eventMessageCaptor.getValue();
+  }
+
+  private MessageAcknowledgement<Event> capturedAcknowledgement() {
+    verify(succeedingConsumer).accept(any(), acknowledgementCaptor.capture());
+    return acknowledgementCaptor.getValue();
   }
 }

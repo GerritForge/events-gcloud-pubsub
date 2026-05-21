@@ -39,6 +39,11 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
     the subscriber to acknowledge receipt before resending the message.
     Default: 10
 
+`plugin.events-gcloud-pubsub.enableAutoCommit`
+:   Optional. Whether the plugin should acknowledge consumed messages automatically.
+    When set to `false`, Pub/Sub messages are acknowledged only when `ack(event)` is invoked.
+    Default: true
+
 `plugin.events-gcloud-pubsub.subscribtionTimeoutInSeconds`
 :   Optional. Maximum time in seconds to wait for the subscriber to connect to GCloud PubSub topic.
     Default: 10
@@ -65,6 +70,7 @@ Should send stream events?     [y/N]? y
 Stream events topic            [gerrit]:
 Number of subscribers          [6]:
 Timeout for subscriber ACKs (secs) [10]:
+Should acknowledge messages automatically? [Y/n]?
 Timeout for subscriber connection (secs) [10]:
 Timeout for subscriber shutdown (secs) [10]:
 Gcloud Project name            : some_project
