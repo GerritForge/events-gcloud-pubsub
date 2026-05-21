@@ -13,6 +13,7 @@ package com.gerritforge.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.EventDeserializer;
+import com.gerritforge.gerrit.eventbroker.MessageAcknowledgement;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.cloud.pubsub.v1.Subscriber;
@@ -111,18 +112,26 @@ public class PubSubEventSubscriber {
   @VisibleForTesting
   MessageReceiver getMessageReceiver() {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
+      boolean autoCommitEnabled = config.isAutoCommitEnabled();
       try (ManualRequestContext ctx = oneOffRequestContext.open()) {
         Event event = eventsDeserializer.deserialize(message.getData().toStringUtf8());
-        messageProcessor.accept(event, unusedEvent -> {});
+        messageProcessor.accept(event, getMessageAcknowledgement(consumer, autoCommitEnabled));
         subscriberMetrics.incrementSucceedToConsumeMessage();
       } catch (Exception e) {
         logger.atSevere().withCause(e).log(
             "Exception when consuming message %s from topic %s [message: %s]",
             message.getMessageId(), topic, message.getData().toStringUtf8());
         subscriberMetrics.incrementFailedToConsumeMessage();
-      } finally {
-        consumer.ack();
       }
     };
+  }
+
+  private MessageAcknowledgement<Event> getMessageAcknowledgement(
+      AckReplyConsumer consumer, boolean autoCommitEnabled) {
+    if (autoCommitEnabled) {
+      return PubSubAutoAcknowledgement.INSTANCE;
+    }
+
+    return unusedEvent -> consumer.ack();
   }
 }

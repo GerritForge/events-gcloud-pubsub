@@ -26,11 +26,13 @@ public class PubSubConfiguration {
   static final String PRIVATE_KEY_LOCATION_FIELD = "privateKeyLocation";
   static final String STREAM_EVENTS_TOPIC_FIELD = "streamEventsTopic";
   static final String SEND_STREAM_EVENTS_FIELD = "sendStreamEvents";
+  static final String ENABLE_AUTO_COMMIT_FIELD = "enableAutoCommit";
   static final String NUMBER_OF_SUBSCRIBERS_FIELD = "numberOfSubscribers";
   static final String ACK_DEADLINE_SECONDS_FIELD = "ackDeadlineSeconds";
   static final String SUBSCRIPTION_TIMEOUT_SECONDS_FIELD = "subscribtionTimeoutInSeconds";
   static final String SHUTDOWN_TIMEOUT_SECONDS_FIELD = "shutdownTimeoutInSeconds";
 
+  static final boolean DEFAULT_ENABLE_AUTO_COMMIT = true;
   static final String DEFAULT_NUMBER_OF_SUBSCRIBERS = "6";
   static final String DEFAULT_ACK_DEADLINE_SECONDS = "10";
   static final String DEFAULT_SUBSCTIPRION_TIMEOUT = "10";
@@ -48,6 +50,7 @@ public class PubSubConfiguration {
   private final String streamEventsTopic;
   private final PluginConfig fromGerritConfig;
   private final boolean sendStreamEvents;
+  private final boolean autoCommitEnabled;
 
   @Inject
   public PubSubConfiguration(
@@ -62,6 +65,8 @@ public class PubSubConfiguration {
         fromGerritConfig.getString(STREAM_EVENTS_TOPIC_FIELD, DEFAULT_STREAM_EVENTS_TOPIC);
     this.sendStreamEvents =
         fromGerritConfig.getBoolean(SEND_STREAM_EVENTS_FIELD, DEFAULT_SEND_STREAM_EVENTS);
+    this.autoCommitEnabled =
+        fromGerritConfig.getBoolean(ENABLE_AUTO_COMMIT_FIELD, DEFAULT_ENABLE_AUTO_COMMIT);
     this.numberOfSubscribers =
         Integer.parseInt(
             fromGerritConfig.getString(NUMBER_OF_SUBSCRIBERS_FIELD, DEFAULT_NUMBER_OF_SUBSCRIBERS));
@@ -124,5 +129,9 @@ public class PubSubConfiguration {
 
   public boolean isSendStreamEvents() {
     return sendStreamEvents;
+  }
+
+  public boolean isAutoCommitEnabled() {
+    return autoCommitEnabled;
   }
 }
