@@ -11,6 +11,7 @@
 
 package com.gerritforge.gerrit.plugins.pubsub;
 
+import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.EventDeserializer;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
@@ -26,7 +27,6 @@ import com.google.pubsub.v1.PubsubMessage;
 import java.io.IOException;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
-import java.util.function.Consumer;
 
 public class PubSubEventSubscriber {
 
@@ -34,7 +34,7 @@ public class PubSubEventSubscriber {
     public PubSubEventSubscriber create(
         @Assisted("topic") String topic,
         @Assisted("groupId") String groupId,
-        Consumer<Event> messageProcessor);
+        AckAwareConsumer<Event> messageProcessor);
   }
 
   private static final FluentLogger logger = FluentLogger.forEnclosingClass();
@@ -44,7 +44,7 @@ public class PubSubEventSubscriber {
   private final OneOffRequestContext oneOffRequestContext;
   private final String topic;
   private final String groupId;
-  private final Consumer<Event> messageProcessor;
+  private final AckAwareConsumer<Event> messageProcessor;
   private final SubscriberProvider subscriberProvider;
   private final PubSubConfiguration config;
   private Subscriber subscriber;
@@ -58,7 +58,7 @@ public class PubSubEventSubscriber {
       OneOffRequestContext oneOffRequestContext,
       @Assisted("topic") String topic,
       @Assisted("groupId") String groupId,
-      @Assisted Consumer<Event> messageProcessor) {
+      @Assisted AckAwareConsumer<Event> messageProcessor) {
     this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
     this.oneOffRequestContext = oneOffRequestContext;
@@ -90,7 +90,7 @@ public class PubSubEventSubscriber {
     return groupId;
   }
 
-  public Consumer<Event> getMessageProcessor() {
+  public AckAwareConsumer<Event> getMessageProcessor() {
     return messageProcessor;
   }
 
@@ -113,7 +113,7 @@ public class PubSubEventSubscriber {
     return (PubsubMessage message, AckReplyConsumer consumer) -> {
       try (ManualRequestContext ctx = oneOffRequestContext.open()) {
         Event event = eventsDeserializer.deserialize(message.getData().toStringUtf8());
-        messageProcessor.accept(event);
+        messageProcessor.accept(event, unusedEvent -> {});
         subscriberMetrics.incrementSucceedToConsumeMessage();
       } catch (Exception e) {
         logger.atSevere().withCause(e).log(

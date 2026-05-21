@@ -15,7 +15,10 @@ import static com.google.common.truth.Truth.assertThat;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
+import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.gerritforge.gerrit.eventbroker.MessageAcknowledgement;
+import com.gerritforge.gerrit.plugins.pubsub.local.EnvironmentChecker;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcTransportChannel;
 import com.google.api.gax.rpc.FixedTransportChannelProvider;
@@ -44,7 +47,6 @@ import com.google.pubsub.v1.PullResponse;
 import com.google.pubsub.v1.PushConfig;
 import com.google.pubsub.v1.ReceivedMessage;
 import com.google.pubsub.v1.TopicName;
-import com.gerritforge.gerrit.plugins.pubsub.local.EnvironmentChecker;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
@@ -319,11 +321,11 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
         .count();
   }
 
-  private class TestConsumer implements Consumer<Event> {
+  private class TestConsumer implements AckAwareConsumer<Event> {
     private Event msg;
 
     @Override
-    public void accept(Event msg) {
+    public void accept(Event msg, MessageAcknowledgement<Event> acknowledgement) {
       this.msg = msg;
     }
 
