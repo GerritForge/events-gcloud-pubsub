@@ -128,6 +128,29 @@ public class PubSubConfigurationTest {
   }
 
   @Test
+  public void shouldEnableAutoCommitByDefault() {
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    PubSubConfiguration configuration =
+        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
+
+    assertThat(configuration.isAutoCommitEnabled()).isTrue();
+  }
+
+  @Test
+  public void shouldReadExplicitAutoCommitConfiguration() {
+    pluginConfig.setBoolean("enableAutoCommit", false);
+    when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
+        .thenReturn(pluginConfig.asPluginConfig());
+
+    PubSubConfiguration configuration =
+        new PubSubConfiguration(pluginConfigFactoryMock, PLUGIN_NAME, gerritInstanceId);
+
+    assertThat(configuration.isAutoCommitEnabled()).isFalse();
+  }
+
+  @Test
   public void shouldThrowExceptionWhenPrivateKeyLocationIsNotDefined() {
     pluginConfig.setString("privateKeyLocation", "");
     when(pluginConfigFactoryMock.getFromGerritConfig(PLUGIN_NAME))
