@@ -12,22 +12,28 @@
 package com.gerritforge.gerrit.plugins.pubsub;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.gerrit.testing.GerritJUnit.assertThrows;
 import static org.mockito.Mockito.any;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.EventDeserializer;
+import com.gerritforge.gerrit.eventbroker.MessageAcknowledgement;
+import com.gerritforge.gerrit.eventbroker.MessageAcknowledgementException;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGsonProvider;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
+import com.google.gerrit.server.util.ManualRequestContext;
 import com.google.gerrit.server.util.OneOffRequestContext;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
+import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -42,15 +48,23 @@ public class PubSubEventSubscriberTest {
   @Mock SubscriberProvider subscriberProviderMock;
   @Mock PubSubSubscriberMetrics pubSubSubscriberMetricsMock;
   @Mock OneOffRequestContext oneOffRequestContext;
+  @Mock ManualRequestContext manualRequestContext;
   @Mock AckReplyConsumer ackReplyConsumerMock;
   @Mock AckAwareConsumer<Event> succeedingConsumer;
   @Captor ArgumentCaptor<Event> eventMessageCaptor;
+  @Captor ArgumentCaptor<MessageAcknowledgement<Event>> acknowledgementCaptor;
 
   private static final String TOPIC = "foo";
   private static final String GROUP_ID = "bar";
 
-  private Gson gson = new EventGsonProvider().get();
-  private EventDeserializer deserializer = new EventDeserializer(gson);
+  private final Gson gson = new EventGsonProvider().get();
+  private final EventDeserializer deserializer = new EventDeserializer(gson);
+
+  @Before
+  public void setUp() {
+    when(oneOffRequestContext.open()).thenReturn(manualRequestContext);
+    when(confMock.isAutoCommitEnabled()).thenReturn(true);
+  }
 
   @Test
   public void shouldIncrementFailedToConsumeMessageWhenReceivingFails() {
@@ -63,41 +77,42 @@ public class PubSubEventSubscriberTest {
         .receiveMessage(PubsubMessage.getDefaultInstance(), ackReplyConsumerMock);
 
     verify(pubSubSubscriberMetricsMock, only()).incrementFailedToConsumeMessage();
+    verify(ackReplyConsumerMock, only()).ack();
   }
 
   @Test
   public void shouldIncrementSucceedToConsumeMessageWhenReceivingSucceeds() {
-    String instanceId = "instance-id";
-    Event eventMessage = new ProjectCreatedEvent();
-    eventMessage.instanceId = instanceId;
-    PubsubMessage pubsubMessage = sampleMessage(eventMessage);
+    ProjectCreatedEvent eventMessage = new ProjectCreatedEvent();
+    eventMessage.instanceId = "instance-id";
 
-    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
+    messageReceiver(succeedingConsumer)
+        .receiveMessage(sampleMessage(eventMessage), ackReplyConsumerMock);
 
     verify(pubSubSubscriberMetricsMock, only()).incrementSucceedToConsumeMessage();
+    verify(ackReplyConsumerMock, only()).ack();
   }
 
   @Test
   public void shouldSkipEventWithoutSourceInstanceId() {
     Event eventWithoutSourceInstanceId = new ProjectCreatedEvent();
-    PubsubMessage pubsubMessage = sampleMessage(eventWithoutSourceInstanceId);
 
-    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
+    messageReceiver(succeedingConsumer)
+        .receiveMessage(sampleMessage(eventWithoutSourceInstanceId), ackReplyConsumerMock);
 
-    verify(succeedingConsumer, never()).accept(eventWithoutSourceInstanceId, unusedEvent -> {});
+    verify(succeedingConsumer, never()).accept(any(), any());
+    verify(ackReplyConsumerMock, only()).ack();
   }
 
   @Test
   public void shouldParseEventObject() {
-    String instanceId = "instance-id";
-    Event event = new ProjectCreatedEvent();
-    event.instanceId = instanceId;
-    PubsubMessage pubsubMessage = sampleMessage(event);
-    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
 
     verify(succeedingConsumer, only()).accept(eventMessageCaptor.capture(), any());
     Event result = eventMessageCaptor.getValue();
-    assertThat(result.instanceId).isEqualTo(instanceId);
+    assertThat(result.instanceId).isEqualTo("instance-id");
   }
 
   @Test
@@ -105,10 +120,88 @@ public class PubSubEventSubscriberTest {
     ProjectCreatedEvent event = new ProjectCreatedEvent();
     event.instanceId = "instance-id";
     event.projectName = "header_body_parser_project";
-    PubsubMessage pubsubMessage = sampleMessage(event);
-    messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
 
     verify(succeedingConsumer, only()).accept(any(Event.class), any());
+  }
+
+  @Test
+  public void shouldNotAcknowledgeAutomaticallyWhenManualAcknowledgementIsEnabled() {
+    when(confMock.isAutoCommitEnabled()).thenReturn(false);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    verify(ackReplyConsumerMock, never()).ack();
+  }
+
+  @Test
+  public void shouldAcknowledgeMessageWhenManualAcknowledgementIsCalled() {
+    when(confMock.isAutoCommitEnabled()).thenReturn(false);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    MessageAcknowledgement<Event> acknowledgement = capturedAcknowledgement();
+    Event receivedEvent = capturedEvent();
+    acknowledgement.ack(receivedEvent);
+
+    verify(ackReplyConsumerMock, only()).ack();
+  }
+
+  @Test
+  public void shouldRejectDoubleManualAcknowledgement() {
+    when(confMock.isAutoCommitEnabled()).thenReturn(false);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    MessageAcknowledgement<Event> acknowledgement = capturedAcknowledgement();
+    Event receivedEvent = capturedEvent();
+    acknowledgement.ack(receivedEvent);
+
+    MessageAcknowledgementException thrown =
+        assertThrows(
+            MessageAcknowledgementException.class, () -> acknowledgement.ack(receivedEvent));
+
+    assertThat(thrown).hasMessageThat().contains("Invalid or already acked Event");
+    verify(ackReplyConsumerMock, only()).ack();
+  }
+
+  @Test
+  public void shouldRejectManualAcknowledgementForDifferentEvent() {
+    when(confMock.isAutoCommitEnabled()).thenReturn(false);
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    MessageAcknowledgementException thrown =
+        assertThrows(
+            MessageAcknowledgementException.class,
+            () -> capturedAcknowledgement().ack(new ProjectCreatedEvent()));
+
+    assertThat(thrown).hasMessageThat().contains("Invalid or already acked Event");
+    verify(ackReplyConsumerMock, never()).ack();
+  }
+
+  @Test
+  public void shouldRejectExplicitAckWhenAutoCommitIsEnabled() {
+    ProjectCreatedEvent event = new ProjectCreatedEvent();
+    event.instanceId = "instance-id";
+
+    messageReceiver(succeedingConsumer).receiveMessage(sampleMessage(event), ackReplyConsumerMock);
+
+    IllegalStateException thrown =
+        assertThrows(
+            IllegalStateException.class, () -> capturedAcknowledgement().ack(capturedEvent()));
+
+    assertThat(thrown).hasMessageThat().contains("already acknowledged automatically");
+    verify(ackReplyConsumerMock, only()).ack();
   }
 
   private PubsubMessage sampleMessage(Event event) {
@@ -128,5 +221,15 @@ public class PubSubEventSubscriberTest {
             GROUP_ID,
             consumer)
         .getMessageReceiver();
+  }
+
+  private Event capturedEvent() {
+    verify(succeedingConsumer).accept(eventMessageCaptor.capture(), any());
+    return eventMessageCaptor.getValue();
+  }
+
+  private MessageAcknowledgement<Event> capturedAcknowledgement() {
+    verify(succeedingConsumer).accept(any(), acknowledgementCaptor.capture());
+    return acknowledgementCaptor.getValue();
   }
 }
