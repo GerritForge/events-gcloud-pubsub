@@ -11,6 +11,7 @@
 
 package com.gerritforge.gerrit.plugins.pubsub;
 
+import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
@@ -24,7 +25,6 @@ import java.util.Map;
 import java.util.Optional;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 class PubSubBrokerApi implements BrokerApi {
@@ -52,12 +52,13 @@ class PubSubBrokerApi implements BrokerApi {
   }
 
   @Override
-  public void receiveAsync(String topic, Consumer<Event> eventConsumer) {
+  public void receiveAsync(String topic, AckAwareConsumer<Event> eventConsumer) {
     receiveAsync(topic, null, eventConsumer);
   }
 
   @Override
-  public void receiveAsync(String topic, @Nullable String maybeGroupId, Consumer<Event> consumer) {
+  public void receiveAsync(
+      String topic, @Nullable String maybeGroupId, AckAwareConsumer<Event> consumer) {
     String groupId = Optional.ofNullable(maybeGroupId).orElse(configuration.getSubscriptionId());
     PubSubEventSubscriber subscriber = subscriberFactory.create(topic, groupId, consumer);
     subscribers.add(subscriber);
@@ -73,6 +74,11 @@ class PubSubBrokerApi implements BrokerApi {
                     s.getGroupId(),
                     TopicSubscriber.topicSubscriber(s.getTopic(), s.getMessageProcessor())))
         .collect(Collectors.toSet());
+  }
+
+  @Override
+  public boolean isAutoAck() {
+    return true;
   }
 
   @Override

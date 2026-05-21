@@ -17,6 +17,7 @@ import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
+import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.EventDeserializer;
 import com.google.cloud.pubsub.v1.AckReplyConsumer;
 import com.google.cloud.pubsub.v1.MessageReceiver;
@@ -27,7 +28,6 @@ import com.google.gerrit.server.util.OneOffRequestContext;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
-import java.util.function.Consumer;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.ArgumentCaptor;
@@ -43,7 +43,7 @@ public class PubSubEventSubscriberTest {
   @Mock PubSubSubscriberMetrics pubSubSubscriberMetricsMock;
   @Mock OneOffRequestContext oneOffRequestContext;
   @Mock AckReplyConsumer ackReplyConsumerMock;
-  @Mock Consumer<Event> succeedingConsumer;
+  @Mock AckAwareConsumer<Event> succeedingConsumer;
   @Captor ArgumentCaptor<Event> eventMessageCaptor;
 
   private static final String TOPIC = "foo";
@@ -54,8 +54,8 @@ public class PubSubEventSubscriberTest {
 
   @Test
   public void shouldIncrementFailedToConsumeMessageWhenReceivingFails() {
-    Consumer<Event> failingConsumer =
-        (message) -> {
+    AckAwareConsumer<Event> failingConsumer =
+        (message, cb) -> {
           throw new RuntimeException("Error receiving message");
         };
 
@@ -84,7 +84,7 @@ public class PubSubEventSubscriberTest {
 
     messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
 
-    verify(succeedingConsumer, never()).accept(eventWithoutSourceInstanceId);
+    verify(succeedingConsumer, never()).accept(eventWithoutSourceInstanceId, unusedEvent -> {});
   }
 
   @Test
@@ -95,7 +95,7 @@ public class PubSubEventSubscriberTest {
     PubsubMessage pubsubMessage = sampleMessage(event);
     messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
 
-    verify(succeedingConsumer, only()).accept(eventMessageCaptor.capture());
+    verify(succeedingConsumer, only()).accept(eventMessageCaptor.capture(), any());
     Event result = eventMessageCaptor.getValue();
     assertThat(result.instanceId).isEqualTo(instanceId);
   }
@@ -108,7 +108,7 @@ public class PubSubEventSubscriberTest {
     PubsubMessage pubsubMessage = sampleMessage(event);
     messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
 
-    verify(succeedingConsumer, only()).accept(any(Event.class));
+    verify(succeedingConsumer, only()).accept(any(Event.class), any());
   }
 
   private PubsubMessage sampleMessage(Event event) {
@@ -117,7 +117,7 @@ public class PubSubEventSubscriberTest {
     return PubsubMessage.newBuilder().setData(data).build();
   }
 
-  private MessageReceiver messageReceiver(Consumer<Event> consumer) {
+  private MessageReceiver messageReceiver(AckAwareConsumer<Event> consumer) {
     return new PubSubEventSubscriber(
             deserializer,
             subscriberProviderMock,
