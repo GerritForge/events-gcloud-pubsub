@@ -78,7 +78,7 @@ class PubSubBrokerApi implements BrokerApi {
 
   @Override
   public boolean isAutoAck() {
-    return true;
+    return configuration.isAutoCommitEnabled();
   }
 
   @Override
