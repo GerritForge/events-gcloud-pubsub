@@ -13,7 +13,6 @@ package com.gerritforge.gerrit.plugins.pubsub;
 
 import static com.google.common.truth.Truth.assertThat;
 import static org.mockito.Mockito.any;
-import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.only;
 import static org.mockito.Mockito.verify;
 
@@ -78,13 +77,13 @@ public class PubSubEventSubscriberTest {
   }
 
   @Test
-  public void shouldSkipEventWithoutSourceInstanceId() {
+  public void shouldConsumeEventWithoutSourceInstanceId() {
     Event eventWithoutSourceInstanceId = new ProjectCreatedEvent();
     PubsubMessage pubsubMessage = sampleMessage(eventWithoutSourceInstanceId);
 
     messageReceiver(succeedingConsumer).receiveMessage(pubsubMessage, ackReplyConsumerMock);
 
-    verify(succeedingConsumer, never()).accept(eventWithoutSourceInstanceId, unusedEvent -> {});
+    verify(succeedingConsumer, only()).accept(any(Event.class), any());
   }
 
   @Test
