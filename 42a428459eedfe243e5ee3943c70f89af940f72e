@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2afb7b48_daa9a458",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-22T19:16:48Z",
+      "side": 1,
+      "message": "What shall we do here in case of failure when manual acking? If we `nack()` in case of failure we might never continue processing. If we `ack()` we continue processing but we loose an event.",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "42a428459eedfe243e5ee3943c70f89af940f72e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
