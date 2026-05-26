@@ -22,6 +22,53 @@
       },
       "revId": "42a428459eedfe243e5ee3943c70f89af940f72e",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "39c631a1_8afc809f",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-26T10:24:29Z",
+      "side": 1,
+      "message": "This is not correct. The `ack()` is delegated to the client in case of manual commit.",
+      "range": {
+        "startLine": 128,
+        "startChar": 30,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "42a428459eedfe243e5ee3943c70f89af940f72e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "7a9ce2e9_6e3cf436",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 5
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-26T10:24:29Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "2afb7b48_daa9a458",
+      "range": {
+        "startLine": 128,
+        "startChar": 12,
+        "endLine": 128,
+        "endChar": 41
+      },
+      "revId": "42a428459eedfe243e5ee3943c70f89af940f72e",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
