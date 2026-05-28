@@ -1,0 +1,159 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c93e61f3_02b01845",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "nit: This has been done in the previous commit already.",
+      "range": {
+        "startLine": 10,
+        "startChar": 16,
+        "endLine": 11,
+        "endChar": 15
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c58990c5_e5d4acb4",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 14,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "wrap line",
+      "range": {
+        "startLine": 14,
+        "startChar": 72,
+        "endLine": 14,
+        "endChar": 74
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c1297ebb_fbdf737e",
+        "filename": "/COMMIT_MSG",
+        "patchSetId": 9
+      },
+      "lineNbr": 16,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "This is no longer true, because the acknowledgement is up the client now.",
+      "range": {
+        "startLine": 15,
+        "startChar": 52,
+        "endLine": 16,
+        "endChar": 45
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "21a59c3a_ba204040",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "If we make this static, it will definitely be the same instance for each message consumed.",
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "5f5e5335_d98ea402",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "```suggestion\n    When set to `false`, Pub/Sub messages are acknowledged only when `ack(event)` is invoked.\n```",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "09884506_2919916f",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 150,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "nit: could inline",
+      "range": {
+        "startLine": 149,
+        "startChar": 0,
+        "endLine": 150,
+        "endChar": 39
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "9800bee3_d728a68d",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T14:22:37Z",
+      "side": 1,
+      "message": "```suggestion\n    verify(ackReplyConsumerMock, times(1)).ack();\n```",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 39
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
