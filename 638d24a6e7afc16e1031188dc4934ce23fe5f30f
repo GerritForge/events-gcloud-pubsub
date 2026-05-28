@@ -22,6 +22,29 @@
       },
       "revId": "638d24a6e7afc16e1031188dc4934ce23fe5f30f",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "72063782_d6adb67f",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 87,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T13:25:29Z",
+      "side": 1,
+      "message": "this should be `any()` as all other tests.",
+      "range": {
+        "startLine": 87,
+        "startChar": 77,
+        "endLine": 87,
+        "endChar": 94
+      },
+      "revId": "638d24a6e7afc16e1031188dc4934ce23fe5f30f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
