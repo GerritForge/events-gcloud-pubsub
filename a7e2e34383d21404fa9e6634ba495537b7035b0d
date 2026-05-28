@@ -24,6 +24,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "0641690d_940921e9",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-28T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "78775632_e20f2618",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 9
+      },
+      "revId": "a7e2e34383d21404fa9e6634ba495537b7035b0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "aaea815d_c4c8c6c5",
@@ -41,6 +65,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "628481ca_7209e042",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-28T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "aaea815d_c4c8c6c5",
+      "revId": "a7e2e34383d21404fa9e6634ba495537b7035b0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "b2d94625_9f57db4c",
@@ -54,6 +96,30 @@
       "writtenOn": "2026-05-28T07:51:36Z",
       "side": 1,
       "message": "I am a bit confused by this: I see that L126-128 in `getMessageReceiver` calls `ack()`, am I reading this wrong?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 48
+      },
+      "revId": "a7e2e34383d21404fa9e6634ba495537b7035b0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "b6f3b15b_e5964948",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-28T14:12:43Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "b2d94625_9f57db4c",
       "range": {
         "startLine": 135,
         "startChar": 0,
