@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "51b6ad47_b40d12f7",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 58,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T07:51:28Z",
+      "side": 1,
+      "message": "does `cb` stand for `callBack`? Can we give a more meaningful name?",
+      "range": {
+        "startLine": 58,
+        "startChar": 16,
+        "endLine": 58,
+        "endChar": 23
+      },
+      "revId": "638d24a6e7afc16e1031188dc4934ce23fe5f30f",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
