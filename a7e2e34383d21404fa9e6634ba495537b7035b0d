@@ -1,0 +1,67 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "78775632_e20f2618",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 128,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T07:51:36Z",
+      "side": 1,
+      "message": "This should be removed I believe.\nAcking should always be done by the client (multi-site), not directly by the library.\n\nAlso, when auto commit is enabled, then no explicit commit should be done at all.",
+      "range": {
+        "startLine": 126,
+        "startChar": 0,
+        "endLine": 128,
+        "endChar": 9
+      },
+      "revId": "a7e2e34383d21404fa9e6634ba495537b7035b0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "aaea815d_c4c8c6c5",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 6
+      },
+      "lineNbr": 81,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T07:51:36Z",
+      "side": 1,
+      "message": "nit: unrelated",
+      "revId": "a7e2e34383d21404fa9e6634ba495537b7035b0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "b2d94625_9f57db4c",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 6
+      },
+      "lineNbr": 135,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-05-28T07:51:36Z",
+      "side": 1,
+      "message": "I am a bit confused by this: I see that L126-128 in `getMessageReceiver` calls `ack()`, am I reading this wrong?",
+      "range": {
+        "startLine": 135,
+        "startChar": 0,
+        "endLine": 135,
+        "endChar": 48
+      },
+      "revId": "a7e2e34383d21404fa9e6634ba495537b7035b0d",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
