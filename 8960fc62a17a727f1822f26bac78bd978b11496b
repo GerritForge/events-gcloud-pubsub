@@ -87,6 +87,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "5b34524c_8a1cf4f4",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriber.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 129,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-28T14:23:52Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "21a59c3a_ba204040",
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "5f5e5335_d98ea402",
@@ -100,6 +118,30 @@
       "writtenOn": "2026-05-28T14:22:37Z",
       "side": 1,
       "message": "```suggestion\n    When set to `false`, Pub/Sub messages are acknowledged only when `ack(event)` is invoked.\n```",
+      "range": {
+        "startLine": 44,
+        "startChar": 0,
+        "endLine": 45,
+        "endChar": 72
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "722ca5b7_f8b2a1f3",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 9
+      },
+      "lineNbr": 45,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-28T14:23:52Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "5f5e5335_d98ea402",
       "range": {
         "startLine": 44,
         "startChar": 0,
@@ -146,6 +188,30 @@
       "writtenOn": "2026-05-28T14:22:37Z",
       "side": 1,
       "message": "```suggestion\n    verify(ackReplyConsumerMock, times(1)).ack();\n```",
+      "range": {
+        "startLine": 152,
+        "startChar": 33,
+        "endLine": 152,
+        "endChar": 39
+      },
+      "revId": "8960fc62a17a727f1822f26bac78bd978b11496b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "2110213d_05c19e17",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubEventSubscriberTest.java",
+        "patchSetId": 9
+      },
+      "lineNbr": 152,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-05-28T14:23:52Z",
+      "side": 1,
+      "message": "Fix applied.",
+      "parentUuid": "9800bee3_d728a68d",
       "range": {
         "startLine": 152,
         "startChar": 33,
