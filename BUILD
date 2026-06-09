@@ -1,14 +1,30 @@
-load("//tools/bzl:junit.bzl", "junit_tests")
 load(
-    "//tools/bzl:plugin.bzl",
-    "PLUGIN_DEPS",
-    "PLUGIN_TEST_DEPS",
+    "@com_googlesource_gerrit_bazlets//:gerrit_plugin.bzl",
     "gerrit_plugin",
+    "gerrit_plugin_tests",
 )
+load("@rules_java//java:defs.bzl", "java_library")
+
+PLUGIN = "events-gcloud-pubsub"
+
+EXT_DEPS = [
+    "com.google.api.grpc:proto-google-cloud-pubsub-v1",
+    "com.google.api:api-common",
+    "com.google.api:gax",
+    "com.google.api:gax-grpc",
+    "com.google.auth:google-auth-library-oauth2-http",
+    "com.google.cloud:google-cloud-pubsub",
+    "io.grpc:grpc-api",
+]
+
+TEST_EXT_DEPS = EXT_DEPS + [
+    "org.testcontainers:gcloud",
+    "org.testcontainers:testcontainers",
+]
 
 gerrit_plugin(
-    name = "events-gcloud-pubsub",
     srcs = glob(["src/main/java/**/*.java"]),
+    ext_deps = EXT_DEPS,
     manifest_entries = [
         "Gerrit-PluginName: events-gcloud-pubsub",
         "Gerrit-Module: com.gerritforge.gerrit.plugins.pubsub.Module",
@@ -16,101 +32,23 @@ gerrit_plugin(
         "Implementation-Title: Gerrit events listener to send events to an external GCloud PubSub broker",
         "Implementation-URL: https://github.com/GerritForge/events-gcloud-pubsub",
     ],
+    plugin = PLUGIN,
     resources = glob(["src/main/resources/**/*"]),
     deps = [
         ":events-broker-neverlink",
-        "@api-common//jar",
-        "@gax-grpc//jar",
-        "@gax//jar",
-        "@google-auth-library-credentials//jar",
-        "@google-auth-library-oauth2-http//jar",
-        "@google-cloud-pubsub-proto//jar",
-        "@google-cloud-pubsub//jar",
-        "@google-http-client-gson//jar",
-        "@google-http-client//jar",
-        "@grpc-alts//jar",
-        "@grpc-api//jar",
-        "@grpc-auth//jar",
-        "@grpc-context//jar",
-        "@grpc-core//jar",
-        "@grpc-netty-shaded//jar",
-        "@grpc-protobuf-lite//jar",
-        "@grpc-protobuf//jar",
-        "@grpc-stub//jar",
-        "@opencensus-api//jar",
-        "@opencensus-contrib-http-util//jar",
-        "@perfmark-api//jar",
-        "@proto-google-common-protos//jar",
-        "@proto-google-iam-v1//jar",
-        "@threetenbp//jar",
+        ":gerrit-provided-neverlink",
     ],
 )
 
-junit_tests(
+gerrit_plugin_tests(
     name = "events-gcloud-pubsub_tests",
     srcs = glob(["src/test/java/**/*.java"]),
+    ext_deps = TEST_EXT_DEPS,
+    plugin = PLUGIN,
     tags = ["events-gcloud-pubsub"],
     deps = [
-        ":events-gcloud-pubsub__plugin_test_deps",
+        ":gerrit-provided-neverlink",
         "//plugins/events-broker",
-        "@api-common//jar",
-        "@gax-grpc//jar",
-        "@gax//jar",
-        "@google-auth-library-credentials//jar",
-        "@google-auth-library-oauth2-http//jar",
-        "@google-cloud-pubsub-proto//jar",
-        "@google-cloud-pubsub//jar",
-        "@google-http-client-gson//jar",
-        "@google-http-client//jar",
-        "@grpc-alts//jar",
-        "@grpc-api//jar",
-        "@grpc-context//jar",
-        "@grpc-core//jar",
-        "@grpc-netty-shaded//jar",
-        "@grpc-protobuf-lite//jar",
-        "@grpc-protobuf//jar",
-        "@grpc-stub//jar",
-        "@opencensus-api//jar",
-        "@opencensus-contrib-http-util//jar",
-        "@perfmark-api//jar",
-        "@proto-google-common-protos//jar",
-        "@proto-google-iam-v1//jar",
-        "@testcontainers-gcloud//jar",
-        "@threetenbp//jar",
-    ],
-)
-
-java_library(
-    name = "events-gcloud-pubsub__plugin_test_deps",
-    testonly = 1,
-    visibility = ["//visibility:public"],
-    exports = PLUGIN_DEPS + PLUGIN_TEST_DEPS + [
-        ":events-gcloud-pubsub__plugin",
-        "@jackson-annotations//jar",
-        "@testcontainers//jar",
-        "@docker-java-api//jar",
-        "@docker-java-transport//jar",
-        "@duct-tape//jar",
-        "@visible-assertions//jar",
-        "@jna//jar",
-        "@testcontainers-gcloud//jar",
-        "@grpc-api//jar",
-        "@gax-grpc//jar",
-        "@grpc-netty-shaded//jar",
-        "@grpc-core//jar",
-        "@threetenbp//jar",
-        "@grpc-alts//jar",
-        "@grpc-protobuf//jar",
-        "@grpc-protobuf-lite//jar",
-        "@proto-google-iam-v1//jar",
-        "@proto-google-common-protos//jar",
-        "@google-http-client//jar",
-        "@grpc-context//jar",
-        "@grpc-stub//jar",
-        "@perfmark-api//jar",
-        "@google-http-client-gson//jar",
-        "@opencensus-api//jar",
-        "@opencensus-contrib-http-util//jar",
     ],
 )
 
@@ -118,4 +56,15 @@ java_library(
     name = "events-broker-neverlink",
     neverlink = 1,
     exports = ["//plugins/events-broker"],
+)
+
+java_library(
+    name = "gerrit-provided-neverlink",
+    neverlink = 1,
+    exports = [
+        "//lib:gson",
+        "//lib:protobuf",
+        "//lib/httpcomponents:httpclient",
+        "//lib/httpcomponents:httpcore",
+    ],
 )
