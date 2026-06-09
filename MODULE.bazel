@@ -1,0 +1,41 @@
+module(name = "gerrit-events-gcloud-pubsub")
+
+bazel_dep(name = "rules_java", version = "9.3.0")
+bazel_dep(name = "rules_jvm_external", version = "7.0")
+
+maven = use_extension("@rules_jvm_external//:extensions.bzl", "maven")
+maven.install(
+    name = "events-gcloud-pubsub_plugin_deps",
+    artifacts = [
+        "com.google.cloud:google-cloud-pubsub:1.111.4",
+        "org.testcontainers:gcloud:1.15.3",
+    ],
+    duplicate_version_warning = "error",
+    excluded_artifacts = [
+        "com.google.code.findbugs:jsr305",
+        "com.google.code.gson:gson",
+        "com.google.errorprone:error_prone_annotations",
+        "com.google.guava:failureaccess",
+        "com.google.guava:guava",
+        "com.google.j2objc:j2objc-annotations",
+        "com.google.protobuf:protobuf-java",
+        "com.google.protobuf:protobuf-java-util",
+        "com.google.protobuf:protobuf-javalite",
+        "commons-codec:commons-codec",
+        "commons-io:commons-io",
+        "junit:junit",
+        "org.apache.httpcomponents:httpclient",
+        "org.apache.httpcomponents:httpcore",
+        "org.checkerframework:checker-qual",
+        "org.slf4j:slf4j-api",
+    ],
+    fail_if_repin_required = True,
+    fail_on_missing_checksum = True,
+    fetch_sources = True,
+    lock_file = "//:events-gcloud-pubsub_plugin_deps.lock.json",
+    repositories = [
+        "https://repo1.maven.org/maven2",
+    ],
+    version_conflict_policy = "pinned",
+)
+use_repo(maven, "events-gcloud-pubsub_plugin_deps")
