@@ -11,6 +11,10 @@
 
 package com.gerritforge.gerrit.plugins.pubsub;
 
+import com.gerritforge.gerrit.plugins.pubsub.local.EnvironmentChecker;
+import com.gerritforge.gerrit.plugins.pubsub.local.LocalCredentialsProvider;
+import com.gerritforge.gerrit.plugins.pubsub.local.LocalPublisherProvider;
+import com.gerritforge.gerrit.plugins.pubsub.local.LocalSubscriberProvider;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.gerrit.extensions.config.FactoryModule;
 import com.google.gerrit.extensions.events.LifecycleListener;
@@ -18,10 +22,6 @@ import com.google.gerrit.extensions.registration.DynamicSet;
 import com.google.gerrit.server.events.EventListener;
 import com.google.inject.Inject;
 import com.google.inject.Scopes;
-import com.gerritforge.gerrit.plugins.pubsub.local.EnvironmentChecker;
-import com.gerritforge.gerrit.plugins.pubsub.local.LocalCredentialsProvider;
-import com.gerritforge.gerrit.plugins.pubsub.local.LocalPublisherProvider;
-import com.gerritforge.gerrit.plugins.pubsub.local.LocalSubscriberProvider;
 
 class Module extends FactoryModule {
 

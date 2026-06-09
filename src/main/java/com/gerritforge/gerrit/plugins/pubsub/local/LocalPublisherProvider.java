@@ -11,6 +11,8 @@
 
 package com.gerritforge.gerrit.plugins.pubsub.local;
 
+import com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration;
+import com.gerritforge.gerrit.plugins.pubsub.PublisherProvider;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.NoCredentialsProvider;
 import com.google.api.gax.grpc.GrpcTransportChannel;
@@ -22,8 +24,6 @@ import com.google.cloud.pubsub.v1.TopicAdminClient;
 import com.google.cloud.pubsub.v1.TopicAdminSettings;
 import com.google.inject.Inject;
 import com.google.pubsub.v1.TopicName;
-import com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration;
-import com.gerritforge.gerrit.plugins.pubsub.PublisherProvider;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
