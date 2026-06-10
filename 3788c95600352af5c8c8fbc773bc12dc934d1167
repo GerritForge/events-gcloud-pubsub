@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "59e740d7_9b764d63",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-06-10T13:07:33Z",
+      "side": 1,
+      "message": "Next changes passes verification.\nFormatting is good.\n\nMerging.",
+      "revId": "3788c95600352af5c8c8fbc773bc12dc934d1167",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
