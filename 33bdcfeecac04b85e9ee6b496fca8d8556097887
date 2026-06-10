@@ -122,6 +122,24 @@
       "message": "After changing the list of top level dependencies this lock file must be generated:\n\n```\n$ REPIN\u003d1 bazelisk run @events-gcloud-pubsub_plugin_deps//:pin\n```\n\nAfter running this command the file is changed:\n\n\u003e modified:   events-gcloud-pubsub_plugin_deps.lock.json",
       "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "c111def7_b03a5e97",
+        "filename": "events-gcloud-pubsub_plugin_deps.lock.json",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-06-10T16:13:36Z",
+      "side": 1,
+      "message": "Thanks @david.ostrovsky@gmail.com done!",
+      "parentUuid": "d5dfb5a5_ab574d3a",
+      "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
