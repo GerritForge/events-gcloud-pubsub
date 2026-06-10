@@ -69,6 +69,24 @@
       "parentUuid": "a0ba7073_19f076d2",
       "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "53759437_c0c62704",
+        "filename": "MODULE.bazel.lock",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-06-10T14:34:21Z",
+      "side": 1,
+      "message": "I have run it:\n\n```\nbazelisk mod deps --lockfile_mode\u003dupdate\n```\n\nbut `MODULE.bazel.lock` diff was produced, I think this is already correct?",
+      "parentUuid": "302a3b30_31a53e5a",
+      "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
