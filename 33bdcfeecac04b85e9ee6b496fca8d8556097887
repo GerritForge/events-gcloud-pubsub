@@ -1,0 +1,38 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "87b97985_fa3c0534",
+        "filename": "MODULE.bazel",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2026-06-10T14:20:31Z",
+      "side": 1,
+      "message": "Nit: remove blank line (probably caused by Suggest Edit).",
+      "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "a0ba7073_19f076d2",
+        "filename": "MODULE.bazel.lock",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2026-06-10T14:20:31Z",
+      "side": 1,
+      "message": "You should re-generate the lock file after trimming top level dependencies in MODULE.bazel. Apologise, missed to mention that.",
+      "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
