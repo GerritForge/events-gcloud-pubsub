@@ -18,6 +18,24 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "b7b54055_a4b51355",
+        "filename": "MODULE.bazel",
+        "patchSetId": 2
+      },
+      "lineNbr": 7,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-06-10T14:21:10Z",
+      "side": 1,
+      "message": "Acknowledged",
+      "parentUuid": "87b97985_fa3c0534",
+      "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "a0ba7073_19f076d2",
@@ -31,6 +49,24 @@
       "writtenOn": "2026-06-10T14:20:31Z",
       "side": 1,
       "message": "You should re-generate the lock file after trimming top level dependencies in MODULE.bazel. Apologise, missed to mention that.",
+      "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "302a3b30_31a53e5a",
+        "filename": "MODULE.bazel.lock",
+        "patchSetId": 2
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-06-10T14:21:10Z",
+      "side": 1,
+      "message": "Of course my bad, thanks david.",
+      "parentUuid": "a0ba7073_19f076d2",
       "revId": "33bdcfeecac04b85e9ee6b496fca8d8556097887",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
