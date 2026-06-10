@@ -1,0 +1,50 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "1e5221f8_e50aa6e4",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 11,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2026-06-10T13:14:04Z",
+      "side": 1,
+      "message": "```suggestion\n\nmaven.install(\n    name \u003d \"events-gcloud-pubsub_plugin_deps\",\n```",
+      "range": {
+        "startLine": 8,
+        "startChar": 0,
+        "endLine": 11,
+        "endChar": 0
+      },
+      "revId": "b512c237f7f66980ed7282041082fca7b9d1e722",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "66fb8938_993384fe",
+        "filename": "MODULE.bazel",
+        "patchSetId": 1
+      },
+      "lineNbr": 21,
+      "author": {
+        "id": 1000177
+      },
+      "writtenOn": "2026-06-10T13:14:04Z",
+      "side": 1,
+      "message": "```suggestion\n        \"com.google.cloud:google-cloud-pubsub:1.111.4\",\n        \"org.testcontainers:gcloud:1.15.3\",\n    ],\n```",
+      "range": {
+        "startLine": 13,
+        "startChar": 0,
+        "endLine": 21,
+        "endChar": 0
+      },
+      "revId": "b512c237f7f66980ed7282041082fca7b9d1e722",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
