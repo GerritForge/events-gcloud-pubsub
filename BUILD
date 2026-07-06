@@ -28,6 +28,7 @@ gerrit_plugin(
     manifest_entries = [
         "Gerrit-PluginName: events-gcloud-pubsub",
         "Gerrit-Module: com.gerritforge.gerrit.plugins.pubsub.Module",
+        "Gerrit-HttpModule: com.gerritforge.gerrit.plugins.bsl.HttpModule",
         "Gerrit-InitStep: com.gerritforge.gerrit.plugins.pubsub.InitConfig",
         "Implementation-Title: Gerrit events listener to send events to an external GCloud PubSub broker",
         "Implementation-URL: https://github.com/GerritForge/events-gcloud-pubsub",
@@ -37,6 +38,7 @@ gerrit_plugin(
     deps = [
         ":events-broker-neverlink",
         ":gerrit-provided-neverlink",
+        "//plugins/gerrit-bsl-license",
     ],
 )
 

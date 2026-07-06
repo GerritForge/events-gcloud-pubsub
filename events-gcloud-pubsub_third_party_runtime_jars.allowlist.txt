@@ -7,6 +7,7 @@ commons-logging
 conscrypt-openjdk-uber
 gax
 gax-grpc
+gerrit-bsl-license
 google-auth-library-credentials
 google-auth-library-oauth2-http
 google-cloud-pubsub
