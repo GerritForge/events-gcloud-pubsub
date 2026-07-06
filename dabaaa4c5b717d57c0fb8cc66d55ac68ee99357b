@@ -1,0 +1,21 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "2721e0d1_a3990d7b",
+        "filename": "/PATCHSET_LEVEL",
+        "patchSetId": 1
+      },
+      "lineNbr": 0,
+      "author": {
+        "id": 1020677
+      },
+      "writtenOn": "2026-07-06T07:41:33Z",
+      "side": 1,
+      "message": "Won\u0027t pass as this plugin is currently broken on master",
+      "revId": "dabaaa4c5b717d57c0fb8cc66d55ac68ee99357b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
