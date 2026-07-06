@@ -119,6 +119,12 @@ class PubSubBrokerApi implements BrokerApi {
   }
 
   @Override
+  public void receiveAsyncWithPartition(
+      String topic, String partition, String groupId, AckAwareConsumer<Event> consumer) {
+    throw new UnsupportedOperationException("receiveAsyncWithPartition is not implemented");
+  }
+
+  @Override
   public void replayAllEvents(String topic) {
     subscribers.stream()
         .filter(subscriber -> topic.equals(subscriber.getTopic()))
