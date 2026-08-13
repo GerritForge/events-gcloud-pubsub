@@ -13,6 +13,7 @@ package com.gerritforge.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
+import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
 import com.google.common.collect.Sets;
 import com.google.gerrit.extensions.registration.DynamicItem;
 import com.google.gerrit.lifecycle.LifecycleModule;
@@ -22,12 +23,14 @@ import com.google.inject.Scopes;
 import com.google.inject.TypeLiteral;
 import java.util.Set;
 import java.util.concurrent.ScheduledExecutorService;
+import java.util.stream.Collectors;
 
 public class PubSubApiModule extends LifecycleModule {
   WorkQueue workQueue;
   PubSubConfiguration configuration;
 
   private Set<TopicSubscriber> activeConsumers = Sets.newHashSet();
+  private Set<TopicSubscriberWithGroupId> activeConsumersWithGroupId = Sets.newHashSet();
 
   @Inject
   public PubSubApiModule(WorkQueue workQueue, PubSubConfiguration configuration) {
@@ -47,7 +50,14 @@ public class PubSubApiModule extends LifecycleModule {
   @Inject(optional = true)
   public void setPreviousBrokerApi(DynamicItem<BrokerApi> previousBrokerApi) {
     if (previousBrokerApi != null && previousBrokerApi.get() != null) {
-      this.activeConsumers = previousBrokerApi.get().topicSubscribers();
+      BrokerApi api = previousBrokerApi.get();
+      this.activeConsumersWithGroupId = api.topicSubscribersWithGroupId();
+      Set<TopicSubscriber> consumersWithGroupId =
+          activeConsumersWithGroupId.stream()
+              .map(TopicSubscriberWithGroupId::topicSubscriber)
+              .collect(Collectors.toSet());
+      this.activeConsumers =
+          Sets.difference(api.topicSubscribers(), consumersWithGroupId).copyInto(Sets.newHashSet());
     }
   }
 
@@ -59,6 +69,8 @@ public class PubSubApiModule extends LifecycleModule {
         .in(Scopes.SINGLETON);
 
     bind(new TypeLiteral<Set<TopicSubscriber>>() {}).toInstance(activeConsumers);
+    bind(new TypeLiteral<Set<TopicSubscriberWithGroupId>>() {})
+        .toInstance(activeConsumersWithGroupId);
     DynamicItem.bind(binder(), BrokerApi.class).to(PubSubBrokerApi.class).in(Scopes.SINGLETON);
   }
 }
