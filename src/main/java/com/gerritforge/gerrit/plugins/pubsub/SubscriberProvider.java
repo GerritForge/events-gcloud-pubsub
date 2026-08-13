@@ -11,6 +11,7 @@
 
 package com.gerritforge.gerrit.plugins.pubsub;
 
+import com.gerritforge.gerrit.eventbroker.EventsBrokerConfiguration;
 import com.google.api.gax.core.CredentialsProvider;
 import com.google.api.gax.core.FixedExecutorProvider;
 import com.google.api.gax.rpc.NotFoundException;
@@ -38,20 +39,30 @@ public class SubscriberProvider {
 
   protected CredentialsProvider credentials;
   protected PubSubConfiguration pubSubProperties;
+  protected EventsBrokerConfiguration eventsBrokerConfiguration;
   protected ScheduledExecutorService executor;
 
   @Inject
   public SubscriberProvider(
       CredentialsProvider credentials,
       PubSubConfiguration pubSubProperties,
+      EventsBrokerConfiguration eventsBrokerConfiguration,
       @ConsumerExecutor ScheduledExecutorService executor) {
     this.credentials = credentials;
     this.pubSubProperties = pubSubProperties;
+    this.eventsBrokerConfiguration = eventsBrokerConfiguration;
     this.executor = executor;
   }
 
   public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
-    return Subscriber.newBuilder(getOrCreateSubscription(topic, groupId).getName(), receiver)
+    return get(topic, groupId, Optional.empty(), receiver);
+  }
+
+  public Subscriber get(
+      String topic, String groupId, Optional<String> partition, MessageReceiver receiver)
+      throws IOException {
+    return Subscriber.newBuilder(
+            getOrCreateSubscription(topic, groupId, partition).getName(), receiver)
         .setExecutorProvider(FixedExecutorProvider.create(executor))
         .setCredentialsProvider(credentials)
         .build();
@@ -67,28 +78,49 @@ public class SubscriberProvider {
 
   protected Subscription getOrCreateSubscription(String topicId, String groupId)
       throws IOException {
+    return getOrCreateSubscription(topicId, groupId, Optional.empty());
+  }
+
+  protected Subscription getOrCreateSubscription(
+      String topicId, String groupId, Optional<String> partition) throws IOException {
     try (SubscriptionAdminClient subscriptionAdminClient =
         SubscriptionAdminClient.create(createSubscriptionAdminSettings())) {
       String subscriptionName = String.format("%s-%s", groupId, topicId);
       ProjectSubscriptionName projectSubscriptionName =
           ProjectSubscriptionName.of(pubSubProperties.getGCloudProject(), subscriptionName);
 
-      return getSubscription(subscriptionAdminClient, projectSubscriptionName)
-          .orElseGet(
-              () ->
-                  subscriptionAdminClient.createSubscription(
-                      createSubscriptionRequest(projectSubscriptionName, topicId)));
+      Optional<String> filter = partition.map(value -> subscriptionFilter(topicId, value));
+      Optional<Subscription> subscription =
+          getSubscription(subscriptionAdminClient, projectSubscriptionName);
+      if (subscription.isPresent()) {
+        if (filter.isPresent() && !filter.get().equals(subscription.get().getFilter())) {
+          throw new IllegalStateException(
+              String.format(
+                  "Subscription %s has filter '%s', expected '%s'",
+                  projectSubscriptionName, subscription.get().getFilter(), filter.get()));
+        }
+        return subscription.get();
+      }
+      return subscriptionAdminClient.createSubscription(
+          createSubscriptionRequest(projectSubscriptionName, topicId, filter));
     }
   }
 
   protected Subscription createSubscriptionRequest(
       ProjectSubscriptionName projectSubscriptionName, String topicId) {
-    return Subscription.newBuilder()
-        .setName(projectSubscriptionName.toString())
-        .setTopic(TopicName.of(pubSubProperties.getGCloudProject(), topicId).toString())
-        .setAckDeadlineSeconds(pubSubProperties.getAckDeadlineSeconds())
-        .setRetainAckedMessages(true)
-        .build();
+    return createSubscriptionRequest(projectSubscriptionName, topicId, Optional.empty());
+  }
+
+  protected Subscription createSubscriptionRequest(
+      ProjectSubscriptionName projectSubscriptionName, String topicId, Optional<String> filter) {
+    Subscription.Builder subscription =
+        Subscription.newBuilder()
+            .setName(projectSubscriptionName.toString())
+            .setTopic(TopicName.of(pubSubProperties.getGCloudProject(), topicId).toString())
+            .setAckDeadlineSeconds(pubSubProperties.getAckDeadlineSeconds())
+            .setRetainAckedMessages(true);
+    filter.ifPresent(subscription::setFilter);
+    return subscription.build();
   }
 
   protected Optional<Subscription> getSubscription(
@@ -127,5 +159,16 @@ public class SubscriberProvider {
     } catch (IOException e) {
       logger.atSevere().withCause(e).log("Cannot replay messages");
     }
+  }
+
+  private String subscriptionFilter(String topic, String partition) {
+    String partitionProperty =
+        eventsBrokerConfiguration
+            .getEventPropertyForTopic(topic)
+            .orElseThrow(
+                () ->
+                    new IllegalArgumentException(
+                        String.format("No partition property configured for topic %s", topic)));
+    return String.format("attributes.%s = \"%s\"", partitionProperty, partition);
   }
 }

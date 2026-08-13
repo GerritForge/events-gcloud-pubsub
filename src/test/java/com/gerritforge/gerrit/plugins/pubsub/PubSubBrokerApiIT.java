@@ -12,6 +12,7 @@
 package com.gerritforge.gerrit.plugins.pubsub;
 
 import static com.google.common.truth.Truth.assertThat;
+import static com.google.gerrit.testing.GerritJUnit.assertThrows;
 import static java.util.stream.Collectors.counting;
 import static java.util.stream.Collectors.groupingBy;
 
@@ -33,8 +34,10 @@ import com.google.cloud.pubsub.v1.stub.SubscriberStubSettings;
 import com.google.gerrit.acceptance.LightweightPluginDaemonTest;
 import com.google.gerrit.acceptance.NoHttpd;
 import com.google.gerrit.acceptance.TestPlugin;
+import com.google.gerrit.acceptance.UseLocalDisk;
 import com.google.gerrit.acceptance.WaitUtil;
 import com.google.gerrit.acceptance.config.GerritConfig;
+import com.google.gerrit.acceptance.config.GlobalPluginConfig;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gerrit.server.events.ProjectCreatedEvent;
@@ -46,6 +49,7 @@ import com.google.pubsub.v1.PullRequest;
 import com.google.pubsub.v1.PullResponse;
 import com.google.pubsub.v1.PushConfig;
 import com.google.pubsub.v1.ReceivedMessage;
+import com.google.pubsub.v1.Subscription;
 import com.google.pubsub.v1.TopicName;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
@@ -53,6 +57,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.function.Consumer;
 import org.junit.Test;
 import org.testcontainers.containers.PubSubEmulatorContainer;
@@ -229,6 +234,88 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
   }
 
   @Test
+  @UseLocalDisk
+  @GlobalPluginConfig(
+      pluginName = "events-broker",
+      name = "topic.test_topic.partitionValue",
+      value = "project-created")
+  @GlobalPluginConfig(
+      pluginName = "events-broker",
+      name = "topic.test_topic.partitionEventProperty",
+      value = "type")
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  public void shouldConsumeEventFromLogicalPartition() throws Exception {
+    Event event = new ProjectCreatedEvent();
+    TestConsumer consumer = new TestConsumer();
+
+    objectUnderTest.receiveAsyncWithPartition(TOPIC_ID, event.getType(), GROUP_ID, consumer);
+    objectUnderTest.send(TOPIC_ID, event);
+
+    WaitUtil.waitUntil(() -> consumer.getMessage() != null, TEST_TIMEOUT);
+    assertThat(consumer.getMessage().getType()).isEqualTo(event.getType());
+    assertThat(getSubscription(GROUP_ID + "-" + TOPIC_ID).getFilter())
+        .isEqualTo("attributes.type = \"project-created\"");
+    assertThat(
+            objectUnderTest.topicSubscribersWithGroupId().stream()
+                .map(subscriber -> subscriber.partition())
+                .toList())
+        .containsExactly(Optional.of(event.getType()));
+  }
+
+  @Test
+  @UseLocalDisk
+  @GlobalPluginConfig(
+      pluginName = "events-broker",
+      name = "topic.test_topic.partitionValue",
+      value = "project-created")
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  public void shouldRejectSubscriptionForUnconfiguredLogicalPartition() {
+    IllegalArgumentException exception =
+        assertThrows(
+            IllegalArgumentException.class,
+            () ->
+                objectUnderTest.receiveAsyncWithPartition(
+                    TOPIC_ID, "some-other-event", GROUP_ID, new TestConsumer()));
+
+    assertThat(exception).hasMessageThat().contains("some-other-event");
+  }
+
+  @Test
+  @UseLocalDisk
+  @GlobalPluginConfig(
+      pluginName = "events-broker",
+      name = "topic.test_topic.partitionValue",
+      value = "project-created")
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
+  @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
+  @GerritConfig(
+      name = "plugin.events-gcloud-pubsub.privateKeyLocation",
+      value = PRIVATE_KEY_LOCATION)
+  public void shouldRejectLogicalPartitionWhenSubscriptionHasNoFilter() throws Exception {
+    // Pub/Sub subscriptions survive plugin restarts and may have been created without a filter.
+    createSubscription(GROUP_ID + "-" + TOPIC_ID, TOPIC_ID, channelProvider, credentialsProvider);
+
+    IllegalStateException exception =
+        assertThrows(
+            IllegalStateException.class,
+            () ->
+                objectUnderTest.receiveAsyncWithPartition(
+                    TOPIC_ID, "project-created", GROUP_ID, new TestConsumer()));
+
+    assertThat(exception)
+        .hasMessageThat()
+        .contains("expected 'attributes.type = \"project-created\"'");
+  }
+
+  @Test
   @GerritConfig(name = "plugin.events-gcloud-pubsub.gcloudProject", value = PROJECT_ID)
   @GerritConfig(name = "plugin.events-gcloud-pubsub.subscriptionId", value = SUBSCRIPTION_ID)
   @GerritConfig(
@@ -310,6 +397,19 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
             PushConfig.getDefaultInstance(),
             10)
         .getName();
+  }
+
+  private Subscription getSubscription(String subscriptionId) throws IOException {
+    SubscriptionAdminSettings subscriptionAdminSettings =
+        SubscriptionAdminSettings.newBuilder()
+            .setTransportChannelProvider(channelProvider)
+            .setCredentialsProvider(credentialsProvider)
+            .build();
+    try (SubscriptionAdminClient subscriptionAdminClient =
+        SubscriptionAdminClient.create(subscriptionAdminSettings)) {
+      return subscriptionAdminClient.getSubscription(
+          ProjectSubscriptionName.of(PROJECT_ID, subscriptionId));
+    }
   }
 
   private long countSubscribers() {

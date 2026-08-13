@@ -26,6 +26,7 @@ import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.pubsub.v1.PubsubMessage;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.TimeoutException;
 
@@ -35,6 +36,7 @@ public class PubSubEventSubscriber {
     public PubSubEventSubscriber create(
         @Assisted("topic") String topic,
         @Assisted("groupId") String groupId,
+        @Assisted("partition") Optional<String> partition,
         AckAwareConsumer<Event> messageProcessor);
   }
 
@@ -45,6 +47,7 @@ public class PubSubEventSubscriber {
   private final OneOffRequestContext oneOffRequestContext;
   private final String topic;
   private final String groupId;
+  private final Optional<String> partition;
   private final AckAwareConsumer<Event> messageProcessor;
   private final SubscriberProvider subscriberProvider;
   private final PubSubConfiguration config;
@@ -59,12 +62,14 @@ public class PubSubEventSubscriber {
       OneOffRequestContext oneOffRequestContext,
       @Assisted("topic") String topic,
       @Assisted("groupId") String groupId,
+      @Assisted("partition") Optional<String> partition,
       @Assisted AckAwareConsumer<Event> messageProcessor) {
     this.eventsDeserializer = eventsDeserializer;
     this.subscriberMetrics = subscriberMetrics;
     this.oneOffRequestContext = oneOffRequestContext;
     this.topic = topic;
     this.groupId = groupId;
+    this.partition = partition;
     this.messageProcessor = messageProcessor;
     this.subscriberProvider = subscriberProvider;
     this.config = config;
@@ -72,7 +77,7 @@ public class PubSubEventSubscriber {
 
   public void subscribe() {
     try {
-      subscriber = subscriberProvider.get(topic, groupId, getMessageReceiver());
+      subscriber = subscriberProvider.get(topic, groupId, partition, getMessageReceiver());
       subscriber
           .startAsync()
           .awaitRunning(config.getSubscribtionTimeoutInSeconds(), TimeUnit.SECONDS);
@@ -89,6 +94,10 @@ public class PubSubEventSubscriber {
 
   public String getGroupId() {
     return groupId;
+  }
+
+  public Optional<String> getPartition() {
+    return partition;
   }
 
   public AckAwareConsumer<Event> getMessageProcessor() {

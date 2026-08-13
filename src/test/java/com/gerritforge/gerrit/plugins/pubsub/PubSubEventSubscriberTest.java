@@ -34,6 +34,7 @@ import com.google.gerrit.server.util.OneOffRequestContext;
 import com.google.gson.Gson;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
+import java.util.Optional;
 import org.junit.Before;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -180,6 +181,7 @@ public class PubSubEventSubscriberTest {
             oneOffRequestContext,
             TOPIC,
             GROUP_ID,
+            Optional.empty(),
             consumer)
         .getMessageReceiver();
   }

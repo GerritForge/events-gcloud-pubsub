@@ -13,6 +13,7 @@ package com.gerritforge.gerrit.plugins.pubsub;
 
 import com.gerritforge.gerrit.eventbroker.AckAwareConsumer;
 import com.gerritforge.gerrit.eventbroker.BrokerApi;
+import com.gerritforge.gerrit.eventbroker.EventsBrokerConfiguration;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriber;
 import com.gerritforge.gerrit.eventbroker.TopicSubscriberWithGroupId;
 import com.google.common.flogger.FluentLogger;
@@ -32,6 +33,7 @@ class PubSubBrokerApi implements BrokerApi {
   private PubSubConfiguration configuration;
   private PubSubPublisher.Factory publisherFactory;
   private PubSubEventSubscriber.Factory subscriberFactory;
+  private EventsBrokerConfiguration eventsBrokerConfiguration;
   private Map<String, PubSubPublisher> publishers = new ConcurrentHashMap<>();
   private Set<PubSubEventSubscriber> subscribers;
 
@@ -39,10 +41,12 @@ class PubSubBrokerApi implements BrokerApi {
   public PubSubBrokerApi(
       PubSubConfiguration configuration,
       PubSubPublisher.Factory publisherFactory,
-      PubSubEventSubscriber.Factory subscriberFactory) {
+      PubSubEventSubscriber.Factory subscriberFactory,
+      EventsBrokerConfiguration eventsBrokerConfiguration) {
     this.configuration = configuration;
     this.publisherFactory = publisherFactory;
     this.subscriberFactory = subscriberFactory;
+    this.eventsBrokerConfiguration = eventsBrokerConfiguration;
     subscribers = Collections.newSetFromMap(new ConcurrentHashMap<>());
   }
 
@@ -60,9 +64,7 @@ class PubSubBrokerApi implements BrokerApi {
   public void receiveAsync(
       String topic, @Nullable String maybeGroupId, AckAwareConsumer<Event> consumer) {
     String groupId = Optional.ofNullable(maybeGroupId).orElse(configuration.getSubscriptionId());
-    PubSubEventSubscriber subscriber = subscriberFactory.create(topic, groupId, consumer);
-    subscribers.add(subscriber);
-    subscriber.subscribe();
+    subscribe(topic, groupId, Optional.empty(), consumer);
   }
 
   @Override
@@ -72,7 +74,8 @@ class PubSubBrokerApi implements BrokerApi {
             s ->
                 TopicSubscriberWithGroupId.topicSubscriberWithGroupId(
                     s.getGroupId(),
-                    TopicSubscriber.topicSubscriber(s.getTopic(), s.getMessageProcessor())))
+                    TopicSubscriber.topicSubscriber(s.getTopic(), s.getMessageProcessor()),
+                    s.getPartition()))
         .collect(Collectors.toSet());
   }
 
@@ -121,7 +124,12 @@ class PubSubBrokerApi implements BrokerApi {
   @Override
   public void receiveAsyncWithPartition(
       String topic, String partition, String groupId, AckAwareConsumer<Event> consumer) {
-    throw new UnsupportedOperationException("receiveAsyncWithPartition is not implemented");
+    if (!eventsBrokerConfiguration.getPartitionsForTopic(topic).contains(partition)) {
+      throw new IllegalArgumentException(
+          String.format(
+              "Logical partition value %s is not configured for topic %s", partition, topic));
+    }
+    subscribe(topic, groupId, Optional.of(partition), consumer);
   }
 
   @Override
@@ -129,5 +137,13 @@ class PubSubBrokerApi implements BrokerApi {
     subscribers.stream()
         .filter(subscriber -> topic.equals(subscriber.getTopic()))
         .forEach(PubSubEventSubscriber::replayMessages);
+  }
+
+  private void subscribe(
+      String topic, String groupId, Optional<String> partition, AckAwareConsumer<Event> consumer) {
+    PubSubEventSubscriber subscriber =
+        subscriberFactory.create(topic, groupId, partition, consumer);
+    subscriber.subscribe();
+    subscribers.add(subscriber);
   }
 }

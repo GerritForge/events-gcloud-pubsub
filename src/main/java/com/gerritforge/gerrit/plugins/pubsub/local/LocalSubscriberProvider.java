@@ -11,6 +11,7 @@
 
 package com.gerritforge.gerrit.plugins.pubsub.local;
 
+import com.gerritforge.gerrit.eventbroker.EventsBrokerConfiguration;
 import com.gerritforge.gerrit.plugins.pubsub.ConsumerExecutor;
 import com.gerritforge.gerrit.plugins.pubsub.PubSubConfiguration;
 import com.gerritforge.gerrit.plugins.pubsub.SubscriberProvider;
@@ -31,6 +32,7 @@ import com.google.pubsub.v1.TopicName;
 import io.grpc.ManagedChannel;
 import io.grpc.ManagedChannelBuilder;
 import java.io.IOException;
+import java.util.Optional;
 import java.util.concurrent.ScheduledExecutorService;
 
 public class LocalSubscriberProvider extends SubscriberProvider {
@@ -40,17 +42,26 @@ public class LocalSubscriberProvider extends SubscriberProvider {
   public LocalSubscriberProvider(
       PubSubConfiguration pubSubProperties,
       CredentialsProvider credentials,
+      EventsBrokerConfiguration eventsBrokerConfiguration,
       EnvironmentChecker environmentChecker,
       @ConsumerExecutor ScheduledExecutorService executor) {
-    super(credentials, pubSubProperties, executor);
+    super(credentials, pubSubProperties, eventsBrokerConfiguration, executor);
     this.environmentChecker = environmentChecker;
   }
 
   @Override
   public Subscriber get(String topic, String groupId, MessageReceiver receiver) throws IOException {
+    return get(topic, groupId, Optional.empty(), receiver);
+  }
+
+  @Override
+  public Subscriber get(
+      String topic, String groupId, Optional<String> partition, MessageReceiver receiver)
+      throws IOException {
     TransportChannelProvider channelProvider = createChannelProvider();
     createTopic(channelProvider, pubSubProperties.getGCloudProject(), topic);
-    return Subscriber.newBuilder(getOrCreateSubscription(topic, groupId).getName(), receiver)
+    return Subscriber.newBuilder(
+            getOrCreateSubscription(topic, groupId, partition).getName(), receiver)
         .setChannelProvider(channelProvider)
         .setExecutorProvider(FixedExecutorProvider.create(executor))
         .setCredentialsProvider(credentials)
