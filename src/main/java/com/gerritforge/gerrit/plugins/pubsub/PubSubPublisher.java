@@ -11,6 +11,7 @@
 
 package com.gerritforge.gerrit.plugins.pubsub;
 
+import com.gerritforge.gerrit.eventbroker.EventsBrokerConfiguration;
 import com.google.api.core.ApiFuture;
 import com.google.api.core.ApiFutureCallback;
 import com.google.api.core.ApiFutures;
@@ -23,11 +24,13 @@ import com.google.common.util.concurrent.MoreExecutors;
 import com.google.gerrit.server.events.Event;
 import com.google.gerrit.server.events.EventGson;
 import com.google.gson.Gson;
+import com.google.gson.JsonElement;
 import com.google.inject.Inject;
 import com.google.inject.assistedinject.Assisted;
 import com.google.protobuf.ByteString;
 import com.google.pubsub.v1.PubsubMessage;
 import java.io.IOException;
+import java.util.List;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
@@ -43,6 +46,7 @@ public class PubSubPublisher {
   private final String topic;
   private final Publisher publisher;
   private final PubSubConfiguration pubSubProperties;
+  private final EventsBrokerConfiguration eventsBrokerConfiguration;
 
   @Inject
   public PubSubPublisher(
@@ -50,6 +54,7 @@ public class PubSubPublisher {
       PublisherProvider publisherProvider,
       @EventGson Gson gson,
       PubSubPublisherMetrics publisherMetrics,
+      EventsBrokerConfiguration eventsBrokerConfiguration,
       @Assisted String topic)
       throws IOException {
     this.gson = gson;
@@ -57,16 +62,47 @@ public class PubSubPublisher {
     this.topic = topic;
     this.publisher = publisherProvider.get(topic);
     this.pubSubProperties = pubSubProperties;
+    this.eventsBrokerConfiguration = eventsBrokerConfiguration;
   }
 
   public ListenableFuture<Boolean> publish(Event event) {
-    return publish(gson.toJson(event));
+    PubsubMessage.Builder message =
+        PubsubMessage.newBuilder().setData(ByteString.copyFromUtf8(gson.toJson(event)));
+    addPartitionAttribute(message, event);
+    return publishAsync(message.build());
   }
 
-  private ListenableFuture<Boolean> publish(String eventPayload) {
-    ByteString data = ByteString.copyFromUtf8(eventPayload);
-    PubsubMessage pubsubMessage = PubsubMessage.newBuilder().setData(data).build();
-    return publishAsync(pubsubMessage);
+  private void addPartitionAttribute(PubsubMessage.Builder message, Event event) {
+    List<String> partitions = eventsBrokerConfiguration.getPartitionsForTopic(topic);
+    if (partitions.isEmpty()) {
+      return;
+    }
+
+    String partitionProperty =
+        eventsBrokerConfiguration
+            .getEventPropertyForTopic(topic)
+            .orElseThrow(
+                () ->
+                    new IllegalArgumentException(
+                        String.format("No partition property configured for topic %s", topic)));
+    JsonElement partitionValue = gson.toJsonTree(event).getAsJsonObject().get(partitionProperty);
+    if (partitionValue == null) {
+      throw new IllegalArgumentException(
+          String.format(
+              "Event has no partition property %s for topic %s", partitionProperty, topic));
+    }
+    if (!partitionValue.isJsonPrimitive()) {
+      throw new IllegalArgumentException(
+          String.format(
+              "Event partition property %s is not a primitive for topic %s",
+              partitionProperty, topic));
+    }
+    String partition = partitionValue.getAsString();
+    if (!partitions.contains(partition)) {
+      throw new IllegalArgumentException(
+          String.format("Partition value %s is not configured for topic %s", partition, topic));
+    }
+    message.putAttributes(partitionProperty, partition);
   }
 
   private ListenableFuture<Boolean> publishAsync(PubsubMessage pubsubMessage) {
