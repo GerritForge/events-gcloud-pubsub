@@ -57,8 +57,8 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Whether to send stream events to the `streamEventsTopic` topic.
     Default: false
 
-Logical partition publishing
-----------------------------
+Logical partitions
+------------------
 
 Logical partition configuration and its shared behaviour are documented by
 [events-broker](https://gerrit.googlesource.com/modules/events-broker/+/refs/heads/master/README.md#partition_aware-topics).
@@ -72,6 +72,18 @@ filter.
 
 Topics without configured partition values keep the existing behaviour and
 are published without a partition attribute.
+
+A partition-aware consumer uses a Pub/Sub subscription filter that matches the
+corresponding message attribute, for example
+`attributes.type = "change-index"`. The subscription keeps the existing
+`<groupId>-<topic>` naming. Callers must therefore use a different group ID for
+each logical partition.
+
+Pub/Sub subscriptions persist independently of the plugin, and their filters
+cannot be changed after creation. If a same-named subscription already exists
+without the expected filter, or with a different one, the consumer is not
+started. Use a new group ID or recreate the subscription with the expected
+filter.
 
 Gerrit init integration
 -----------------------
