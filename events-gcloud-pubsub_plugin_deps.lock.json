@@ -18,18 +18,18 @@
     "org.apache.httpcomponents:httpcore": -1485416135,
     "org.checkerframework:checker-qual": -661903474,
     "org.slf4j:slf4j-api": 2145585153,
-    "org.testcontainers:gcloud": -634486838,
+    "org.testcontainers:gcloud": 579979558,
     "repositories": -1949687017
   },
   "__RESOLVED_ARTIFACTS_HASH": {
     "com.fasterxml.jackson.core:jackson-annotations": 895697199,
     "com.fasterxml.jackson.core:jackson-annotations:jar:sources": 486697886,
-    "com.github.docker-java:docker-java-api": 139358551,
-    "com.github.docker-java:docker-java-api:jar:sources": -1841431399,
-    "com.github.docker-java:docker-java-transport": -1625431730,
-    "com.github.docker-java:docker-java-transport-zerodep": 1211208779,
-    "com.github.docker-java:docker-java-transport-zerodep:jar:sources": 1831324118,
-    "com.github.docker-java:docker-java-transport:jar:sources": -890290027,
+    "com.github.docker-java:docker-java-api": 1886720023,
+    "com.github.docker-java:docker-java-api:jar:sources": 1672381514,
+    "com.github.docker-java:docker-java-transport": -1400224799,
+    "com.github.docker-java:docker-java-transport-zerodep": 2022449988,
+    "com.github.docker-java:docker-java-transport-zerodep:jar:sources": -887161140,
+    "com.github.docker-java:docker-java-transport:jar:sources": -2085127734,
     "com.google.android:annotations": 2096496032,
     "com.google.android:annotations:jar:sources": -1797343139,
     "com.google.api.grpc:proto-google-cloud-pubsub-v1": -1638227073,
@@ -87,24 +87,24 @@
     "io.perfmark:perfmark-api:jar:sources": -1750902201,
     "javax.annotation:javax.annotation-api": -1009230154,
     "javax.annotation:javax.annotation-api:jar:sources": -1912277688,
-    "net.java.dev.jna:jna": -478207850,
-    "net.java.dev.jna:jna:jar:sources": -1514669027,
-    "org.apache.commons:commons-compress": -4079815,
-    "org.apache.commons:commons-compress:jar:sources": -1407692426,
+    "net.java.dev.jna:jna": 82863035,
+    "net.java.dev.jna:jna:jar:sources": -1071055013,
+    "org.apache.commons:commons-compress": 176829,
+    "org.apache.commons:commons-compress:jar:sources": -2012564756,
     "org.checkerframework:checker-compat-qual": -1467856161,
     "org.checkerframework:checker-compat-qual:jar:sources": 896082574,
     "org.codehaus.mojo:animal-sniffer-annotations": -1106966938,
     "org.codehaus.mojo:animal-sniffer-annotations:jar:sources": 1597675703,
     "org.conscrypt:conscrypt-openjdk-uber": 316272607,
     "org.conscrypt:conscrypt-openjdk-uber:jar:sources": -2083692261,
-    "org.rnorth.duct-tape:duct-tape": -236646297,
+    "org.jetbrains:annotations": -845966580,
+    "org.jetbrains:annotations:jar:sources": 582621361,
+    "org.rnorth.duct-tape:duct-tape": -1059401544,
     "org.rnorth.duct-tape:duct-tape:jar:sources": -1798015648,
-    "org.rnorth.visible-assertions:visible-assertions": -852291420,
-    "org.rnorth.visible-assertions:visible-assertions:jar:sources": -242017347,
-    "org.testcontainers:gcloud": -2049726274,
-    "org.testcontainers:gcloud:jar:sources": 2010592167,
-    "org.testcontainers:testcontainers": -913026762,
-    "org.testcontainers:testcontainers:jar:sources": 563137027,
+    "org.testcontainers:gcloud": -1753436654,
+    "org.testcontainers:gcloud:jar:sources": -1586832460,
+    "org.testcontainers:testcontainers": 1900938391,
+    "org.testcontainers:testcontainers:jar:sources": 115174585,
     "org.threeten:threetenbp": -677862507,
     "org.threeten:threetenbp:jar:sources": -524367352
   },
@@ -118,24 +118,24 @@
     },
     "com.github.docker-java:docker-java-api": {
       "shasums": {
-        "jar": "5a9f801ea1fc51fa06ab97a9856ceb95c8cbca53a9b359bac46b6d65cc38a3cf",
-        "sources": "fe1dbf0a1e2392cb5874179c2a72f3857215973b19969f7753a50cdd3acac838"
+        "jar": "6789d68f95904cf274a6410fdfcc5530976bc94197c856909459bb8c64db557b",
+        "sources": "1a407574c5c7bf2170d7c9bb76db7341b43b3ee06dc44e215c31356a1d9f3c91"
       },
-      "version": "3.2.8"
+      "version": "3.4.2"
     },
     "com.github.docker-java:docker-java-transport": {
       "shasums": {
-        "jar": "1d3eb23fcf6c0b8097808e131394dfdcaf913b35b6b249945bd1762cc6423e0b",
-        "sources": "afb0289594aa172b604b0dad6fcaf122c4907b502636cfb3ca44e30d2cbf51af"
+        "jar": "bc9981224fdc2d4726566fc723470601ceb14378265c865b4c203146a4e39765",
+        "sources": "a50fd13efc29146e047ac2a34403172ed62bf52752252286335df1b3e5cf1d18"
       },
-      "version": "3.2.8"
+      "version": "3.4.2"
     },
     "com.github.docker-java:docker-java-transport-zerodep": {
       "shasums": {
-        "jar": "f0ce261803b459e00de8b549d88713822d53ff727aa2fa4125fc44af5c637c5e",
-        "sources": "3ef44eb76332a015781564ec20ae15a917d2be292c14e287ba87d5dddd443077"
+        "jar": "582b772e0c52fa9d24710617ef610655465edd9a2930b0db75fc8667d6a8d02b",
+        "sources": "c88c4745337a54eeae73788cdba9b1a80cebbd3cadfc701c3f8a9e7d217da314"
       },
-      "version": "3.2.8"
+      "version": "3.4.2"
     },
     "com.google.android:annotations": {
       "shasums": {
@@ -341,17 +341,17 @@
     },
     "net.java.dev.jna:jna": {
       "shasums": {
-        "jar": "930273cc1c492f25661ea62413a6da3fd7f6e01bf1c4dcc0817fc8696a7b07ac",
-        "sources": "4616cf507a47462ea5ec04654778d2e41624e21db7f41188cc553e8dce1123da"
+        "jar": "66d4f819a062a51a1d5627bffc23fac55d1677f0e0a1feba144aabdd670a64bb",
+        "sources": "a4c45843e8f60df141c4f37602365a421bb278ca1ef30ba0a043d6a871dd29f4"
       },
-      "version": "5.8.0"
+      "version": "5.13.0"
     },
     "org.apache.commons:commons-compress": {
       "shasums": {
-        "jar": "0aeb625c948c697ea7b205156e112363b59ed5e2551212cd4e460bdb72c7c06e",
-        "sources": "0eb5d7f270c2fccdab31daa5f7091b038ad0099b29885040604d66e07fd46a18"
+        "jar": "fbf2c5d275e513c08f4e4fb539726dbf3ac2142af956ba93efb983244f0c36bd",
+        "sources": "b79da77c5bb6e9b528d60c7336a59dc08cab29baac52f3d35441455c5fec4db1"
       },
-      "version": "1.20"
+      "version": "1.24.0"
     },
     "org.checkerframework:checker-compat-qual": {
       "shasums": {
@@ -374,6 +374,13 @@
       },
       "version": "2.5.1"
     },
+    "org.jetbrains:annotations": {
+      "shasums": {
+        "jar": "195fb0da046d55bb042e91543484cf1da68b02bb7afbfe031f229e45ac84b3f2",
+        "sources": "b2c0d02e0a32c56d359e99634e7d769f9b1a8cd6e25061995abad1c1baf86f56"
+      },
+      "version": "17.0.0"
+    },
     "org.rnorth.duct-tape:duct-tape": {
       "shasums": {
         "jar": "31cef12ddec979d1f86d7cf708c41a17da523d05c685fd6642e9d0b2addb7240",
@@ -381,26 +388,19 @@
       },
       "version": "1.0.8"
     },
-    "org.rnorth.visible-assertions:visible-assertions": {
-      "shasums": {
-        "jar": "4504ae968b237cdcdcb68ff5b07aa63abe4992f907a77c3d6120aa9b9041401c",
-        "sources": "b6dc190fdf53bbeb6be7012487a35a0cfc623ad56163a611d1c8ad04709aba22"
-      },
-      "version": "2.1.2"
-    },
     "org.testcontainers:gcloud": {
       "shasums": {
-        "jar": "fb96f9edc9c1598161637f43f1f73f660a2bf6792eb18928bdd95cb3d5b06a6b",
-        "sources": "a0bbead284f364917fc3c763769c6b24faa0b1c8bf190b36239682acd20ffdc5"
+        "jar": "5ce4a02782a2c8e2a578aa144dbbc217ce67e184f999b3a575c7ad5ad98075a0",
+        "sources": "c64c0be767b37acf8e2af5592fe36c159899f7a01d4f3f339c19399634be8c9d"
       },
-      "version": "1.15.3"
+      "version": "1.21.4"
     },
     "org.testcontainers:testcontainers": {
       "shasums": {
-        "jar": "6c56448dad8649ce88285bda7c053e20ae7759b0a5ffcf30204ff717ec586c92",
-        "sources": "fd513c2525e16a045a262b90ae37057b5bb8e5912ecce66dc3b03588d7ca6e34"
+        "jar": "ea81a9ca337bbae7ee83f372b92d55140c7ab976bce73ff1b79f2dd151ca9610",
+        "sources": "a72d55e776d8d15848bfd8ee8d457f01b6dd54c037d851b894a8db286cfcc4bc"
       },
-      "version": "1.15.3"
+      "version": "1.21.4"
     },
     "org.threeten:threetenbp": {
       "shasums": {
@@ -458,8 +458,8 @@
       "org.conscrypt:conscrypt-openjdk-uber",
       "org.threeten:threetenbp"
     ],
-    "org.rnorth.visible-assertions:visible-assertions": [
-      "net.java.dev.jna:jna"
+    "org.rnorth.duct-tape:duct-tape": [
+      "org.jetbrains:annotations"
     ],
     "org.testcontainers:gcloud": [
       "org.testcontainers:testcontainers"
@@ -468,8 +468,7 @@
       "com.github.docker-java:docker-java-api",
       "com.github.docker-java:docker-java-transport-zerodep",
       "org.apache.commons:commons-compress",
-      "org.rnorth.duct-tape:duct-tape",
-      "org.rnorth.visible-assertions:visible-assertions"
+      "org.rnorth.duct-tape:duct-tape"
     ]
   },
   "packages": {
@@ -543,6 +542,20 @@
       "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.nio.support.classic",
       "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.protocol",
       "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http.ssl",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.config",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.frame",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.hpack",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.impl",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.impl.io",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.impl.nio",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.impl.nio.bootstrap",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.nio",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.nio.command",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.nio.pool",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.nio.support",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.protocol",
+      "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.http2.ssl",
       "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.io",
       "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.net",
       "com.github.dockerjava.zerodep.shaded.org.apache.hc.core5.pool",
@@ -795,6 +808,13 @@
       "org.apache.commons.compress.compressors.xz",
       "org.apache.commons.compress.compressors.z",
       "org.apache.commons.compress.compressors.zstandard",
+      "org.apache.commons.compress.harmony",
+      "org.apache.commons.compress.harmony.archive.internal.nls",
+      "org.apache.commons.compress.harmony.pack200",
+      "org.apache.commons.compress.harmony.unpack200",
+      "org.apache.commons.compress.harmony.unpack200.bytecode",
+      "org.apache.commons.compress.harmony.unpack200.bytecode.forms",
+      "org.apache.commons.compress.java.util.jar",
       "org.apache.commons.compress.parallel",
       "org.apache.commons.compress.utils"
     ],
@@ -809,6 +829,10 @@
       "org.conscrypt.ct",
       "org.conscrypt.io"
     ],
+    "org.jetbrains:annotations": [
+      "org.intellij.lang.annotations",
+      "org.jetbrains.annotations"
+    ],
     "org.rnorth.duct-tape:duct-tape": [
       "org.rnorth.ducttape",
       "org.rnorth.ducttape.circuitbreakers",
@@ -816,11 +840,6 @@
       "org.rnorth.ducttape.ratelimits",
       "org.rnorth.ducttape.timeouts",
       "org.rnorth.ducttape.unreliables"
-    ],
-    "org.rnorth.visible-assertions:visible-assertions": [
-      "org.rnorth",
-      "org.rnorth.ansi",
-      "org.rnorth.visibleassertions"
     ],
     "org.testcontainers:gcloud": [
       "org.testcontainers.containers"
@@ -833,6 +852,7 @@
       "org.testcontainers.containers.traits",
       "org.testcontainers.containers.wait.internal",
       "org.testcontainers.containers.wait.strategy",
+      "org.testcontainers.core",
       "org.testcontainers.dockerclient",
       "org.testcontainers.images",
       "org.testcontainers.images.builder",
@@ -840,6 +860,7 @@
       "org.testcontainers.images.builder.dockerfile.statement",
       "org.testcontainers.images.builder.dockerfile.traits",
       "org.testcontainers.images.builder.traits",
+      "org.testcontainers.jib",
       "org.testcontainers.lifecycle",
       "org.testcontainers.shaded.com.fasterxml.jackson.core",
       "org.testcontainers.shaded.com.fasterxml.jackson.core.base",
@@ -877,7 +898,6 @@
       "org.testcontainers.shaded.com.github.dockerjava.core.exception",
       "org.testcontainers.shaded.com.github.dockerjava.core.exec",
       "org.testcontainers.shaded.com.github.dockerjava.core.util",
-      "org.testcontainers.shaded.com.github.dockerjava.okhttp",
       "org.testcontainers.shaded.com.google.common.annotations",
       "org.testcontainers.shaded.com.google.common.base",
       "org.testcontainers.shaded.com.google.common.base.internal",
@@ -885,6 +905,7 @@
       "org.testcontainers.shaded.com.google.common.collect",
       "org.testcontainers.shaded.com.google.common.escape",
       "org.testcontainers.shaded.com.google.common.eventbus",
+      "org.testcontainers.shaded.com.google.common.graph",
       "org.testcontainers.shaded.com.google.common.hash",
       "org.testcontainers.shaded.com.google.common.html",
       "org.testcontainers.shaded.com.google.common.io",
@@ -893,7 +914,10 @@
       "org.testcontainers.shaded.com.google.common.primitives",
       "org.testcontainers.shaded.com.google.common.reflect",
       "org.testcontainers.shaded.com.google.common.util.concurrent",
+      "org.testcontainers.shaded.com.google.common.util.concurrent.internal",
       "org.testcontainers.shaded.com.google.common.xml",
+      "org.testcontainers.shaded.com.google.errorprone.annotations",
+      "org.testcontainers.shaded.com.google.errorprone.annotations.concurrent",
       "org.testcontainers.shaded.com.google.thirdparty.publicsuffix",
       "org.testcontainers.shaded.com.trilead.ssh2",
       "org.testcontainers.shaded.com.trilead.ssh2.auth",
@@ -908,39 +932,45 @@
       "org.testcontainers.shaded.com.trilead.ssh2.signature",
       "org.testcontainers.shaded.com.trilead.ssh2.transport",
       "org.testcontainers.shaded.com.trilead.ssh2.util",
-      "org.testcontainers.shaded.okhttp3",
-      "org.testcontainers.shaded.okhttp3.internal",
-      "org.testcontainers.shaded.okhttp3.internal.annotations",
-      "org.testcontainers.shaded.okhttp3.internal.cache",
-      "org.testcontainers.shaded.okhttp3.internal.cache2",
-      "org.testcontainers.shaded.okhttp3.internal.connection",
-      "org.testcontainers.shaded.okhttp3.internal.http",
-      "org.testcontainers.shaded.okhttp3.internal.http1",
-      "org.testcontainers.shaded.okhttp3.internal.http2",
-      "org.testcontainers.shaded.okhttp3.internal.io",
-      "org.testcontainers.shaded.okhttp3.internal.platform",
-      "org.testcontainers.shaded.okhttp3.internal.proxy",
-      "org.testcontainers.shaded.okhttp3.internal.publicsuffix",
-      "org.testcontainers.shaded.okhttp3.internal.tls",
-      "org.testcontainers.shaded.okhttp3.internal.ws",
-      "org.testcontainers.shaded.okio",
       "org.testcontainers.shaded.org.apache.commons.io",
+      "org.testcontainers.shaded.org.apache.commons.io.build",
+      "org.testcontainers.shaded.org.apache.commons.io.charset",
       "org.testcontainers.shaded.org.apache.commons.io.comparator",
+      "org.testcontainers.shaded.org.apache.commons.io.file",
+      "org.testcontainers.shaded.org.apache.commons.io.file.attribute",
+      "org.testcontainers.shaded.org.apache.commons.io.file.spi",
       "org.testcontainers.shaded.org.apache.commons.io.filefilter",
+      "org.testcontainers.shaded.org.apache.commons.io.function",
       "org.testcontainers.shaded.org.apache.commons.io.input",
+      "org.testcontainers.shaded.org.apache.commons.io.input.buffer",
       "org.testcontainers.shaded.org.apache.commons.io.monitor",
       "org.testcontainers.shaded.org.apache.commons.io.output",
       "org.testcontainers.shaded.org.apache.commons.io.serialization",
-      "org.testcontainers.shaded.org.apache.commons.lang",
-      "org.testcontainers.shaded.org.apache.commons.lang.builder",
-      "org.testcontainers.shaded.org.apache.commons.lang.enum",
-      "org.testcontainers.shaded.org.apache.commons.lang.enums",
-      "org.testcontainers.shaded.org.apache.commons.lang.exception",
-      "org.testcontainers.shaded.org.apache.commons.lang.math",
-      "org.testcontainers.shaded.org.apache.commons.lang.mutable",
-      "org.testcontainers.shaded.org.apache.commons.lang.reflect",
-      "org.testcontainers.shaded.org.apache.commons.lang.text",
-      "org.testcontainers.shaded.org.apache.commons.lang.time",
+      "org.testcontainers.shaded.org.apache.commons.lang3",
+      "org.testcontainers.shaded.org.apache.commons.lang3.arch",
+      "org.testcontainers.shaded.org.apache.commons.lang3.builder",
+      "org.testcontainers.shaded.org.apache.commons.lang3.compare",
+      "org.testcontainers.shaded.org.apache.commons.lang3.concurrent",
+      "org.testcontainers.shaded.org.apache.commons.lang3.concurrent.locks",
+      "org.testcontainers.shaded.org.apache.commons.lang3.event",
+      "org.testcontainers.shaded.org.apache.commons.lang3.exception",
+      "org.testcontainers.shaded.org.apache.commons.lang3.function",
+      "org.testcontainers.shaded.org.apache.commons.lang3.math",
+      "org.testcontainers.shaded.org.apache.commons.lang3.mutable",
+      "org.testcontainers.shaded.org.apache.commons.lang3.reflect",
+      "org.testcontainers.shaded.org.apache.commons.lang3.stream",
+      "org.testcontainers.shaded.org.apache.commons.lang3.text",
+      "org.testcontainers.shaded.org.apache.commons.lang3.text.translate",
+      "org.testcontainers.shaded.org.apache.commons.lang3.time",
+      "org.testcontainers.shaded.org.apache.commons.lang3.tuple",
+      "org.testcontainers.shaded.org.awaitility",
+      "org.testcontainers.shaded.org.awaitility.classpath",
+      "org.testcontainers.shaded.org.awaitility.constraint",
+      "org.testcontainers.shaded.org.awaitility.core",
+      "org.testcontainers.shaded.org.awaitility.pollinterval",
+      "org.testcontainers.shaded.org.awaitility.reflect",
+      "org.testcontainers.shaded.org.awaitility.reflect.exception",
+      "org.testcontainers.shaded.org.awaitility.spi",
       "org.testcontainers.shaded.org.bouncycastle",
       "org.testcontainers.shaded.org.bouncycastle.asn1",
       "org.testcontainers.shaded.org.bouncycastle.asn1.anssi",
@@ -963,6 +993,7 @@
       "org.testcontainers.shaded.org.bouncycastle.asn1.gnu",
       "org.testcontainers.shaded.org.bouncycastle.asn1.iana",
       "org.testcontainers.shaded.org.bouncycastle.asn1.icao",
+      "org.testcontainers.shaded.org.bouncycastle.asn1.isara",
       "org.testcontainers.shaded.org.bouncycastle.asn1.isismtt",
       "org.testcontainers.shaded.org.bouncycastle.asn1.isismtt.ocsp",
       "org.testcontainers.shaded.org.bouncycastle.asn1.isismtt.x509",
@@ -1015,12 +1046,15 @@
       "org.testcontainers.shaded.org.bouncycastle.crypto.agreement.kdf",
       "org.testcontainers.shaded.org.bouncycastle.crypto.agreement.srp",
       "org.testcontainers.shaded.org.bouncycastle.crypto.commitments",
+      "org.testcontainers.shaded.org.bouncycastle.crypto.constraints",
       "org.testcontainers.shaded.org.bouncycastle.crypto.digests",
       "org.testcontainers.shaded.org.bouncycastle.crypto.ec",
       "org.testcontainers.shaded.org.bouncycastle.crypto.encodings",
       "org.testcontainers.shaded.org.bouncycastle.crypto.engines",
       "org.testcontainers.shaded.org.bouncycastle.crypto.examples",
+      "org.testcontainers.shaded.org.bouncycastle.crypto.fpe",
       "org.testcontainers.shaded.org.bouncycastle.crypto.generators",
+      "org.testcontainers.shaded.org.bouncycastle.crypto.hpke",
       "org.testcontainers.shaded.org.bouncycastle.crypto.io",
       "org.testcontainers.shaded.org.bouncycastle.crypto.kems",
       "org.testcontainers.shaded.org.bouncycastle.crypto.macs",
@@ -1033,7 +1067,6 @@
       "org.testcontainers.shaded.org.bouncycastle.crypto.prng",
       "org.testcontainers.shaded.org.bouncycastle.crypto.prng.drbg",
       "org.testcontainers.shaded.org.bouncycastle.crypto.signers",
-      "org.testcontainers.shaded.org.bouncycastle.crypto.tls",
       "org.testcontainers.shaded.org.bouncycastle.crypto.util",
       "org.testcontainers.shaded.org.bouncycastle.dvcs",
       "org.testcontainers.shaded.org.bouncycastle.eac",
@@ -1045,6 +1078,14 @@
       "org.testcontainers.shaded.org.bouncycastle.i18n",
       "org.testcontainers.shaded.org.bouncycastle.i18n.filter",
       "org.testcontainers.shaded.org.bouncycastle.iana",
+      "org.testcontainers.shaded.org.bouncycastle.internal.asn1.bsi",
+      "org.testcontainers.shaded.org.bouncycastle.internal.asn1.cms",
+      "org.testcontainers.shaded.org.bouncycastle.internal.asn1.eac",
+      "org.testcontainers.shaded.org.bouncycastle.internal.asn1.isismtt",
+      "org.testcontainers.shaded.org.bouncycastle.its",
+      "org.testcontainers.shaded.org.bouncycastle.its.bc",
+      "org.testcontainers.shaded.org.bouncycastle.its.jcajce",
+      "org.testcontainers.shaded.org.bouncycastle.its.operator",
       "org.testcontainers.shaded.org.bouncycastle.jcajce",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.interfaces",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.io",
@@ -1069,6 +1110,7 @@
       "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.keystore.bc",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.keystore.bcfks",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.keystore.pkcs12",
+      "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.keystore.util",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.symmetric",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.symmetric.util",
       "org.testcontainers.shaded.org.bouncycastle.jcajce.provider.util",
@@ -1096,6 +1138,22 @@
       "org.testcontainers.shaded.org.bouncycastle.mime.smime",
       "org.testcontainers.shaded.org.bouncycastle.mozilla",
       "org.testcontainers.shaded.org.bouncycastle.mozilla.jcajce",
+      "org.testcontainers.shaded.org.bouncycastle.oer",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.etsi102941",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.etsi102941.basetypes",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.etsi103097",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.etsi103097.extension",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.ieee1609dot2",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.ieee1609dot2.basetypes",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.ieee1609dot2dot1",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.etsi102941",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.etsi102941.basetypes",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.etsi103097",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.etsi103097.extension",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.ieee1609dot2",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.ieee1609dot2.basetypes",
+      "org.testcontainers.shaded.org.bouncycastle.oer.its.template.ieee1609dot2dot1",
       "org.testcontainers.shaded.org.bouncycastle.openssl",
       "org.testcontainers.shaded.org.bouncycastle.openssl.bc",
       "org.testcontainers.shaded.org.bouncycastle.openssl.jcajce",
@@ -1107,33 +1165,64 @@
       "org.testcontainers.shaded.org.bouncycastle.pkcs.jcajce",
       "org.testcontainers.shaded.org.bouncycastle.pkix",
       "org.testcontainers.shaded.org.bouncycastle.pkix.jcajce",
+      "org.testcontainers.shaded.org.bouncycastle.pkix.util",
+      "org.testcontainers.shaded.org.bouncycastle.pkix.util.filter",
       "org.testcontainers.shaded.org.bouncycastle.pqc.asn1",
       "org.testcontainers.shaded.org.bouncycastle.pqc.crypto",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.gmss",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.gmss.util",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.mceliece",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.bike",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.cmce",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.crystals.dilithium",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.crystals.kyber",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.falcon",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.frodo",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.gemss",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.hqc",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.lms",
       "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.newhope",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.qtesla",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.qteslarnd1",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.ntru",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.ntruprime",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.picnic",
       "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.rainbow",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.rainbow.util",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.saber",
       "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.sphincs",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.sphincsplus",
       "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.util",
       "org.testcontainers.shaded.org.bouncycastle.pqc.crypto.xmss",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.interfaces",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.bike",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.cmce",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.dilithium",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.falcon",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.frodo",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.gmss",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.hqc",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.kyber",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.lms",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.mceliece",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.newhope",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.qtesla",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.ntru",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.ntruprime",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.picnic",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.rainbow",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.saber",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.sphincs",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.sphincsplus",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.util",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.provider.xmss",
       "org.testcontainers.shaded.org.bouncycastle.pqc.jcajce.spec",
-      "org.testcontainers.shaded.org.bouncycastle.pqc.math.linearalgebra",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.crypto.gmss",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.crypto.gmss.util",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.crypto.mceliece",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.crypto.qtesla",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.crypto.rainbow",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.crypto.rainbow.util",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.legacy.math.linearalgebra",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.math.ntru",
+      "org.testcontainers.shaded.org.bouncycastle.pqc.math.ntru.parameters",
       "org.testcontainers.shaded.org.bouncycastle.tsp",
       "org.testcontainers.shaded.org.bouncycastle.tsp.cms",
+      "org.testcontainers.shaded.org.bouncycastle.tsp.ers",
       "org.testcontainers.shaded.org.bouncycastle.util",
       "org.testcontainers.shaded.org.bouncycastle.util.encoders",
       "org.testcontainers.shaded.org.bouncycastle.util.io",
@@ -1143,7 +1232,49 @@
       "org.testcontainers.shaded.org.bouncycastle.x509",
       "org.testcontainers.shaded.org.bouncycastle.x509.extension",
       "org.testcontainers.shaded.org.bouncycastle.x509.util",
+      "org.testcontainers.shaded.org.checkerframework.checker.builder.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.calledmethods.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.compilermsgs.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.fenum.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.formatter.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.guieffect.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.i18n.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.i18nformatter.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.index.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.initialization.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.interning.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.lock.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.mustcall.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.nullness.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.optional.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.propkey.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.regex.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.signature.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.signedness.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.tainting.qual",
+      "org.testcontainers.shaded.org.checkerframework.checker.units.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.aliasing.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.initializedfields.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.reflection.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.returnsreceiver.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.subtyping.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.util.count.report.qual",
+      "org.testcontainers.shaded.org.checkerframework.common.value.qual",
+      "org.testcontainers.shaded.org.checkerframework.dataflow.qual",
+      "org.testcontainers.shaded.org.checkerframework.framework.qual",
+      "org.testcontainers.shaded.org.hamcrest",
+      "org.testcontainers.shaded.org.hamcrest.beans",
+      "org.testcontainers.shaded.org.hamcrest.collection",
+      "org.testcontainers.shaded.org.hamcrest.comparator",
+      "org.testcontainers.shaded.org.hamcrest.core",
+      "org.testcontainers.shaded.org.hamcrest.internal",
+      "org.testcontainers.shaded.org.hamcrest.io",
+      "org.testcontainers.shaded.org.hamcrest.number",
+      "org.testcontainers.shaded.org.hamcrest.object",
+      "org.testcontainers.shaded.org.hamcrest.text",
+      "org.testcontainers.shaded.org.hamcrest.xml",
       "org.testcontainers.shaded.org.yaml.snakeyaml",
+      "org.testcontainers.shaded.org.yaml.snakeyaml.comments",
       "org.testcontainers.shaded.org.yaml.snakeyaml.composer",
       "org.testcontainers.shaded.org.yaml.snakeyaml.constructor",
       "org.testcontainers.shaded.org.yaml.snakeyaml.emitter",
@@ -1257,10 +1388,10 @@
       "org.codehaus.mojo:animal-sniffer-annotations:jar:sources",
       "org.conscrypt:conscrypt-openjdk-uber",
       "org.conscrypt:conscrypt-openjdk-uber:jar:sources",
+      "org.jetbrains:annotations",
+      "org.jetbrains:annotations:jar:sources",
       "org.rnorth.duct-tape:duct-tape",
       "org.rnorth.duct-tape:duct-tape:jar:sources",
-      "org.rnorth.visible-assertions:visible-assertions",
-      "org.rnorth.visible-assertions:visible-assertions:jar:sources",
       "org.testcontainers:gcloud",
       "org.testcontainers:gcloud:jar:sources",
       "org.testcontainers:testcontainers",
@@ -1317,14 +1448,19 @@
     },
     "org.testcontainers:testcontainers": {
       "org.testcontainers.dockerclient.DockerClientProviderStrategy": [
+        "org.testcontainers.dockerclient.DockerDesktopClientProviderStrategy",
         "org.testcontainers.dockerclient.DockerMachineClientProviderStrategy",
         "org.testcontainers.dockerclient.EnvironmentAndSystemPropertyClientProviderStrategy",
         "org.testcontainers.dockerclient.NpipeSocketClientProviderStrategy",
         "org.testcontainers.dockerclient.RootlessDockerClientProviderStrategy",
+        "org.testcontainers.dockerclient.TestcontainersHostPropertyClientProviderStrategy",
         "org.testcontainers.dockerclient.UnixSocketClientProviderStrategy"
       ],
-      "org.testcontainers.utility.ImageNameSubstitutor": [
-        "org.testcontainers.utility.DefaultImageNameSubstitutor"
+      "org.testcontainers.shaded.com.fasterxml.jackson.core.JsonFactory": [
+        "org.testcontainers.shaded.com.fasterxml.jackson.core.JsonFactory"
+      ],
+      "org.testcontainers.shaded.com.fasterxml.jackson.core.ObjectCodec": [
+        "org.testcontainers.shaded.com.fasterxml.jackson.databind.ObjectMapper"
       ]
     },
     "org.threeten:threetenbp": {

@@ -82,7 +82,8 @@ public class PubSubBrokerApiIT extends LightweightPluginDaemonTest {
 
   public PubSubEmulatorContainer emulator =
       new PubSubEmulatorContainer(
-          DockerImageName.parse("gcr.io/google.com/cloudsdktool/cloud-sdk:316.0.0-emulators"));
+          DockerImageName.parse(
+              "gcr.io/google.com/cloudsdktool/google-cloud-cli:580.0.0-emulators"));
 
   @Override
   public void setUpTestPlugin() throws Exception {
