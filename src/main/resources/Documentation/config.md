@@ -57,6 +57,22 @@ The events-gcloud-pubsub plugin is configured by adding a plugin stanza in the
 :   Whether to send stream events to the `streamEventsTopic` topic.
     Default: false
 
+Logical partition publishing
+----------------------------
+
+Logical partition configuration and its shared behaviour are documented by
+[events-broker](https://gerrit.googlesource.com/modules/events-broker/+/refs/heads/master/README.md#partition_aware-topics).
+
+Messages are still published to the same Pub/Sub topic with the same JSON
+payload. For a partition-aware topic, events-gcloud-pubsub copies the configured
+partition event property and its value to a Pub/Sub message attribute. For
+example, an event routed by `type=change-index` has the Pub/Sub attribute
+`type="change-index"`. Pub/Sub subscriptions can then use that attribute in a
+filter.
+
+Topics without configured partition values keep the existing behaviour and
+are published without a partition attribute.
+
 Gerrit init integration
 -----------------------
 
