@@ -1,0 +1,27 @@
+{
+  "comments": [
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "4c0c8667_6661115e",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1012541
+      },
+      "writtenOn": "2026-08-18T15:40:33Z",
+      "side": 1,
+      "message": "Why do we need local disk? Same for the other tests",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 15
+      },
+      "revId": "c197f4f0b6507762ca2ff3dd942fdd98aa0019d8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    }
+  ]
+}
