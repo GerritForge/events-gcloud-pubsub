@@ -22,6 +22,30 @@
       },
       "revId": "c197f4f0b6507762ca2ff3dd942fdd98aa0019d8",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": false,
+      "key": {
+        "uuid": "80166b92_ab783a2b",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubBrokerApiIT.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 270,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-08-20T07:58:32Z",
+      "side": 1,
+      "message": "It is needed by @GlobalPluginConfig. Gerrit writes the global plugin configuration to the test site, and the test framework requires @UseLocalDisk when that annotation is used.",
+      "parentUuid": "4c0c8667_6661115e",
+      "range": {
+        "startLine": 270,
+        "startChar": 0,
+        "endLine": 270,
+        "endChar": 15
+      },
+      "revId": "c197f4f0b6507762ca2ff3dd942fdd98aa0019d8",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
   ]
 }
