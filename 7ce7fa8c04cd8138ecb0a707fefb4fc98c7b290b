@@ -24,6 +24,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "69bd78e2_ce5db8e0",
+        "filename": "src/main/java/com/gerritforge/gerrit/plugins/pubsub/PubSubPublisher.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 90,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-08-20T07:45:17Z",
+      "side": 1,
+      "message": "Yes, we do the same for other implementations too.\nThe problem is not inherently with the configuration is that the _caller_ wants to send a message to that topic that does not have the expected property.\n\nIt is a runtime error imho.",
+      "parentUuid": "2d95e768_0a1c19ab",
+      "range": {
+        "startLine": 90,
+        "startChar": 16,
+        "endLine": 90,
+        "endChar": 40
+      },
+      "revId": "7ce7fa8c04cd8138ecb0a707fefb4fc98c7b290b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "97edb188_65a47d8d",
@@ -47,6 +71,30 @@
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     },
     {
+      "unresolved": false,
+      "key": {
+        "uuid": "65ed63a3_ae23dd83",
+        "filename": "src/main/resources/Documentation/config.md",
+        "patchSetId": 1
+      },
+      "lineNbr": 70,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-08-20T07:45:17Z",
+      "side": 1,
+      "message": "Done",
+      "parentUuid": "97edb188_65a47d8d",
+      "range": {
+        "startLine": 70,
+        "startChar": 6,
+        "endLine": 70,
+        "endChar": 18
+      },
+      "revId": "7ce7fa8c04cd8138ecb0a707fefb4fc98c7b290b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
       "unresolved": true,
       "key": {
         "uuid": "f2bba901_f1624086",
@@ -60,6 +108,24 @@
       "writtenOn": "2026-08-18T13:54:46Z",
       "side": 1,
       "message": "I think we are missing a test where a topic has partitions but no partition property is configured. It is a valid path in the code.",
+      "revId": "7ce7fa8c04cd8138ecb0a707fefb4fc98c7b290b",
+      "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
+    },
+    {
+      "unresolved": true,
+      "key": {
+        "uuid": "c3933118_5ef64aff",
+        "filename": "src/test/java/com/gerritforge/gerrit/plugins/pubsub/PubSubPublisherTest.java",
+        "patchSetId": 1
+      },
+      "lineNbr": 130,
+      "author": {
+        "id": 1015244
+      },
+      "writtenOn": "2026-08-20T07:45:17Z",
+      "side": 1,
+      "message": "mmm, `partitionEventProperty` defaults to `type` in `EventsBrokerConfiguration`, so a topic with configured partitions always has a partition property.\n\nWDYT?",
+      "parentUuid": "f2bba901_f1624086",
       "revId": "7ce7fa8c04cd8138ecb0a707fefb4fc98c7b290b",
       "serverId": "d5d70762-12d0-45a1-890d-524b12d3f735"
     }
